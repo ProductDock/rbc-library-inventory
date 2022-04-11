@@ -1,0 +1,14 @@
+spring:
+  kafka:
+    enabled: true
+    bootstrap-servers: ${kafka.server.url:localhost:9092}
+    consumer:
+      enable-auto-commit: false #necessary setting
+      auto-offset-reset: latest
+      group-id: ${consumer.group:group}
+    listener:
+      ack-mode: manual-immediate
+    topic:
+      book-status-topic: ${kafka.topic:book-status-topic}
+server:
+  port: 8081
