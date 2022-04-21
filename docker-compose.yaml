@@ -8,6 +8,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root2
       MONGO_INITDB_DATABASE: inventory-db
     ports:
-      - 28017:27017
+      - "28017:27017"
     volumes:
       - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
