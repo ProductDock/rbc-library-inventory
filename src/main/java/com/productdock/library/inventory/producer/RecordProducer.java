@@ -12,18 +12,13 @@ import java.util.UUID;
 public class RecordProducer {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public ProducerRecord createKafkaRecord(String topic, RentalRecord rentalRecord) {
+    public ProducerRecord createKafkaRecord(String topic, RentalRecord rentalRecord) throws JsonProcessingException {
         var serialisedMessage = serialiseMessage(rentalRecord);
         var producerRecord = new ProducerRecord<>(topic, UUID.randomUUID().toString(), serialisedMessage);
         return producerRecord;
     }
 
-    private String serialiseMessage(RentalRecord rentalRecord) {
-        try {
-            return OBJECT_MAPPER.writeValueAsString(rentalRecord);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return "";
+    private String serialiseMessage(RentalRecord rentalRecord) throws JsonProcessingException {
+        return OBJECT_MAPPER.writeValueAsString(rentalRecord);
     }
 }

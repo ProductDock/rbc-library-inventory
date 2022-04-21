@@ -12,8 +12,6 @@ public record RecordConsumer(BookService bookService, RentalRecordDeserializer r
     @KafkaListener(topics = "${spring.kafka.topic.rental-record-topic}")
     public synchronized void listen(ConsumerRecord<String, String> record) {
         var rentalRecord = rentalRecordDeserializer.deserializeRentalRecord(record);
-        System.out.println(rentalRecord.toString());
-        bookService.addBook(rentalRecord);
-        bookService.addRentalRecord(rentalRecord);
+        bookService.saveBook(rentalRecord);
     }
 }

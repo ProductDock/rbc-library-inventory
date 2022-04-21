@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class RentalRecord {
+public class RentalRecord implements Serializable {
     @Id
     private String bookId;
     private List<BookInteraction> reservations;

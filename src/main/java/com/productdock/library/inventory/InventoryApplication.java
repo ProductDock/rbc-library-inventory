@@ -7,7 +7,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.kafka.annotation.EnableKafka;
 
 
+@EnableKafka
 @SpringBootApplication
+@EnableAutoConfiguration
 @EnableMongoRepositories
 public class InventoryApplication {
 

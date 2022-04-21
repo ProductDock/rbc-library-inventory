@@ -7,18 +7,19 @@ import org.springframework.stereotype.Service;
 @Service
 public record BookService(BookRepository bookRepository, Publisher publisher) {
 
-    public void addBook(RentalRecord rentalRecord) {
-        if (bookRepository.findById(rentalRecord.getBookId()).isEmpty())
-            bookRepository.save(new Book(rentalRecord.getBookId(), 3, rentalRecord.getReservations().size(), rentalRecord.getRents().size()));
-    }
-
-    public void addRentalRecord(RentalRecord rentalRecord) {
+    public void saveBook(RentalRecord rentalRecord) {
+        saveNewBook(rentalRecord);
         var optionalBook = bookRepository.findById(rentalRecord.getBookId());
         if (optionalBook.isPresent()) {
             var book = optionalBook.get();
             processBookRequest(rentalRecord, book);
             bookRepository.save(book);
         }
+    }
+
+    private void saveNewBook(RentalRecord rentalRecord) {
+        if (bookRepository.findById(rentalRecord.getBookId()).isEmpty())
+            bookRepository.save(new Book(rentalRecord.getBookId(), 1, rentalRecord.getReservations().size(), rentalRecord.getRents().size()));
     }
 
     private void processBookRequest(RentalRecord rentalRecord, Book book) {
@@ -31,7 +32,6 @@ public record BookService(BookRepository bookRepository, Publisher publisher) {
     }
 
     private void userTriedToTakeUnavailableBook(RentalRecord rentalRecord, Book book) {
-        System.out.println("ERROR: There is no book available for you to reserve or rent");
         if(rentalRecord.getRents().size() > book.getRentedBooks()) {
             rentalRecord.removeLastRent();
         } else {
