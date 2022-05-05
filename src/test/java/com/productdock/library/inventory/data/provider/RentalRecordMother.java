@@ -1,7 +1,10 @@
 package com.productdock.library.inventory.data.provider;
 
 
+<<<<<<< Updated upstream
 import com.productdock.library.inventory.book.BookInteraction;
+=======
+>>>>>>> Stashed changes
 import com.productdock.library.inventory.record.RentalRecord;
 
 import java.util.Arrays;

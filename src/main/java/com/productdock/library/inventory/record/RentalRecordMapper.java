@@ -1,0 +1,12 @@
+package com.productdock.library.inventory.record;
+
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+public interface RentalRecordMapper {
+
+    @Mapping(target = "bookCopies", source = "source.rentalRecords")
+    RentalRecord toDomain(RentalRecordMessage source);
+}

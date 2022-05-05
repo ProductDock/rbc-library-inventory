@@ -1,5 +1,6 @@
 package com.productdock.library.inventory.producer;
 
+import com.productdock.library.inventory.book.BookAvailabilityMessage;
 import com.productdock.library.inventory.record.RentalRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -19,9 +20,9 @@ public class Publisher {
         this.recordProducer = recordProducer;
     }
 
-    public void sendMessage(RentalRecord rentalRecord) {
+    public void sendMessage(BookAvailabilityMessage bookAvailabilityMessage) {
         try {
-            var kafkaRecord = recordProducer.createKafkaRecord(KAFKA_TOPIC, rentalRecord);
+            var kafkaRecord = recordProducer.createKafkaRecord(KAFKA_TOPIC, bookAvailabilityMessage);
             var resp = kafkaTemplate.send(kafkaRecord).get();
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,15 +1,15 @@
 package com.productdock.library.inventory.book;
 
+import com.productdock.library.inventory.record.RentalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 public class BookInteraction implements Serializable {
-
-    private String userEmail;
-    private Date date;
+    private String patron;
+    private RentalStatus status;
 }
+

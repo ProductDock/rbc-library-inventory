@@ -14,12 +14,12 @@ public class RentalRecordDeserializer {
         this.objectMapper = objectMapper;
     }
 
-    public RentalRecord deserializeRentalRecord(ConsumerRecord<String, String> consumerRecord) {
+    public RentalRecordMessage deserializeRentalRecord(ConsumerRecord<String, String> consumerRecord) {
         try {
-            return objectMapper.readValue(consumerRecord.value(), RentalRecord.class);
+            return objectMapper.readValue(consumerRecord.value(), RentalRecordMessage.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return new RentalRecord();
+        return new RentalRecordMessage();
     }
 }

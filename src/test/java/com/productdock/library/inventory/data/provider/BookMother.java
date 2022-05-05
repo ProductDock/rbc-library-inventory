@@ -1,6 +1,6 @@
 package com.productdock.library.inventory.data.provider;
 
-import com.productdock.library.inventory.book.Book;
+import com.productdock.library.inventory.book.BookEntity;
 
 public class BookMother {
 
@@ -9,12 +9,12 @@ public class BookMother {
     private static final int defaultRentedBooks = 0;
     private static final int defaultReservedBooks = 0;
 
-    public static Book defaultBook() {
+    public static BookEntity defaultBook() {
         return defaultBookBuilder().build();
     }
 
-    public static Book.BookBuilder defaultBookBuilder() {
-        return Book.builder()
+    public static BookEntity.BookBuilder defaultBookBuilder() {
+        return BookEntity.builder()
                 .bookId(defaultBookId)
                 .bookCopies(defaultBookCopies)
                 .rentedBooks(defaultRentedBooks)

@@ -18,14 +18,29 @@ public class RentalRecord implements Serializable {
 
     @Id
     private String bookId;
-    private List<BookInteraction> reservations;
-    private List<BookInteraction> rents;
+    private List<BookInteraction> bookCopies;
+
+    public int getRentsCount(){
+        return (int) bookCopies.stream().filter(book -> book.getStatus().equals(RentalStatus.RENTED)).count();
+    }
+
+    public int getReservationsCount(){
+        return (int) bookCopies.stream().filter(book -> book.getStatus().equals(RentalStatus.RESERVED)).count();
+    }
 
     public void removeLastReservation() {
-        reservations.remove(reservations.size() - 1);
+        for(int i=bookCopies.size()-1;i>=0;i--){
+            if(bookCopies.get(i).getStatus().equals(RentalStatus.RESERVED)){
+                bookCopies.remove(i);
+            }
+        }
     }
 
     public void removeLastRent() {
-        rents.remove(rents.size() - 1);
+        for(int i=bookCopies.size()-1;i>=0;i--){
+            if(bookCopies.get(i).getStatus().equals(RentalStatus.RENTED)){
+                bookCopies.remove(i);
+            }
+        }
     }
 }
