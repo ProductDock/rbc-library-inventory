@@ -15,16 +15,17 @@ import java.util.List;
 @Data
 @Builder
 public class RentalRecord implements Serializable {
+
     @Id
     private String bookId;
     private List<BookInteraction> reservations;
     private List<BookInteraction> rents;
 
     public void removeLastReservation() {
-        reservations.remove(reservations.size()-1);
+        reservations.remove(reservations.size() - 1);
     }
 
     public void removeLastRent() {
-        rents.remove(rents.size()-1);
+        rents.remove(rents.size() - 1);
     }
 }

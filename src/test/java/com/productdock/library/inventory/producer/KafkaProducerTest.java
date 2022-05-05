@@ -2,7 +2,6 @@ package com.productdock.library.inventory.producer;
 
 import com.productdock.library.inventory.book.BookRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
-import com.productdock.library.inventory.producer.Publisher;
 import com.productdock.library.inventory.record.RentalRecord;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +22,7 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SpringBootTest
 public class KafkaProducerTest extends KafkaTestBase {
+
     public static final String FIRST_BOOK = "1";
     public static final String TEST_FILE = "testRecord.txt";
 

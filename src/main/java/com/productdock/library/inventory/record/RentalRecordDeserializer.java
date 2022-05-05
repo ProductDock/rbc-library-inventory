@@ -3,7 +3,6 @@ package com.productdock.library.inventory.record;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.logging.log4j.message.SimpleMessage;
 import org.springframework.stereotype.Component;
 
 @Component

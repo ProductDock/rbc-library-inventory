@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Component
 public class RecordProducer {
+
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public ProducerRecord createKafkaRecord(String topic, RentalRecord rentalRecord) throws JsonProcessingException {

@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 
 @Component
 public class KafkaTestConsumer {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaTestConsumer.class);
 
     @Autowired
@@ -29,7 +30,7 @@ public class KafkaTestConsumer {
 
     private void writeRecordToFile(RentalRecord rentalRecord) {
         try {
-            FileOutputStream  fileOutputStream = new FileOutputStream("testRecord.txt");
+            FileOutputStream fileOutputStream = new FileOutputStream("testRecord.txt");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(rentalRecord);
             objectOutputStream.flush();
