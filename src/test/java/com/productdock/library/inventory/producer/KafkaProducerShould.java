@@ -2,7 +2,6 @@ package com.productdock.library.inventory.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
-import com.productdock.library.inventory.producer.RecordProducer;
 import com.productdock.library.inventory.record.RentalRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +17,7 @@ import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 public class KafkaProducerShould {
+
     @InjectMocks
     private RecordProducer recordProducer;
 
@@ -38,7 +38,7 @@ public class KafkaProducerShould {
     void throwExceptionWhenProducingBadEntity() {
         RentalRecord rentalRecord = mock(RentalRecord.class);
         assertThrows(JsonProcessingException.class, () -> {
-                var producerRecord = recordProducer.createKafkaRecord(topic, rentalRecord);
+            var producerRecord = recordProducer.createKafkaRecord(topic, rentalRecord);
         });
     }
 }

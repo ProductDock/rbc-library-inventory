@@ -1,11 +1,13 @@
 package com.productdock.library.inventory.data.provider;
 
 
-import com.productdock.library.inventory.book.Book;
 import com.productdock.library.inventory.book.BookInteraction;
 import com.productdock.library.inventory.record.RentalRecord;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RentalRecordMother {
 

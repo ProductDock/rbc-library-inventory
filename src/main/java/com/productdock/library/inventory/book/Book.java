@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Builder
 public class Book {
+
     @Id
     private String bookId;
     private int bookCopies;

@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class BookInteraction implements Serializable {
+
     private String userEmail;
     private Date date;
 }

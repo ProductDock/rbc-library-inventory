@@ -1,8 +1,8 @@
 package com.productdock.library.inventory.consumer;
 
 
-import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.book.BookRepository;
+import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -18,8 +18,9 @@ public record BookService(BookRepository bookRepository, Publisher publisher) {
     }
 
     private void saveNewBook(RentalRecord rentalRecord) {
-        if (bookRepository.findById(rentalRecord.getBookId()).isEmpty())
+        if (bookRepository.findById(rentalRecord.getBookId()).isEmpty()) {
             bookRepository.save(new Book(rentalRecord.getBookId(), 1, rentalRecord.getReservations().size(), rentalRecord.getRents().size()));
+        }
     }
 
     private void processBookRequest(RentalRecord rentalRecord, Book book) {
@@ -32,7 +33,7 @@ public record BookService(BookRepository bookRepository, Publisher publisher) {
     }
 
     private void userTriedToTakeUnavailableBook(RentalRecord rentalRecord, Book book) {
-        if(rentalRecord.getRents().size() > book.getRentedBooks()) {
+        if (rentalRecord.getRents().size() > book.getRentedBooks()) {
             rentalRecord.removeLastRent();
         } else {
             rentalRecord.removeLastReservation();
