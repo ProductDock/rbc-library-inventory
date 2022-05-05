@@ -11,7 +11,7 @@ public class Publisher {
     private final KafkaTemplate kafkaTemplate;
     private final RecordProducer recordProducer;
 
-    @Value("${spring.kafka.topic.rental-record-warning-topic}")
+    @Value("${spring.kafka.topic.book-availability}")
     private String KAFKA_TOPIC;
 
     public Publisher(KafkaTemplate kafkaTemplate, RecordProducer recordProducer) {

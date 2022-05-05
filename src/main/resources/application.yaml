@@ -14,8 +14,8 @@ spring:
       auto-offset-reset: latest
       group-id: ${consumer.group:group}
     topic:
-      rental-record-topic: ${kafka.topic:rental-record-topic}
-      rental-record-warning-topic: ${kafka.topic:rental-record-warning-topic}
+      rental-record: ${kafka.topic:rental-record}
+      book-availability: ${kafka.topic:book-availability}
 
   data:
     mongodb:

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public record RecordConsumer(BookService bookService, RentalRecordDeserializer rentalRecordDeserializer) {
 
-    @KafkaListener(topics = "${spring.kafka.topic.rental-record-topic}")
+    @KafkaListener(topics = "${spring.kafka.topic.rental-record}")
     public synchronized void listen(ConsumerRecord<String, String> record) {
         var rentalRecord = rentalRecordDeserializer.deserializeRentalRecord(record);
         bookService.saveBook(rentalRecord);
