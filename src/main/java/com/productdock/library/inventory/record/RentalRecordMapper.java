@@ -1,12 +1,13 @@
 package com.productdock.library.inventory.record;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import com.productdock.library.inventory.domain.RentalRecord;
+import org.springframework.stereotype.Component;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-public interface RentalRecordMapper {
+@Component
+public class RentalRecordMapper {
 
-    @Mapping(target = "rentalRecords", source = "source.rentalRecords")
-    RentalRecord toDomain(RentalRecordMessage source);
+    public RentalRecord toDomain(RentalRecordMessage source){
+        return new RentalRecord(source.getBookId(), source.getRentalRecords());
+    }
+
 }

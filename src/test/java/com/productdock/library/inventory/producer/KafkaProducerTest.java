@@ -17,7 +17,6 @@ import java.time.Duration;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import static com.productdock.library.inventory.data.provider.BookMother.defaultBookAvailabilityMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
@@ -34,13 +33,8 @@ class KafkaProducerTest extends KafkaTestBase {
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
 
-    @BeforeEach
-    final void before() {
-        File f = new File(TEST_FILE);
-        f.delete();
-    }
-
     @AfterEach
+    @BeforeEach
     final void after() {
         File f = new File(TEST_FILE);
         f.delete();
@@ -48,7 +42,7 @@ class KafkaProducerTest extends KafkaTestBase {
 
     @Test
     void shouldSendMessage() throws IOException, ClassNotFoundException, ExecutionException, InterruptedException {
-        publisher.sendMessage(defaultBookAvailabilityMessage());
+        publisher.sendMessage(new BookAvailabilityMessage("1", 1));
         await()
                 .atMost(Duration.ofSeconds(5))
                 .until(ifFileExists(TEST_FILE));
@@ -62,7 +56,7 @@ class KafkaProducerTest extends KafkaTestBase {
     private Callable<Boolean> ifFileExists(String testFile) {
         var checkForFile = new Callable<Boolean>() {
             @Override
-            public Boolean call() throws Exception {
+            public Boolean call() {
                 File f = new File(testFile);
                 return f.isFile();
             }

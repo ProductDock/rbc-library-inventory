@@ -1,8 +1,9 @@
 package com.productdock.library.inventory.book;
 
+import com.productdock.library.inventory.domain.Inventory;
+import com.productdock.library.inventory.domain.RentalRecord;
+import com.productdock.library.inventory.exception.InventoryException;
 import com.productdock.library.inventory.producer.Publisher;
-import com.productdock.library.inventory.record.RentalRecordMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,10 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.productdock.library.inventory.data.provider.BookMother.*;
+import static com.productdock.library.inventory.data.provider.InventoryMother.*;
+import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultBookEntityBuilder;
+import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultInventoryRecordEntity;
+import static com.productdock.library.inventory.data.provider.RentalRecordMessageMother.defaultRentalRecordMessage;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecord;
-import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecordMessage;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,40 +38,28 @@ class InventoryRecordServiceShould {
     @Mock
     private InventoryRecordMapper inventoryRecordMapper;
 
-    @Mock
-    private RentalRecordMapper rentalRecordMapper;
-
-    @BeforeEach
-    final void before() {
-        inventoryRecordRepository.deleteAll();
-    }
-
     @Test
     void updateBookState_whenBookExists() throws Exception {
-        var rentalRecordMessage = defaultRentalRecordMessage();
-        var bookEntity = Optional.of(defaultInventoryRecordEntity());
-        var inventory = defaultInventory();
+        var bookEntity = Optional.of(mock(InventoryRecordEntity.class));
         var rentalRecord = defaultRentalRecord();
-        given(inventoryRecordRepository.findById(rentalRecordMessage.getBookId())).willReturn(bookEntity);
-        given(rentalRecordMapper.toDomain(rentalRecordMessage)).willReturn(rentalRecord);
+        given(inventoryRecordRepository.findById(rentalRecord.getBookId())).willReturn(bookEntity);
+        var inventory = mock(Inventory.class);
         given(inventoryRecordMapper.toDomain(bookEntity.get())).willReturn(inventory);
         given(inventoryRecordMapper.toEntity(inventory)).willReturn(bookEntity.get());
 
-        inventoryRecordService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
+        inventoryRecordService.updateBookState(rentalRecord);
 
+        verify(inventory).updateStateWith(rentalRecord);
         verify(inventoryRecordRepository).save(bookEntity.get());
+        verify(publisher).sendMessage(any());
     }
 
     @Test
-    void updateBookState_whenBookDoesNotExist() throws Exception {
-        var rentalRecordMessage = defaultRentalRecordMessage();
-        var bookEntity = Optional.of(defaultBookEntityBuilder().rentedBooks(1).build());
+    void throwException_whenBookDoesNotExist() throws Exception {
         var rentalRecord = defaultRentalRecord();
-        given(inventoryRecordRepository.findById(rentalRecordMessage.getBookId())).willReturn(Optional.empty());
-        given(rentalRecordMapper.toDomain(rentalRecordMessage)).willReturn(rentalRecord);
+        given(inventoryRecordRepository.findById(rentalRecord.getBookId())).willReturn(Optional.empty());
 
-        inventoryRecordService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
-
-        verify(inventoryRecordRepository).save(bookEntity.get());
+        assertThatThrownBy(() -> inventoryRecordService.updateBookState(rentalRecord))
+                .isInstanceOf(InventoryException.class);
     }
 }

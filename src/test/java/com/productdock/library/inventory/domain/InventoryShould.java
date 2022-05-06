@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.productdock.library.inventory.data.provider.BookMother.defaultInventory;
+import static com.productdock.library.inventory.data.provider.InventoryMother.defaultInventory;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-class BookShould {
+class InventoryShould {
 
     @Test
     void getAvailableBookCount() {
@@ -17,7 +17,7 @@ class BookShould {
 
         int availableBookCount = inventory.getAvailableBooksCount();
 
-        assertThat(availableBookCount).isEqualTo(1);
+        assertThat(availableBookCount).isEqualTo(3);
     }
 
     @Test
@@ -29,5 +29,6 @@ class BookShould {
 
         assertThat(inventory.getAvailableBooksCount()).isZero();
         assertThat(inventory.getRentedBooks()).isEqualTo(1);
+        assertThat(inventory.getReservedBooks()).isEqualTo(2);
     }
 }

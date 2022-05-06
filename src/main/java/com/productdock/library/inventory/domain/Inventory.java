@@ -1,6 +1,5 @@
 package com.productdock.library.inventory.domain;
 
-import com.productdock.library.inventory.record.RentalRecord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

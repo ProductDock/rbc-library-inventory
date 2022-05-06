@@ -11,8 +11,9 @@ import org.springframework.stereotype.Component;
 public record RecordConsumer(InventoryRecordService inventoryRecordService, RentalRecordDeserializer rentalRecordDeserializer, RentalRecordMapper rentalRecordMapper) {
 
     @KafkaListener(topics = "${spring.kafka.topic.book-status}")
-    public synchronized void listen(ConsumerRecord<String, String> rentalRecord) throws Exception {
-        var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(rentalRecord);
-        inventoryRecordService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
+    public synchronized void listen(ConsumerRecord<String, String> message) throws Exception {
+        var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(message);
+        var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
+        inventoryRecordService.updateBookState(rentalRecord);
     }
 }

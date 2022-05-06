@@ -1,7 +1,6 @@
 package com.productdock.library.inventory.consumer;
 
 
-import com.productdock.library.inventory.book.InventoryRecordEntity;
 import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
@@ -12,10 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
-import java.util.Optional;
 
-import static com.productdock.library.inventory.data.provider.BookMother.defaultInventoryRecordEntity;
-import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecordMessage;
+import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultInventoryRecordEntity;
+import static com.productdock.library.inventory.data.provider.RentalRecordMessageMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
@@ -47,7 +45,7 @@ class KafkaConsumerTest extends KafkaTestBase {
                 .until(() -> inventoryRecordRepository.findById("1").isPresent());
 
         var entity = inventoryRecordRepository.findById("1");
-        assertThat(entity.get().getBookCopies()).isEqualTo(1);
+        assertThat(entity.get().getBookCopies()).isEqualTo(3);
         assertThat(entity.get().getRentedBooks()).isEqualTo(1);
         assertThat(entity.get().getReservedBooks()).isZero();
     }
