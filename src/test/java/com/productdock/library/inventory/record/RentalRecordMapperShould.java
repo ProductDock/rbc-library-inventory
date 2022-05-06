@@ -18,7 +18,7 @@ class RentalRecordMapperShould {
 
         assertThat(rentalRecord.getBookId()).isEqualTo(rentalRecordMessage.getBookId());
         assertThat(rentalRecord.getRentsCount()).isEqualTo(1);
-        assertThat(rentalRecord.getReservationsCount()).isEqualTo(0);
+        assertThat(rentalRecord.getReservationsCount()).isZero();
     }
 
 }
