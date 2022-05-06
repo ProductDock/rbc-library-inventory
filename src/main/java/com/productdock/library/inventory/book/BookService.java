@@ -17,13 +17,13 @@ public record BookService(BookRepository bookRepository, Publisher publisher, Bo
             Book book = bookMapper.toDomain(bookEntity);
             book.processRentalRecords(rentalRecord);
             bookRepository.save(bookMapper.toEntity(book));
-            publisher.sendMessage(new BookAvailabilityMessage(book.getBookId(), book.getAvailableBooksCount()));
+            publisher.sendMessage(BookAvailabilityMessage.builder().bookId(book.getBookId()).availableBookCount(book.getAvailableBooksCount()).build());
         }
     }
 
     private void saveNewBook(RentalRecord rentalRecord) {
         if (bookRepository.findById(rentalRecord.getBookId()).isEmpty()) {
-            bookRepository.save(new BookEntity(rentalRecord.getBookId(), 1, rentalRecord.getReservationsCount(), rentalRecord.getRentsCount()));
+            bookRepository.save(BookEntity.builder().bookId(rentalRecord.getBookId()).bookCopies(1).reservedBooks(rentalRecord.getReservationsCount()).rentedBooks(rentalRecord.getRentsCount()).build());
         }
     }
 }
