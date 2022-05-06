@@ -1,0 +1,10 @@
+#!/bin/bash
+sudo usermod -a -G docker ${USER}
+docker-credential-gcr configure-docker
+
+docker stop rbc-library-inventory
+docker rm rbc-library-inventory
+docker rmi $(docker images | grep "rbc-library-inventory")
+
+docker run -dp 8084:8080 --env-file /home/pd-library/.inventory-service_env --name=rbc-library-inventory gcr.io/prod-pd-library/rbc-library-inventory:$1
+docker container ls -a

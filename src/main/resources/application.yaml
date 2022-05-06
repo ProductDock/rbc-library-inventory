@@ -14,16 +14,16 @@ spring:
       auto-offset-reset: latest
       group-id: ${consumer.group:group}
     topic:
-      book-status: ${kafka.topic:book-status}
-      book-availability: ${kafka.topic:book-availability}
+      book-status: book-status
+      book-availability: book-availability
 
   data:
     mongodb:
       authentication-database: inventory-db
-      host: localhost
-      port: 28017
-      username: root1
-      password: root1
+      host: ${mongodb.host:localhost}
+      port: ${mongodb.port:28017}
+      username: ${mongodb.user:root}
+      password: ${mongodb.password:root}
       database: inventory-db
 server:
   port: 8081
