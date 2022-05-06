@@ -35,18 +35,4 @@ class BookMapperShould {
 
         assertThat(book.getBookId()).isEqualTo(bookEntity.getBookId());
     }
-
-//    private void assertThatRecordsAreMatching (List<BookRentalRecord.BookCopy> bookCopies, List<BookInteraction> bookInteractions) {
-//        assertThat(bookCopies).hasSameSizeAs(bookInteractions);
-//        var bookCopy = bookCopies.get(0);
-//        var bookInteraction = bookInteractions.get(0);
-//        assertThatBookCopyIsMatching(bookCopy, bookInteraction);
-//    }
-//
-//    private void assertThatBookCopyIsMatching(BookRentalRecord.BookCopy bookCopy, BookInteraction bookInteraction) {
-//        assertThat(bookCopy.getPatron()).isEqualTo(bookInteraction.getUserEmail());
-//        assertThat(bookCopy.getStatus()).isEqualTo(bookInteraction.getStatus());
-//        assertThat(bookCopy.getDate()).isEqualTo(bookInteraction.getDate());
-//    }
-
 }
