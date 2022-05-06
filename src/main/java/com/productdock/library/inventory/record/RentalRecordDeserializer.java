@@ -14,12 +14,7 @@ public class RentalRecordDeserializer {
         this.objectMapper = objectMapper;
     }
 
-    public RentalRecordMessage deserializeRentalRecord(ConsumerRecord<String, String> consumerRecord) {
-        try {
-            return objectMapper.readValue(consumerRecord.value(), RentalRecordMessage.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return new RentalRecordMessage();
+    public RentalRecordMessage deserializeRentalRecord(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
+        return objectMapper.readValue(consumerRecord.value(), RentalRecordMessage.class);
     }
 }
