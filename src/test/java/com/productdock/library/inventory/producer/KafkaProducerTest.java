@@ -1,7 +1,6 @@
 package com.productdock.library.inventory.producer;
 
 import com.productdock.library.inventory.book.BookAvailabilityMessage;
-import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +28,6 @@ class KafkaProducerTest extends KafkaTestBase {
 
     @Autowired
     private Publisher publisher;
-
-    @Autowired
-    private InventoryRecordRepository inventoryRecordRepository;
 
     @AfterEach
     @BeforeEach
