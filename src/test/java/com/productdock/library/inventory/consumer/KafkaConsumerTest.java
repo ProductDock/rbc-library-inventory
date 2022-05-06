@@ -1,6 +1,7 @@
 package com.productdock.library.inventory.consumer;
 
 
+import com.productdock.library.inventory.book.InventoryRecordEntity;
 import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
+import java.util.Optional;
 
+import static com.productdock.library.inventory.data.provider.BookMother.defaultInventoryRecordEntity;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
@@ -31,18 +34,21 @@ class KafkaConsumerTest extends KafkaTestBase {
     @BeforeEach
     final void before() {
         inventoryRecordRepository.deleteAll();
+        inventoryRecordRepository.save(defaultInventoryRecordEntity());
     }
 
     @Test
-    void shouldSaveBook_whenMessageReceived() throws Exception{
+    void shouldUpdateInventory_whenMessageReceived() throws Exception{
         var rentalRecord = defaultRentalRecordMessage();
-        System.out.println(rentalRecord.toString());
+
         producer.send(topic, rentalRecord);
         await()
-                .atMost(Duration.ofSeconds(20))
+                .atMost(Duration.ofSeconds(5))
                 .until(() -> inventoryRecordRepository.findById("1").isPresent());
-        assertThat(inventoryRecordRepository.findById("1").get().getBookCopies()).isEqualTo(1);
-        assertThat(inventoryRecordRepository.findById("1").get().getRentedBooks()).isEqualTo(1);
-        assertThat(inventoryRecordRepository.findById("1").get().getReservedBooks()).isZero();
+
+        var entity = inventoryRecordRepository.findById("1");
+        assertThat(entity.get().getBookCopies()).isEqualTo(1);
+        assertThat(entity.get().getRentedBooks()).isEqualTo(1);
+        assertThat(entity.get().getReservedBooks()).isZero();
     }
 }
