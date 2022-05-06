@@ -1,31 +1,29 @@
 package com.productdock.library.inventory.producer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.book.BookAvailabilityMessage;
-import com.productdock.library.inventory.record.RentalRecord;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.ExecutionException;
+
 @Component
 public class Publisher {
 
-    private final KafkaTemplate kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private final RecordProducer recordProducer;
 
     @Value("${spring.kafka.topic.book-availability}")
-    private String KAFKA_TOPIC;
+    private String kafkaTopic;
 
-    public Publisher(KafkaTemplate kafkaTemplate, RecordProducer recordProducer) {
+    public Publisher(KafkaTemplate<String, String> kafkaTemplate, RecordProducer recordProducer) {
         this.kafkaTemplate = kafkaTemplate;
         this.recordProducer = recordProducer;
     }
 
-    public void sendMessage(BookAvailabilityMessage bookAvailabilityMessage) {
-        try {
-            var kafkaRecord = recordProducer.createKafkaRecord(KAFKA_TOPIC, bookAvailabilityMessage);
-            var resp = kafkaTemplate.send(kafkaRecord).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void sendMessage(BookAvailabilityMessage bookAvailabilityMessage) throws ExecutionException, InterruptedException, JsonProcessingException {
+        var kafkaRecord = recordProducer.createKafkaRecord(kafkaTopic, bookAvailabilityMessage);
+        kafkaTemplate.send(kafkaRecord).get();
     }
 }

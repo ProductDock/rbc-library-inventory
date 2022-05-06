@@ -1,7 +1,12 @@
 package com.productdock.library.inventory.data.provider;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.productdock.library.inventory.book.BookAvailabilityMessage;
 import com.productdock.library.inventory.record.RentalRecord;
 import com.productdock.library.inventory.record.RentalRecordDeserializer;
+import com.productdock.library.inventory.record.RentalRecordMapper;
+import com.productdock.library.inventory.record.RentalRecordMessage;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +23,16 @@ public class KafkaTestConsumer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaTestConsumer.class);
 
-    @Autowired
-    private RentalRecordDeserializer rentalRecordDeserializer;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @KafkaListener(topics = "${spring.kafka.topic.rental-record-warning-topic}")
-    public void receive(ConsumerRecord<String, String> consumerRecord) {
+    @KafkaListener(topics = "${spring.kafka.topic.book-availability}")
+    public void receive(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
         LOGGER.info("received payload='{}'", consumerRecord.toString());
-        var rentalRecord = rentalRecordDeserializer.deserializeRentalRecord(consumerRecord);
-        writeRecordToFile(rentalRecord);
+        var bookAvailabilityMessage = objectMapper.readValue(consumerRecord.value(), BookAvailabilityMessage.class);
+        writeRecordToFile(bookAvailabilityMessage);
     }
 
-    private void writeRecordToFile(RentalRecord rentalRecord) {
+    private void writeRecordToFile(BookAvailabilityMessage rentalRecord) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("testRecord.txt");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);

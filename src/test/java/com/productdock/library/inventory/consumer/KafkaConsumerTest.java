@@ -12,12 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 
-import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecordBuilder;
+import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SpringBootTest
-public class KafkaConsumerTest extends KafkaTestBase {
+class KafkaConsumerTest extends KafkaTestBase {
 
     @Autowired
     private KafkaTestProducer producer;
@@ -25,7 +25,7 @@ public class KafkaConsumerTest extends KafkaTestBase {
     @Autowired
     private BookRepository bookRepository;
 
-    @Value("${spring.kafka.topic.rental-record-topic}")
+    @Value("${spring.kafka.topic.rental-record}")
     private String topic;
 
     @BeforeEach
@@ -35,14 +35,14 @@ public class KafkaConsumerTest extends KafkaTestBase {
 
     @Test
     void shouldSaveBook_whenMessageReceived() {
-        var rentalRecord = defaultRentalRecordBuilder().build();
+        var rentalRecord = defaultRentalRecordMessage();
         System.out.println(rentalRecord.toString());
         producer.send(topic, rentalRecord);
         await()
                 .atMost(Duration.ofSeconds(20))
                 .until(() -> bookRepository.findById("1").isPresent());
-        assertThat(bookRepository.findById("1").get().getBookCopies()).isNotNull();
-        assertThat(bookRepository.findById("1").get().getRentedBooks()).isNotNull();
-        assertThat(bookRepository.findById("1").get().getReservedBooks()).isNotNull();
+        assertThat(bookRepository.findById("1").get().getBookCopies()).isEqualTo(1);
+        assertThat(bookRepository.findById("1").get().getRentedBooks()).isEqualTo(1);
+        assertThat(bookRepository.findById("1").get().getReservedBooks()).isZero();
     }
 }

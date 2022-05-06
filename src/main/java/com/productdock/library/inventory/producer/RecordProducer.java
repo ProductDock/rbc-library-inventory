@@ -13,7 +13,7 @@ public class RecordProducer {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public ProducerRecord createKafkaRecord(String topic, BookAvailabilityMessage bookAvailabilityMessage) throws JsonProcessingException {
+    public ProducerRecord<String, String> createKafkaRecord(String topic, BookAvailabilityMessage bookAvailabilityMessage) throws JsonProcessingException {
         var serialisedMessage = serialiseMessage(bookAvailabilityMessage);
         return new ProducerRecord<>(topic, UUID.randomUUID().toString(), serialisedMessage);
     }

@@ -7,6 +7,6 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface RentalRecordMapper {
 
-    @Mapping(target = "bookCopies", source = "source.rentalRecords")
+    @Mapping(target = "rentalRecords", source = "source.rentalRecords")
     RentalRecord toDomain(RentalRecordMessage source);
 }

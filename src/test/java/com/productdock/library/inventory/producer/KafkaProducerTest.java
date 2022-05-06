@@ -1,5 +1,6 @@
 package com.productdock.library.inventory.producer;
 
+import com.productdock.library.inventory.book.BookAvailabilityMessage;
 import com.productdock.library.inventory.book.BookRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.record.RentalRecord;
@@ -15,15 +16,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.Duration;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
-import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecord;
+import static com.productdock.library.inventory.data.provider.BookMother.defaultBookAvailabilityMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SpringBootTest
-public class KafkaProducerTest extends KafkaTestBase {
+class KafkaProducerTest extends KafkaTestBase {
 
     public static final String FIRST_BOOK = "1";
+    public static final int AVAILABLE_BOOK_COUNT = 1;
     public static final String TEST_FILE = "testRecord.txt";
 
     @Autowired
@@ -34,25 +37,21 @@ public class KafkaProducerTest extends KafkaTestBase {
 
     @BeforeEach
     final void before() {
+        File f = new File(TEST_FILE);
+        f.delete();
         bookRepository.deleteAll();
     }
 
-    @AfterEach
-    final void after() {
-        File f = new File(TEST_FILE);
-        f.delete();
-    }
-
     @Test
-    void shouldSendMessage_whenWarningTriggered() throws IOException, ClassNotFoundException {
-        publisher.sendMessage(defaultRentalRecord());
+    void shouldSendMessage() throws IOException, ClassNotFoundException, ExecutionException, InterruptedException {
+        publisher.sendMessage(defaultBookAvailabilityMessage());
         Callable<Boolean> checkForFile = ifFileExists(TEST_FILE);
         await()
-                .atMost(Duration.ofSeconds(20))
+                .atMost(Duration.ofSeconds(5))
                 .until(checkForFile);
-        RentalRecord rentalRecord = getRentalRecordFromConsumersFile(TEST_FILE);
-        assertThat(rentalRecord.getBookId().equals(FIRST_BOOK));
-        assertThat(rentalRecord.getRents()).isNotNull();
+        BookAvailabilityMessage bookAvailabilityMessage = getAvailableBookCountFromConsumersFile(TEST_FILE);
+        assertThat(bookAvailabilityMessage.getBookId()).isEqualTo(FIRST_BOOK);
+        assertThat(bookAvailabilityMessage.getAvailableBookCount()).isEqualTo(AVAILABLE_BOOK_COUNT);
     }
 
     private Callable<Boolean> ifFileExists(String testFile) {
@@ -66,11 +65,11 @@ public class KafkaProducerTest extends KafkaTestBase {
         return checkForFile;
     }
 
-    private RentalRecord getRentalRecordFromConsumersFile(String testFile) throws IOException, ClassNotFoundException {
+    private BookAvailabilityMessage getAvailableBookCountFromConsumersFile(String testFile) throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(testFile);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        var rentalRecord = (RentalRecord) objectInputStream.readObject();
+        var bookAvailabilityMessage = (BookAvailabilityMessage) objectInputStream.readObject();
         objectInputStream.close();
-        return rentalRecord;
+        return bookAvailabilityMessage;
     }
 }
