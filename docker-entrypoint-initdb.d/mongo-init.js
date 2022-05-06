@@ -1,0 +1,11 @@
+db.createUser(
+    {
+        user: "root",
+        pwd: "root",
+        roles:[
+        {
+            role :"readWrite",
+            db: "inventory-db"
+        }]
+    }
+);
