@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public record RecordConsumer(BookService bookService, RentalRecordDeserializer rentalRecordDeserializer, RentalRecordMapper rentalRecordMapper) {
 
-    @KafkaListener(topics = "${spring.kafka.topic.rental-record}")
+    @KafkaListener(topics = "${spring.kafka.topic.book-status}")
     public synchronized void listen(ConsumerRecord<String, String> rentalRecord) throws Exception {
         var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(rentalRecord);
         bookService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
