@@ -15,7 +15,7 @@ public record BookService(BookRepository bookRepository, Publisher publisher, Bo
         if (optionalBook.isPresent()) {
             var bookEntity = optionalBook.get();
             Book book = bookMapper.toDomain(bookEntity);
-            book.processRentalRecords(rentalRecord);
+            book.updateStateWith(rentalRecord);
             bookRepository.save(bookMapper.toEntity(book));
             publisher.sendMessage(BookAvailabilityMessage.builder().bookId(book.getBookId()).availableBookCount(book.getAvailableBooksCount()).build());
         }

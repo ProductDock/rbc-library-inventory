@@ -20,7 +20,7 @@ public class Book {
         return bookCopies - (rentedBooks + reservedBooks);
     }
 
-    public void processRentalRecords(RentalRecord rentalRecord) {
+    public void updateStateWith(RentalRecord rentalRecord) {
         setRentedBooks(rentalRecord.getRentsCount());
         setReservedBooks(rentalRecord.getReservationsCount());
     }
