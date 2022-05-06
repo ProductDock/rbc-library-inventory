@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class Book {
+public class Inventory {
     private String bookId;
     private int bookCopies;
     private int reservedBooks;

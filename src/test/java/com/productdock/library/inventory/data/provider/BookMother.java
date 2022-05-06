@@ -1,14 +1,8 @@
 package com.productdock.library.inventory.data.provider;
 
 import com.productdock.library.inventory.book.BookAvailabilityMessage;
-import com.productdock.library.inventory.book.BookEntity;
-import com.productdock.library.inventory.domain.Book;
-import com.productdock.library.inventory.record.RentalRecordMessage;
-import com.productdock.library.inventory.record.RentalStatus;
-
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import com.productdock.library.inventory.book.InventoryRecordEntity;
+import com.productdock.library.inventory.domain.Inventory;
 
 public class BookMother {
 
@@ -18,24 +12,24 @@ public class BookMother {
     private static final int defaultReservedBooks = 0;
     private static final int availableBookCount = 1;
 
-    public static BookEntity defaultBookEntity() {
+    public static InventoryRecordEntity defaultInventoryRecordEntity() {
         return defaultBookEntityBuilder().build();
     }
 
-    public static BookEntity.BookEntityBuilder defaultBookEntityBuilder() {
-        return BookEntity.builder()
+    public static InventoryRecordEntity.InventoryRecordEntityBuilder defaultBookEntityBuilder() {
+        return InventoryRecordEntity.builder()
                 .bookId(defaultBookId)
                 .bookCopies(defaultBookCopies)
                 .rentedBooks(defaultRentedBooks)
                 .reservedBooks(defaultReservedBooks);
     }
 
-    public static Book defaultBook() {
-        return defaultBookBuilder().build();
+    public static Inventory defaultInventory() {
+        return defaultInventoryBuilder().build();
     }
 
-    public static Book.BookBuilder defaultBookBuilder() {
-        return Book.builder()
+    public static Inventory.InventoryBuilder defaultInventoryBuilder() {
+        return Inventory.builder()
                 .bookId(defaultBookId)
                 .bookCopies(defaultBookCopies)
                 .rentedBooks(defaultRentedBooks)

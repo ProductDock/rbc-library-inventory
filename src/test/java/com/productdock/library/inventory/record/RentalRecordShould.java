@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.productdock.library.inventory.data.provider.BookMother.defaultBook;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecord;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecordBuilder;
 import static org.assertj.core.api.Assertions.assertThat;

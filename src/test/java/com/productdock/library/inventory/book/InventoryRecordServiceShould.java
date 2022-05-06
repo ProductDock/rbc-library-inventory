@@ -1,6 +1,5 @@
 package com.productdock.library.inventory.book;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.producer.Publisher;
 import com.productdock.library.inventory.record.RentalRecordMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 import static com.productdock.library.inventory.data.provider.BookMother.*;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecord;
@@ -20,42 +18,42 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class BookServiceShould {
+class InventoryRecordServiceShould {
 
     @InjectMocks
-    private BookService bookService;
+    private InventoryRecordService inventoryRecordService;
 
     @Mock
-    private BookRepository bookRepository;
+    private InventoryRecordRepository inventoryRecordRepository;
 
     @Mock
     private Publisher publisher;
 
     @Mock
-    private BookMapper bookMapper;
+    private InventoryRecordMapper inventoryRecordMapper;
 
     @Mock
     private RentalRecordMapper rentalRecordMapper;
 
     @BeforeEach
     final void before() {
-        bookRepository.deleteAll();
+        inventoryRecordRepository.deleteAll();
     }
 
     @Test
     void updateBookState_whenBookExists() throws Exception {
         var rentalRecordMessage = defaultRentalRecordMessage();
-        var bookEntity = Optional.of(defaultBookEntity());
-        var book = defaultBook();
+        var bookEntity = Optional.of(defaultInventoryRecordEntity());
+        var inventory = defaultInventory();
         var rentalRecord = defaultRentalRecord();
-        given(bookRepository.findById(rentalRecordMessage.getBookId())).willReturn(bookEntity);
+        given(inventoryRecordRepository.findById(rentalRecordMessage.getBookId())).willReturn(bookEntity);
         given(rentalRecordMapper.toDomain(rentalRecordMessage)).willReturn(rentalRecord);
-        given(bookMapper.toDomain(bookEntity.get())).willReturn(book);
-        given(bookMapper.toEntity(book)).willReturn(bookEntity.get());
+        given(inventoryRecordMapper.toDomain(bookEntity.get())).willReturn(inventory);
+        given(inventoryRecordMapper.toEntity(inventory)).willReturn(bookEntity.get());
 
-        bookService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
+        inventoryRecordService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
 
-        verify(bookRepository).save(bookEntity.get());
+        verify(inventoryRecordRepository).save(bookEntity.get());
     }
 
     @Test
@@ -63,11 +61,11 @@ class BookServiceShould {
         var rentalRecordMessage = defaultRentalRecordMessage();
         var bookEntity = Optional.of(defaultBookEntityBuilder().rentedBooks(1).build());
         var rentalRecord = defaultRentalRecord();
-        given(bookRepository.findById(rentalRecordMessage.getBookId())).willReturn(Optional.empty());
+        given(inventoryRecordRepository.findById(rentalRecordMessage.getBookId())).willReturn(Optional.empty());
         given(rentalRecordMapper.toDomain(rentalRecordMessage)).willReturn(rentalRecord);
 
-        bookService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
+        inventoryRecordService.updateBookState(rentalRecordMapper.toDomain(rentalRecordMessage));
 
-        verify(bookRepository).save(bookEntity.get());
+        verify(inventoryRecordRepository).save(bookEntity.get());
     }
 }

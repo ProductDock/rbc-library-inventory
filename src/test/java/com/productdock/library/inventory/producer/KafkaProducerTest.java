@@ -1,9 +1,8 @@
 package com.productdock.library.inventory.producer;
 
 import com.productdock.library.inventory.book.BookAvailabilityMessage;
-import com.productdock.library.inventory.book.BookRepository;
+import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
-import com.productdock.library.inventory.record.RentalRecord;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ class KafkaProducerTest extends KafkaTestBase {
     private Publisher publisher;
 
     @Autowired
-    private BookRepository bookRepository;
+    private InventoryRecordRepository inventoryRecordRepository;
 
     @BeforeEach
     final void before() {

@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @AllArgsConstructor
 @Builder
-public class BookEntity {
+public class InventoryRecordEntity {
 
     @Id
     private String bookId;

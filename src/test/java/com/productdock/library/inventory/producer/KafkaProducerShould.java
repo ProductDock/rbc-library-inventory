@@ -3,8 +3,6 @@ package com.productdock.library.inventory.producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.productdock.library.inventory.book.BookAvailabilityMessage;
-import com.productdock.library.inventory.domain.Book;
-import com.productdock.library.inventory.record.RentalRecord;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,7 +1,7 @@
 package com.productdock.library.inventory.consumer;
 
 
-import com.productdock.library.inventory.book.BookRepository;
+import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,14 +23,14 @@ class KafkaConsumerTest extends KafkaTestBase {
     private KafkaTestProducer producer;
 
     @Autowired
-    private BookRepository bookRepository;
+    private InventoryRecordRepository inventoryRecordRepository;
 
-    @Value("${spring.kafka.topic.rental-record}")
+    @Value("${spring.kafka.topic.book-status}")
     private String topic;
 
     @BeforeEach
     final void before() {
-        bookRepository.deleteAll();
+        inventoryRecordRepository.deleteAll();
     }
 
     @Test
@@ -40,9 +40,9 @@ class KafkaConsumerTest extends KafkaTestBase {
         producer.send(topic, rentalRecord);
         await()
                 .atMost(Duration.ofSeconds(20))
-                .until(() -> bookRepository.findById("1").isPresent());
-        assertThat(bookRepository.findById("1").get().getBookCopies()).isEqualTo(1);
-        assertThat(bookRepository.findById("1").get().getRentedBooks()).isEqualTo(1);
-        assertThat(bookRepository.findById("1").get().getReservedBooks()).isZero();
+                .until(() -> inventoryRecordRepository.findById("1").isPresent());
+        assertThat(inventoryRecordRepository.findById("1").get().getBookCopies()).isEqualTo(1);
+        assertThat(inventoryRecordRepository.findById("1").get().getRentedBooks()).isEqualTo(1);
+        assertThat(inventoryRecordRepository.findById("1").get().getReservedBooks()).isZero();
     }
 }

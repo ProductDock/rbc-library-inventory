@@ -1,7 +1,6 @@
 package com.productdock.library.inventory.record;
 
 import com.productdock.library.inventory.book.BookInteraction;
-import com.productdock.library.inventory.book.BookMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static com.productdock.library.inventory.data.provider.BookMother.defaultBook;
-import static com.productdock.library.inventory.data.provider.BookMother.defaultBookEntity;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 

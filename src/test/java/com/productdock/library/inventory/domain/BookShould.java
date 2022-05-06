@@ -4,31 +4,30 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.productdock.library.inventory.data.provider.BookMother.defaultBook;
+import static com.productdock.library.inventory.data.provider.BookMother.defaultInventory;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class BookShould {
 
     @Test
     void getAvailableBookCount() {
-        var book = defaultBook();
+        var inventory = defaultInventory();
 
-        int availableBookCount = book.getAvailableBooksCount();
+        int availableBookCount = inventory.getAvailableBooksCount();
 
         assertThat(availableBookCount).isEqualTo(1);
     }
 
     @Test
     void processRentalRecords() {
-        var book = defaultBook();
+        var inventory = defaultInventory();
         var rentalRecord = defaultRentalRecord();
 
-        book.updateStateWith(rentalRecord);
+        inventory.updateStateWith(rentalRecord);
 
-        assertThat(book.getAvailableBooksCount()).isZero();
-        assertThat(book.getRentedBooks()).isEqualTo(1);
+        assertThat(inventory.getAvailableBooksCount()).isZero();
+        assertThat(inventory.getRentedBooks()).isEqualTo(1);
     }
 }
