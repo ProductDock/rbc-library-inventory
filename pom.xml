@@ -9,13 +9,16 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.productdock</groupId>
-	<artifactId>rbc-library-rental</artifactId>
+	<artifactId>rbc-library-inventory</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rbc-library-rental</name>
-	<description>Rental service for rbc library</description>
+	<name>rbc-library-inventory</name>
+	<description>Inventory service for rbc library</description>
 	<properties>
 		<java.version>17</java.version>
 		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<sonar.organization>productdock</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.projectKey>ProductDock_rbc-library-inventory</sonar.projectKey>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -93,6 +96,40 @@
 			<version>${mapstruct.version}</version>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>coverage</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.8.7</version>
+						<executions>
+							<execution>
+								<id>prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<goals>
+									<goal>report</goal>
+								</goals>
+								<configuration>
+									<formats>
+										<format>XML</format>
+									</formats>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<build>
 		<plugins>
