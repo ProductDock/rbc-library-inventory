@@ -24,7 +24,7 @@ class BookMapperShould {
 
         var bookEntity = bookMapper.toEntity(book);
 
-        assertThat(book.getBookId()).isEqualTo(bookEntity.getBookId());
+        assertThat(bookEntity.getBookId()).isEqualTo(book.getBookId());
     }
 
     @Test
@@ -33,6 +33,6 @@ class BookMapperShould {
 
         var book = bookMapper.toDomain(bookEntity);
 
-        assertThat(book.getBookId()).isEqualTo(bookEntity.getBookId());
+        assertThat(bookEntity.getBookId()).isEqualTo(book.getBookId());
     }
 }

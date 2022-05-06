@@ -16,13 +16,9 @@ public class KafkaTestProducer {
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void send(String topic, RentalRecordMessage rentalRecordMessage) {
+    public void send(String topic, RentalRecordMessage rentalRecordMessage) throws JsonProcessingException {
         String message = "";
-        try {
-            message = OBJECT_MAPPER.writeValueAsString(rentalRecordMessage);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        message = OBJECT_MAPPER.writeValueAsString(rentalRecordMessage);
         kafkaTemplate.send(topic, message);
     }
 }

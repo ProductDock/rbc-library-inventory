@@ -39,23 +39,29 @@ class KafkaProducerTest extends KafkaTestBase {
     final void before() {
         File f = new File(TEST_FILE);
         f.delete();
-        bookRepository.deleteAll();
+    }
+
+    @AfterEach
+    final void after() {
+        File f = new File(TEST_FILE);
+        f.delete();
     }
 
     @Test
     void shouldSendMessage() throws IOException, ClassNotFoundException, ExecutionException, InterruptedException {
         publisher.sendMessage(defaultBookAvailabilityMessage());
-        Callable<Boolean> checkForFile = ifFileExists(TEST_FILE);
         await()
                 .atMost(Duration.ofSeconds(5))
-                .until(checkForFile);
-        BookAvailabilityMessage bookAvailabilityMessage = getAvailableBookCountFromConsumersFile(TEST_FILE);
+                .until(ifFileExists(TEST_FILE));
+
+        var bookAvailabilityMessage = getAvailableBookCountFromConsumersFile(TEST_FILE);
+
         assertThat(bookAvailabilityMessage.getBookId()).isEqualTo(FIRST_BOOK);
         assertThat(bookAvailabilityMessage.getAvailableBookCount()).isEqualTo(AVAILABLE_BOOK_COUNT);
     }
 
     private Callable<Boolean> ifFileExists(String testFile) {
-        Callable<Boolean> checkForFile = new Callable<Boolean>() {
+        var checkForFile = new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
                 File f = new File(testFile);

@@ -34,7 +34,7 @@ class KafkaConsumerTest extends KafkaTestBase {
     }
 
     @Test
-    void shouldSaveBook_whenMessageReceived() {
+    void shouldSaveBook_whenMessageReceived() throws Exception{
         var rentalRecord = defaultRentalRecordMessage();
         System.out.println(rentalRecord.toString());
         producer.send(topic, rentalRecord);
