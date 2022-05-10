@@ -26,4 +26,4 @@ spring:
       password: ${mongodb.password:root}
       database: inventory-db
 server:
-  port: 8081
+  port: 8084

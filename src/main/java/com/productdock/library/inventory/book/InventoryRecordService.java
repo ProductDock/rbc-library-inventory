@@ -11,14 +11,24 @@ import org.springframework.stereotype.Service;
 public record InventoryRecordService(InventoryRecordRepository inventoryRecordRepository, Publisher publisher, InventoryRecordMapper inventoryRecordMapper) {
 
     public void updateBookState(RentalRecord rentalRecord) throws Exception {
-        var optionalBook = inventoryRecordRepository.findById(rentalRecord.getBookId());
+        Inventory book = getInventoryFrom(rentalRecord.getBookId());
+        book.updateStateWith(rentalRecord);
+        inventoryRecordRepository.save(inventoryRecordMapper.toEntity(book));
+        publisher.sendMessage(new BookAvailabilityMessage(book.getBookId(), book.getAvailableBooksCount()));
+    }
+
+    private Inventory getInventoryFrom(String bookId) {
+        var optionalBook = inventoryRecordRepository.findById(bookId);
         if (optionalBook.isEmpty()) {
             throw new InventoryException("Book does not exist in inventory!");
         }
         var bookEntity = optionalBook.get();
         Inventory book = inventoryRecordMapper.toDomain(bookEntity);
-        book.updateStateWith(rentalRecord);
-        inventoryRecordRepository.save(inventoryRecordMapper.toEntity(book));
-        publisher.sendMessage(new BookAvailabilityMessage(book.getBookId(), book.getAvailableBooksCount()));
+        return book;
+    }
+
+    public int getAvailableBooksCount(String bookId){
+        Inventory book = getInventoryFrom(bookId);
+        return book.getAvailableBooksCount();
     }
 }
