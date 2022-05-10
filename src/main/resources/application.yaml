@@ -22,8 +22,8 @@ spring:
       authentication-database: inventory-db
       host: ${mongodb.host:localhost}
       port: ${mongodb.port:28017}
-      username: ${mongodb.user:root}
-      password: ${mongodb.password:root}
+      username: ${mongodb.user:root1}
+      password: ${mongodb.password:root1}
       database: inventory-db
 server:
   port: 8084
