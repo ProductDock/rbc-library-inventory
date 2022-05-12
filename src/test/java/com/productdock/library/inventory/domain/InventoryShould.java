@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.productdock.library.inventory.data.provider.InventoryMother.defaultInventory;
-import static com.productdock.library.inventory.data.provider.RentalRecordMother.*;
+import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecord;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)

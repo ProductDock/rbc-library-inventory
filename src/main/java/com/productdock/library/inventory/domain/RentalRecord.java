@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,17 +20,17 @@ public class RentalRecord implements Serializable {
     private int rentsCount;
     private int reservationsCount;
 
-    public RentalRecord(String bookId, List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests){
+    public RentalRecord(String bookId, List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests) {
         this.bookId = bookId;
         setRentsCountFrom(rentalRecordRequests);
         setReservationsCountFrom(rentalRecordRequests);
     }
 
-    private void setRentsCountFrom(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests){
+    private void setRentsCountFrom(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests) {
         rentsCount = getCountByStatus(rentalRecordRequests, RentalStatus.RENTED);
     }
 
-    private void setReservationsCountFrom(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests){
+    private void setReservationsCountFrom(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests) {
         reservationsCount = getCountByStatus(rentalRecordRequests, RentalStatus.RESERVED);
     }
 

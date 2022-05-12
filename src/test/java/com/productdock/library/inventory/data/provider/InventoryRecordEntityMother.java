@@ -1,7 +1,6 @@
 package com.productdock.library.inventory.data.provider;
 
 import com.productdock.library.inventory.book.InventoryRecordEntity;
-import com.productdock.library.inventory.domain.Inventory;
 
 public class InventoryRecordEntityMother {
 

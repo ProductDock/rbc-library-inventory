@@ -1,7 +1,6 @@
 package com.productdock.library.inventory.book;
 
 import com.productdock.library.inventory.domain.Inventory;
-import com.productdock.library.inventory.domain.RentalRecord;
 import com.productdock.library.inventory.exception.InventoryException;
 import com.productdock.library.inventory.producer.Publisher;
 import org.junit.jupiter.api.Test;
@@ -12,10 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.productdock.library.inventory.data.provider.InventoryMother.*;
-import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultBookEntityBuilder;
-import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultInventoryRecordEntity;
-import static com.productdock.library.inventory.data.provider.RentalRecordMessageMother.defaultRentalRecordMessage;
 import static com.productdock.library.inventory.data.provider.RentalRecordMother.defaultRentalRecord;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -42,7 +37,7 @@ class InventoryRecordServiceShould {
     void updateBookState_whenBookExists() throws Exception {
         var bookEntity = Optional.of(mock(InventoryRecordEntity.class));
         var rentalRecord = defaultRentalRecord();
-        given(inventoryRecordRepository.findById(rentalRecord.getBookId())).willReturn(bookEntity);
+        given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(bookEntity);
         var inventory = mock(Inventory.class);
         given(inventoryRecordMapper.toDomain(bookEntity.get())).willReturn(inventory);
         given(inventoryRecordMapper.toEntity(inventory)).willReturn(bookEntity.get());
@@ -57,7 +52,7 @@ class InventoryRecordServiceShould {
     @Test
     void throwException_whenBookDoesNotExist() throws Exception {
         var rentalRecord = defaultRentalRecord();
-        given(inventoryRecordRepository.findById(rentalRecord.getBookId())).willReturn(Optional.empty());
+        given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.empty());
 
         assertThatThrownBy(() -> inventoryRecordService.updateBookState(rentalRecord))
                 .isInstanceOf(InventoryException.class);

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static com.productdock.library.inventory.data.provider.InventoryMother.*;
+import static com.productdock.library.inventory.data.provider.InventoryMother.defaultInventory;
 import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultInventoryRecordEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 

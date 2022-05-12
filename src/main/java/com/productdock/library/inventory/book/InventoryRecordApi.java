@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public record InventoryRecordApi(InventoryRecordService inventoryRecordService) {
 
     @GetMapping("/{bookId}")
-    public int getAvailableBooksCount(@PathVariable("bookId") String bookId){
+    public int getAvailableBooksCount(@PathVariable("bookId") String bookId) {
         return inventoryRecordService.getAvailableBooksCount(bookId);
     }
 }

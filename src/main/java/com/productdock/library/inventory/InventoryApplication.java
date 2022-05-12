@@ -13,8 +13,8 @@ import org.springframework.kafka.annotation.EnableKafka;
 @EnableMongoRepositories
 public class InventoryApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(InventoryApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(InventoryApplication.class, args);
+    }
 
 }
