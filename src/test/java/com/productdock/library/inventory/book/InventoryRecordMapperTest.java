@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {InventoryRecordMapperImpl.class})
-class InventoryRecordMapperShould {
+class InventoryRecordMapperTest {
 
     @Autowired
     private InventoryRecordMapper inventoryRecordMapper;

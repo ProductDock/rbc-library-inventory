@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-class KafkaProducerShould {
+class KafkaProducerUnitTest {
 
     @InjectMocks
     private RecordProducer recordProducer;

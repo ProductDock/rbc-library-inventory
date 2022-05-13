@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static com.productdock.library.inventory.data.provider.RentalRecordMessageMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RentalRecordMapperShould {
+class RentalRecordMapperTest {
 
     RentalRecordMapper rentalRecordMapper = new RentalRecordMapper();
 

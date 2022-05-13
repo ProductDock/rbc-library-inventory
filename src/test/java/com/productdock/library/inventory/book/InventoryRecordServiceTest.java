@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class InventoryRecordServiceShould {
+class InventoryRecordServiceTest {
 
     @InjectMocks
     private InventoryRecordService inventoryRecordService;
