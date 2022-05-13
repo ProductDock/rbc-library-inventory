@@ -45,6 +45,7 @@ class KafkaConsumerTest extends KafkaTestBase {
         givenInventoryRecordEntity();
         var rentalRecord = defaultRentalRecordMessage();
 
+        System.out.println(inventoryRecordRepository.findByBookId("1"));
         producer.send(topic, rentalRecord);
         await()
                 .atMost(Duration.ofSeconds(20))
