@@ -9,7 +9,7 @@ import static com.productdock.library.inventory.data.provider.RentalRecordMother
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-class InventoryShould {
+class InventoryTest {
 
     @Test
     void getAvailableBookCount() {
