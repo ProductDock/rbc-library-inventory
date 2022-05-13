@@ -6,10 +6,7 @@ import com.productdock.library.inventory.book.InventoryRecordService;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
 import org.junit.Ignore;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,7 +36,7 @@ class KafkaConsumerTest extends KafkaTestBase {
     }
 
     @Test
-    @Ignore
+    @Disabled
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
         givenInventoryRecordEntity();
         var rentalRecord = defaultRentalRecordMessage();
