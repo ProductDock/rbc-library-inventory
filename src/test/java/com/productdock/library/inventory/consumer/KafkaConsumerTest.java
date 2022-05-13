@@ -41,7 +41,7 @@ class KafkaConsumerTest extends KafkaTestBase {
 
         producer.send(topic, rentalRecord);
         await()
-                .atMost(Duration.ofSeconds(10))
+                .atMost(Duration.ofSeconds(20))
                 .until(() -> inventoryRecordRepository.findByBookId("1").get().getRentedBooks() != 0);
 
         var entity = inventoryRecordRepository.findByBookId("1");
