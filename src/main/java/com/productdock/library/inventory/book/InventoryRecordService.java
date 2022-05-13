@@ -15,6 +15,7 @@ public record InventoryRecordService(InventoryRecordRepository inventoryRecordRe
     @SneakyThrows
     public void updateBookState(RentalRecord rentalRecord) {
         System.out.println(rentalRecord);
+        System.out.println(inventoryRecordRepository.findByBookId(rentalRecord.getBookId()));
         var book = getInventoryFrom(rentalRecord.getBookId());
         book.updateStateWith(rentalRecord);
         saveInventoryRecord(book);
