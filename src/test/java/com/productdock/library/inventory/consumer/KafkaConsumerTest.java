@@ -1,11 +1,9 @@
 package com.productdock.library.inventory.consumer;
 
 
-import com.productdock.library.inventory.book.InventoryRecordEntity;
 import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
-import com.productdock.library.inventory.record.RentalRecordDeserializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +25,6 @@ class KafkaConsumerTest extends KafkaTestBase {
 
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
-
-    @Autowired
-    private RentalRecordDeserializer rentalRecordDeserializer;
 
     @Value("${spring.kafka.topic.book-status}")
     private String topic;

@@ -11,7 +11,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       enable-auto-commit: true
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
       group-id: ${consumer.group:group}
     topic:
       book-status: book-status
