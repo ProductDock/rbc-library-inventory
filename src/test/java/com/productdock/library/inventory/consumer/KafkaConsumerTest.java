@@ -5,6 +5,7 @@ import com.productdock.library.inventory.book.InventoryRecordEntity;
 import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
+import com.productdock.library.inventory.record.RentalRecordDeserializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import static com.productdock.library.inventory.data.provider.RentalRecordMessag
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 class KafkaConsumerTest extends KafkaTestBase {
 
     @Autowired
@@ -26,6 +27,9 @@ class KafkaConsumerTest extends KafkaTestBase {
 
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
+
+    @Autowired
+    private RentalRecordDeserializer rentalRecordDeserializer;
 
     @Value("${spring.kafka.topic.book-status}")
     private String topic;
@@ -38,7 +42,6 @@ class KafkaConsumerTest extends KafkaTestBase {
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
         givenInventoryRecordEntity();
-        System.out.println(inventoryRecordRepository.findByBookId("1").get());
         var rentalRecord = defaultRentalRecordMessage();
 
         producer.send(topic, rentalRecord);
