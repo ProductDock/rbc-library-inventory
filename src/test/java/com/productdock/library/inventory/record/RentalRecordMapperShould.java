@@ -2,7 +2,6 @@ package com.productdock.library.inventory.record;
 
 import org.junit.jupiter.api.Test;
 
-
 import static com.productdock.library.inventory.data.provider.RentalRecordMessageMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 

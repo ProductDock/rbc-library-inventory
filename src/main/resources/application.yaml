@@ -11,7 +11,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       enable-auto-commit: true
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
       group-id: ${consumer.group:group}
     topic:
       book-status: book-status
@@ -22,8 +22,8 @@ spring:
       authentication-database: inventory-db
       host: ${mongodb.host:localhost}
       port: ${mongodb.port:28017}
-      username: ${mongodb.user:root}
-      password: ${mongodb.password:root}
+      username: ${mongodb.user:root1}
+      password: ${mongodb.password:root1}
       database: inventory-db
 server:
-  port: 8081
+  port: 8084

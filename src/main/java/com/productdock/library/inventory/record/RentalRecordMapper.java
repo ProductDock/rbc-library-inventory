@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RentalRecordMapper {
 
-    public RentalRecord toDomain(RentalRecordMessage source){
+    public RentalRecord toDomain(RentalRecordMessage source) {
         return new RentalRecord(source.getBookId(), source.getRentalRecords());
     }
 

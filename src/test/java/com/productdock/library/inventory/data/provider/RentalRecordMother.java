@@ -1,13 +1,6 @@
 package com.productdock.library.inventory.data.provider;
 
 import com.productdock.library.inventory.domain.RentalRecord;
-import com.productdock.library.inventory.record.RentalRecordMessage;
-import com.productdock.library.inventory.record.RentalStatus;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import java.util.List;
 
 public class RentalRecordMother {
 

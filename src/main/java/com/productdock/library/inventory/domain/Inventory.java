@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class Inventory {
+
     private String bookId;
     private int bookCopies;
     private int reservedBooks;
     private int rentedBooks;
 
-    public int getAvailableBooksCount(){
+    public int getAvailableBooksCount() {
         return bookCopies - (rentedBooks + reservedBooks);
     }
 

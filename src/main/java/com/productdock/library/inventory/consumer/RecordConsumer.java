@@ -1,5 +1,6 @@
 package com.productdock.library.inventory.consumer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.book.InventoryRecordService;
 import com.productdock.library.inventory.record.RentalRecordDeserializer;
 import com.productdock.library.inventory.record.RentalRecordMapper;
@@ -8,10 +9,11 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public record RecordConsumer(InventoryRecordService inventoryRecordService, RentalRecordDeserializer rentalRecordDeserializer, RentalRecordMapper rentalRecordMapper) {
+public record RecordConsumer(InventoryRecordService inventoryRecordService,
+                             RentalRecordDeserializer rentalRecordDeserializer, RentalRecordMapper rentalRecordMapper) {
 
     @KafkaListener(topics = "${spring.kafka.topic.book-status}")
-    public synchronized void listen(ConsumerRecord<String, String> message) throws Exception {
+    public synchronized void listen(ConsumerRecord<String, String> message) throws JsonProcessingException {
         var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(message);
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
         inventoryRecordService.updateBookState(rentalRecord);
