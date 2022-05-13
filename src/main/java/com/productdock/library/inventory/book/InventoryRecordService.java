@@ -4,6 +4,7 @@ import com.productdock.library.inventory.domain.Inventory;
 import com.productdock.library.inventory.domain.RentalRecord;
 import com.productdock.library.inventory.exception.InventoryException;
 import com.productdock.library.inventory.producer.Publisher;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Service;
 public record InventoryRecordService(InventoryRecordRepository inventoryRecordRepository, Publisher publisher,
                                      InventoryRecordMapper inventoryRecordMapper) {
 
-    public void updateBookState(RentalRecord rentalRecord) throws Exception {
+    @SneakyThrows
+    public void updateBookState(RentalRecord rentalRecord) {
         var book = getInventoryFrom(rentalRecord.getBookId());
         book.updateStateWith(rentalRecord);
         saveInventoryRecord(book);
