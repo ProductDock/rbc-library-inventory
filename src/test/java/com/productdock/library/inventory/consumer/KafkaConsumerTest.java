@@ -36,7 +36,7 @@ class KafkaConsumerTest extends KafkaTestBase {
     }
 
     @Test
-    @Disabled
+    @Disabled("Flaky test when running on Sonar")
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
         givenInventoryRecordEntity();
         var rentalRecord = defaultRentalRecordMessage();
