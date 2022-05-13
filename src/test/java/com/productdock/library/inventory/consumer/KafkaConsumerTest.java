@@ -32,11 +32,11 @@ class KafkaConsumerTest extends KafkaTestBase {
     @BeforeEach
     final void before() {
         inventoryRecordRepository.deleteAll();
+        inventoryRecordRepository.save(defaultInventoryRecordEntity());
     }
 
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
-        givenInventoryRecordEntity();
         var rentalRecord = defaultRentalRecordMessage();
 
         producer.send(topic, rentalRecord);
@@ -48,9 +48,5 @@ class KafkaConsumerTest extends KafkaTestBase {
         assertThat(entity.get().getBookCopies()).isEqualTo(3);
         assertThat(entity.get().getRentedBooks()).isEqualTo(1);
         assertThat(entity.get().getReservedBooks()).isZero();
-    }
-
-    private void givenInventoryRecordEntity() {
-        inventoryRecordRepository.save(defaultInventoryRecordEntity());
     }
 }
