@@ -14,9 +14,7 @@ public record RecordConsumer(InventoryRecordService inventoryRecordService,
     @KafkaListener(topics = "${spring.kafka.topic.book-status}")
     public synchronized void listen(ConsumerRecord<String, String> message) throws Exception {
         var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(message);
-        System.out.println(rentalRecordMessage);
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
-        System.out.println(rentalRecord);
         inventoryRecordService.updateBookState(rentalRecord);
     }
 }

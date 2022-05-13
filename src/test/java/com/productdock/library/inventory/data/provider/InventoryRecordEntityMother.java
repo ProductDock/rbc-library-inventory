@@ -4,6 +4,7 @@ import com.productdock.library.inventory.book.InventoryRecordEntity;
 
 public class InventoryRecordEntityMother {
 
+    private static final String defaultId = "1111111";
     private static final String defaultBookId = "1";
     private static final int defaultBookCopies = 3;
     private static final int defaultRentedBooks = 0;
