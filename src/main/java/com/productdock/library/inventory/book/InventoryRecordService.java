@@ -14,6 +14,7 @@ public record InventoryRecordService(InventoryRecordRepository inventoryRecordRe
 
     @SneakyThrows
     public void updateBookState(RentalRecord rentalRecord) {
+        System.out.println(inventoryRecordRepository.findAll());
         var book = getInventoryFrom(rentalRecord.getBookId());
         book.updateStateWith(rentalRecord);
         saveInventoryRecord(book);
@@ -22,8 +23,7 @@ public record InventoryRecordService(InventoryRecordRepository inventoryRecordRe
 
     private Inventory getInventoryFrom(String bookId) {
         var optionalBook = inventoryRecordRepository.findByBookId(bookId);
-        System.out.println(inventoryRecordRepository.findByBookId(bookId));
-        System.out.println(optionalBook);
+        System.out.println(inventoryRecordRepository.findAll());
         if (optionalBook.isEmpty()) {
             throw new InventoryException("Book does not exist in inventory!");
         }

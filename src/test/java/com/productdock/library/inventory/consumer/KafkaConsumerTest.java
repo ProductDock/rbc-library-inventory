@@ -4,7 +4,8 @@ package com.productdock.library.inventory.consumer;
 import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +30,8 @@ class KafkaConsumerTest extends KafkaTestBase {
     @Value("${spring.kafka.topic.book-status}")
     private String topic;
 
-    @BeforeEach
-    final void before() {
+    @AfterEach
+    void after() {
         inventoryRecordRepository.deleteAll();
     }
 
