@@ -37,8 +37,8 @@ class KafkaConsumerTest extends KafkaTestBase {
 
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
-        var inventoryRecordEntity = givenInventoryRecordEntity();
-        System.out.println(inventoryRecordEntity);
+        givenInventoryRecordEntity();
+        System.out.println(inventoryRecordRepository.findByBookId("1").get());
         var rentalRecord = defaultRentalRecordMessage();
 
         producer.send(topic, rentalRecord);
@@ -52,7 +52,7 @@ class KafkaConsumerTest extends KafkaTestBase {
         assertThat(entity.get().getReservedBooks()).isZero();
     }
 
-    private InventoryRecordEntity givenInventoryRecordEntity() {
-        return inventoryRecordRepository.save(defaultInventoryRecordEntity());
+    private void givenInventoryRecordEntity() {
+        inventoryRecordRepository.save(defaultInventoryRecordEntity());
     }
 }
