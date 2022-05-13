@@ -16,6 +16,7 @@ public class InventoryRecordEntityMother {
 
     public static InventoryRecordEntity.InventoryRecordEntityBuilder defaultBookEntityBuilder() {
         return InventoryRecordEntity.builder()
+                .id(defaultId)
                 .bookId(defaultBookId)
                 .bookCopies(defaultBookCopies)
                 .rentedBooks(defaultRentedBooks)
