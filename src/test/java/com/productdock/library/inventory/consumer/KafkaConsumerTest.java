@@ -2,6 +2,7 @@ package com.productdock.library.inventory.consumer;
 
 
 import com.productdock.library.inventory.book.InventoryRecordRepository;
+import com.productdock.library.inventory.book.InventoryRecordService;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
 import org.junit.jupiter.api.AfterEach;
@@ -27,6 +28,9 @@ class KafkaConsumerTest extends KafkaTestBase {
 
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
+
+    @Autowired
+    private InventoryRecordService inventoryRecordService;
 
     @Value("${spring.kafka.topic.book-status}")
     private String topic;

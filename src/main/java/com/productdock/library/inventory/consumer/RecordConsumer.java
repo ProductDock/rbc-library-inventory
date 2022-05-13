@@ -15,6 +15,7 @@ public record RecordConsumer(InventoryRecordService inventoryRecordService,
     public synchronized void listen(ConsumerRecord<String, String> message) throws Exception {
         var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(message);
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
+        System.out.println(rentalRecord);
         inventoryRecordService.updateBookState(rentalRecord);
     }
 }
