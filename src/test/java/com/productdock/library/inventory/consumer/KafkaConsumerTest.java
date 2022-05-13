@@ -1,6 +1,7 @@
 package com.productdock.library.inventory.consumer;
 
 
+import com.productdock.library.inventory.book.InventoryRecordEntity;
 import com.productdock.library.inventory.book.InventoryRecordRepository;
 import com.productdock.library.inventory.data.provider.KafkaTestBase;
 import com.productdock.library.inventory.data.provider.KafkaTestProducer;
@@ -17,7 +18,7 @@ import static com.productdock.library.inventory.data.provider.RentalRecordMessag
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class KafkaConsumerTest extends KafkaTestBase {
 
     @Autowired
@@ -32,11 +33,12 @@ class KafkaConsumerTest extends KafkaTestBase {
     @BeforeEach
     final void before() {
         inventoryRecordRepository.deleteAll();
-        inventoryRecordRepository.save(defaultInventoryRecordEntity());
     }
 
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
+        var inventoryRecordEntity = givenInventoryRecordEntity();
+        System.out.println(inventoryRecordEntity);
         var rentalRecord = defaultRentalRecordMessage();
 
         producer.send(topic, rentalRecord);
@@ -48,5 +50,9 @@ class KafkaConsumerTest extends KafkaTestBase {
         assertThat(entity.get().getBookCopies()).isEqualTo(3);
         assertThat(entity.get().getRentedBooks()).isEqualTo(1);
         assertThat(entity.get().getReservedBooks()).isZero();
+    }
+
+    private InventoryRecordEntity givenInventoryRecordEntity() {
+        return inventoryRecordRepository.save(defaultInventoryRecordEntity());
     }
 }
