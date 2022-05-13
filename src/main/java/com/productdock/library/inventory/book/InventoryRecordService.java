@@ -22,6 +22,8 @@ public record InventoryRecordService(InventoryRecordRepository inventoryRecordRe
 
     private Inventory getInventoryFrom(String bookId) {
         var optionalBook = inventoryRecordRepository.findByBookId(bookId);
+        System.out.println(inventoryRecordRepository.findByBookId(bookId));
+        System.out.println(optionalBook);
         if (optionalBook.isEmpty()) {
             throw new InventoryException("Book does not exist in inventory!");
         }
