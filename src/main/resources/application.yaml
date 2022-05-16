@@ -25,5 +25,3 @@ spring:
       username: ${mongodb.user:root1}
       password: ${mongodb.password:root1}
       database: document-db
-server:
-  port: 8084
