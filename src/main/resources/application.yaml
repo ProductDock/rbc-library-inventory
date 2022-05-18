@@ -1,4 +1,10 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
   kafka:
     enabled: true
     bootstrap-servers: ${kafka.server.url:localhost:9092}
