@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultInventoryRecordEntity;
@@ -30,6 +31,7 @@ class InventoryRecordApiTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnAvailableBooksCount_whenRecordEntityExists() throws Exception {
         givenInventoryRecordEntity();
 
@@ -39,9 +41,16 @@ class InventoryRecordApiTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnBadRequest_whenRecordEntityDoesNotExist() throws Exception {
         mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldReturnNotAuthorized_whenUserIsUnauthenticated() throws Exception {
+        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
+                .andExpect(status().isUnauthorized());
     }
 
     private void givenInventoryRecordEntity() {
