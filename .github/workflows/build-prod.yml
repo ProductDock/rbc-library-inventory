@@ -11,5 +11,4 @@ jobs:
     uses: ProductDock/rbc-github-workflows/.github/workflows/build-prod.yml@main
     with:
       update-script: /home/pd-library/update-inventory-image.sh
-      docker-build-args: --build-arg ACTIVE_PROFILE=prod
     secrets: inherit
