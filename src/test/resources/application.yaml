@@ -22,3 +22,6 @@ spring:
     topic:
       book-status: test-book-status
       book-availability: test-book-availability
+
+mongock:
+  enabled: false
