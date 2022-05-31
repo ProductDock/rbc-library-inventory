@@ -2,10 +2,8 @@ package com.productdock.library.inventory.domain;
 
 import com.productdock.library.inventory.record.RentalRecordMessage;
 import com.productdock.library.inventory.record.RentalStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@ToString
+@Slf4j
 public class RentalRecord implements Serializable {
 
     private String bookId;
@@ -35,6 +35,8 @@ public class RentalRecord implements Serializable {
     }
 
     private int getCountByStatus(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests, RentalStatus status) {
+        log.debug("Get rental records count by status: {}", status);
+
         return (int) rentalRecordRequests.stream().filter(book -> book.getStatus().equals(status)).count();
     }
 }
