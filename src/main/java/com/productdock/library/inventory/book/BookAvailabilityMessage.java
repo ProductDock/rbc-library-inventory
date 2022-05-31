@@ -1,9 +1,6 @@
 package com.productdock.library.inventory.book;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -11,6 +8,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
 public class BookAvailabilityMessage implements Serializable {
 
     private String bookId;
