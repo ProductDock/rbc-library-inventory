@@ -8,7 +8,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@ToString
 public class BookAvailabilityMessage implements Serializable {
 
     private String bookId;

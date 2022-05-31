@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-@ToString
 @Slf4j
 public class Inventory {
 

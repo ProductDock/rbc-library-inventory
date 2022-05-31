@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-@ToString
 @Slf4j
 public class RentalRecord implements Serializable {
 
