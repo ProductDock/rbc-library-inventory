@@ -25,12 +25,16 @@ spring:
 
   data:
     mongodb:
-      authentication-database: inventory-db
+      authentication-database: inventory
       host: ${mongodb.host:localhost}
       port: ${mongodb.port:28017}
       username: ${mongodb.user:root1}
       password: ${mongodb.password:root1}
-      database: inventory-db
+      database: inventory
 
 mongock:
   change-logs-scan-package: com.productdock.library.inventory.config.dbmigrations
+
+logging:
+  level:
+    com.productdock.library.inventory: ${logging.level:INFO}
