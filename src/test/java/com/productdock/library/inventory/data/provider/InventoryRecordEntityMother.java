@@ -1,6 +1,6 @@
 package com.productdock.library.inventory.data.provider;
 
-import com.productdock.library.inventory.book.InventoryRecordEntity;
+import com.productdock.library.inventory.adapter.out.mongo.entity.InventoryRecordEntity;
 
 public class InventoryRecordEntityMother {
 

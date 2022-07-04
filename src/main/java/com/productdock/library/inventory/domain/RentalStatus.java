@@ -1,4 +1,4 @@
-package com.productdock.library.inventory.record;
+package com.productdock.library.inventory.domain;
 
 public enum RentalStatus {
     RENTED,

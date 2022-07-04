@@ -1,5 +1,6 @@
 package com.productdock.library.inventory.book;
 
+import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecordMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

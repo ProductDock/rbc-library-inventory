@@ -1,7 +1,7 @@
 package com.productdock.library.inventory.data.provider;
 
-import com.productdock.library.inventory.record.RentalRecordMessage;
-import com.productdock.library.inventory.record.RentalStatus;
+import com.productdock.library.inventory.adapter.in.kafka.messages.RentalRecordMessage;
+import com.productdock.library.inventory.domain.RentalStatus;
 
 import java.util.Arrays;
 import java.util.List;

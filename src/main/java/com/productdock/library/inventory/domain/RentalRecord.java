@@ -1,7 +1,6 @@
 package com.productdock.library.inventory.domain;
 
-import com.productdock.library.inventory.record.RentalRecordMessage;
-import com.productdock.library.inventory.record.RentalStatus;
+import com.productdock.library.inventory.adapter.in.kafka.messages.RentalRecordMessage;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 

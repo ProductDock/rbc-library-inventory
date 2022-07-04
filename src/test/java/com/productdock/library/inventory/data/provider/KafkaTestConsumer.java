@@ -2,7 +2,7 @@ package com.productdock.library.inventory.data.provider;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.productdock.library.inventory.book.BookAvailabilityMessage;
+import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,5 +1,6 @@
-package com.productdock.library.inventory.record;
+package com.productdock.library.inventory.adapter.in.kafka.messages;
 
+import com.productdock.library.inventory.domain.RentalStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,9 +1,7 @@
-package com.productdock.library.inventory.consumer;
+package com.productdock.library.inventory.adapter.in.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.book.InventoryRecordService;
-import com.productdock.library.inventory.record.RentalRecordDeserializer;
-import com.productdock.library.inventory.record.RentalRecordMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;

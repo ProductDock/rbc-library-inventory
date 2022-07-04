@@ -1,5 +1,6 @@
 package com.productdock.library.inventory.record;
 
+import com.productdock.library.inventory.adapter.in.kafka.RentalRecordMapper;
 import org.junit.jupiter.api.Test;
 
 import static com.productdock.library.inventory.data.provider.RentalRecordMessageMother.defaultRentalRecordMessage;

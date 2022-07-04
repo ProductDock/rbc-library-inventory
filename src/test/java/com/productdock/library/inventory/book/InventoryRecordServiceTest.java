@@ -1,8 +1,10 @@
 package com.productdock.library.inventory.book;
 
+import com.productdock.library.inventory.adapter.out.mongo.entity.InventoryRecordEntity;
+import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecordMapper;
 import com.productdock.library.inventory.domain.Inventory;
-import com.productdock.library.inventory.exception.InventoryException;
-import com.productdock.library.inventory.producer.Publisher;
+import com.productdock.library.inventory.domain.exception.InventoryException;
+import com.productdock.library.inventory.adapter.out.kafka.Publisher;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
