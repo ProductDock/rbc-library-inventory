@@ -1,4 +1,4 @@
-package com.productdock.library.inventory.data.provider;
+package com.productdock.library.inventory.data.provider.domain;
 
 import com.productdock.library.inventory.domain.RentalRecord;
 

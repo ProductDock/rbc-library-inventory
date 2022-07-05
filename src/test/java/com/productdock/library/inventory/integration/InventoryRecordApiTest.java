@@ -1,5 +1,6 @@
-package com.productdock.library.inventory.book;
+package com.productdock.library.inventory.integration;
 
+import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordEntityRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.productdock.library.inventory.data.provider.InventoryRecordEntityMother.defaultInventoryRecordEntity;
+import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.defaultInventoryRecordEntity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,11 +24,11 @@ class InventoryRecordApiTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private InventoryRecordRepository inventoryRecordRepository;
+    private InventoryRecordEntityRepository inventoryRecordEntityRepository;
 
     @BeforeEach
     final void before() {
-        inventoryRecordRepository.deleteAll();
+        inventoryRecordEntityRepository.deleteAll();
     }
 
     @Test
@@ -35,7 +36,7 @@ class InventoryRecordApiTest {
     void shouldReturnAvailableBooksCount_whenRecordEntityExists() throws Exception {
         givenInventoryRecordEntity();
 
-        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
+        mockMvc.perform(get("/api/inventory/book/" + BOOK_ID))
                 .andExpect(status().isOk())
                 .andExpect(content().string("3"));
     }
@@ -43,17 +44,17 @@ class InventoryRecordApiTest {
     @Test
     @WithMockUser
     void shouldReturnBadRequest_whenRecordEntityDoesNotExist() throws Exception {
-        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
+        mockMvc.perform(get("/api/inventory/book/" + BOOK_ID))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void shouldReturnNotAuthorized_whenUserIsUnauthenticated() throws Exception {
-        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
+        mockMvc.perform(get("/api/inventory/book/" + BOOK_ID))
                 .andExpect(status().isUnauthorized());
     }
 
     private void givenInventoryRecordEntity() {
-        inventoryRecordRepository.save(defaultInventoryRecordEntity());
+        inventoryRecordEntityRepository.save(defaultInventoryRecordEntity());
     }
 }

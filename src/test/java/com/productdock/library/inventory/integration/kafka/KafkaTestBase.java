@@ -1,4 +1,4 @@
-package com.productdock.library.inventory.data.provider;
+package com.productdock.library.inventory.integration.kafka;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.kafka.test.context.EmbeddedKafka;

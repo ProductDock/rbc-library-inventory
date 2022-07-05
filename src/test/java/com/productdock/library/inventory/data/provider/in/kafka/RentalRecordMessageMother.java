@@ -1,4 +1,4 @@
-package com.productdock.library.inventory.data.provider;
+package com.productdock.library.inventory.data.provider.in.kafka;
 
 import com.productdock.library.inventory.adapter.in.kafka.messages.RentalRecordMessage;
 import com.productdock.library.inventory.domain.RentalStatus;

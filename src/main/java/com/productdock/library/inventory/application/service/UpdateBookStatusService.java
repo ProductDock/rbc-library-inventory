@@ -1,9 +1,9 @@
 package com.productdock.library.inventory.application.service;
 
+import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
 import com.productdock.library.inventory.application.port.in.UpdateBookStatusUseCase;
 import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
 import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
-import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
 import com.productdock.library.inventory.domain.RentalRecord;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

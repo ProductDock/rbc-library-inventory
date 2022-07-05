@@ -1,8 +1,8 @@
-package com.productdock.library.inventory.producer;
+package com.productdock.library.inventory.integration;
 
 import com.productdock.library.inventory.adapter.out.kafka.Publisher;
 import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
-import com.productdock.library.inventory.data.provider.KafkaTestBase;
+import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

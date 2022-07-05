@@ -1,4 +1,4 @@
-package com.productdock.library.inventory.data.provider;
+package com.productdock.library.inventory.integration.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,9 +1,8 @@
-package com.productdock.library.inventory.record;
+package com.productdock.library.inventory.domain;
 
-import com.productdock.library.inventory.adapter.in.kafka.RentalRecordMapper;
 import org.junit.jupiter.api.Test;
 
-import static com.productdock.library.inventory.data.provider.RentalRecordMessageMother.defaultRentalRecordMessage;
+import static com.productdock.library.inventory.data.provider.in.kafka.RentalRecordMessageMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RentalRecordMapperTest {
