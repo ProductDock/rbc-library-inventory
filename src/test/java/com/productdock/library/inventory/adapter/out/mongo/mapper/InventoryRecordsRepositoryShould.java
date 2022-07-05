@@ -20,7 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class InventoryRecordsRepositoryShould {
+class InventoryRecordsRepositoryShould {
 
     private static final String BOOK_ID = "1";
     private static final Optional<InventoryRecordEntity> INVENTORY_RECORD_ENTITY = Optional.of(mock(InventoryRecordEntity.class));
