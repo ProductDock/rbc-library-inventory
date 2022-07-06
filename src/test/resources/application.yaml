@@ -17,7 +17,7 @@ spring:
       value-seriliazer: org.apache.kafka.common.serialization.StringSerializer
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
-      auto-offset-reset: earliest
+      auto-offset-reset: latest
       group-id: rbc-library
     topic:
       book-status: test-book-status

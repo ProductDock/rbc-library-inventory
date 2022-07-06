@@ -2,6 +2,7 @@ package com.productdock.library.inventory.adapter.out.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
+import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -11,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 @Component
 @Slf4j
-public class Publisher {
+public class Publisher implements BookAvailabilityMessagingOutPort {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final RecordProducer recordProducer;

@@ -5,12 +5,14 @@ import com.productdock.library.inventory.application.port.in.UpdateBookStatusUse
 import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
 import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
 import com.productdock.library.inventory.domain.RentalRecord;
+import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class UpdateBookStatusService implements UpdateBookStatusUseCase {
 
     private InventoryRecordsPersistenceOutPort inventoryRecordRepository;
