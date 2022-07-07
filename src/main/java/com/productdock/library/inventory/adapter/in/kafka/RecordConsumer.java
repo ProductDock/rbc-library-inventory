@@ -1,6 +1,7 @@
 package com.productdock.library.inventory.adapter.in.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.productdock.library.inventory.application.port.in.UpdateBookStatusUseCase;
 import com.productdock.library.inventory.application.service.UpdateBookStatusService;
 import com.productdock.library.inventory.domain.RentalRecordMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public record RecordConsumer(UpdateBookStatusService updateBookStatusService,
+public record RecordConsumer(UpdateBookStatusUseCase updateBookStatusUseCase,
                              RentalRecordDeserializer rentalRecordDeserializer, RentalRecordMapper rentalRecordMapper) {
 
     @KafkaListener(topics = "${spring.kafka.topic.book-status}")
@@ -19,6 +20,6 @@ public record RecordConsumer(UpdateBookStatusService updateBookStatusService,
 
         var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(message);
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
-        updateBookStatusService.updateBookState(rentalRecord);
+        updateBookStatusUseCase.updateBookState(rentalRecord);
     }
 }

@@ -17,7 +17,7 @@ public class UpdateBookStatusService implements UpdateBookStatusUseCase {
 
     private InventoryRecordsPersistenceOutPort inventoryRecordRepository;
 
-    private BookAvailabilityMessagingOutPort bookAvailabilityMessagingOutPort;
+    private BookAvailabilityMessagingOutPort bookAvailabilityPublisher;
 
     @Override
     @SneakyThrows
@@ -27,6 +27,6 @@ public class UpdateBookStatusService implements UpdateBookStatusUseCase {
         var book = inventoryRecordRepository.getInventoryFrom(rentalRecord.getBookId());
         book.updateStateWith(rentalRecord);
         inventoryRecordRepository.saveInventoryRecord(book);
-        bookAvailabilityMessagingOutPort.sendMessage(new BookAvailabilityMessage(book.getBookId(), book.getAvailableBooksCount()));
+        bookAvailabilityPublisher.sendMessage(new BookAvailabilityMessage(book.getBookId(), book.getAvailableBooksCount()));
     }
 }
