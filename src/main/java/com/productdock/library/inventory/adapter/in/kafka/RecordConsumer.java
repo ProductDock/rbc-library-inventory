@@ -19,6 +19,7 @@ public record RecordConsumer(UpdateBookStatusService updateBookStatusService,
 
         var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(message);
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
+        System.out.println(rentalRecord);
         updateBookStatusService.updateBookState(rentalRecord);
     }
 }

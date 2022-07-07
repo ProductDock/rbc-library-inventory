@@ -1,10 +1,10 @@
 package com.productdock.library.inventory.integration;
 
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordEntityRepository;
+import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,8 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@AutoConfigureMockMvc
-class InventoryRecordApiTest {
+class InventoryRecordApiTest extends KafkaTestBase {
 
     public static final String BOOK_ID = "1";
 
@@ -27,7 +26,7 @@ class InventoryRecordApiTest {
     private InventoryRecordEntityRepository inventoryRecordEntityRepository;
 
     @BeforeEach
-    final void before() {
+    void before() {
         inventoryRecordEntityRepository.deleteAll();
     }
 

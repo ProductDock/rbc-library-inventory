@@ -2,13 +2,10 @@ package com.productdock.library.inventory.integration;
 
 
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordEntityRepository;
-import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
-import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
 import com.productdock.library.inventory.application.service.UpdateBookStatusService;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import com.productdock.library.inventory.integration.kafka.KafkaTestProducer;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,11 +38,12 @@ class KafkaConsumerTest extends KafkaTestBase {
         inventoryRecordEntityRepository.deleteAll();
     }
 
-    @Disabled("Flaky test when running on Sonar")
+    //    @Disabled("Flaky test when running on Sonar")
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
         givenInventoryRecordEntity();
         var rentalRecord = defaultRentalRecordMessage();
+        System.out.println(inventoryRecordEntityRepository.findAll());
 
         producer.send(topic, rentalRecord);
         await()
