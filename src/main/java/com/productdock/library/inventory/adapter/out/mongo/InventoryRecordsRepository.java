@@ -19,11 +19,7 @@ public class InventoryRecordsRepository implements InventoryRecordsPersistenceOu
     @Override
     public Inventory getInventoryFrom(String bookId) {
         log.debug("Find book in database by id: {}", bookId);
-        var optionalBook = inventoryRecordEntityRepository.findByBookId(bookId);
-        if (optionalBook.isEmpty()) {
-            throw new InventoryException("Book does not exist in inventory!");
-        }
-        var bookEntity = optionalBook.get();
+        var bookEntity = inventoryRecordEntityRepository.findByBookId(bookId).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
         return inventoryRecordMapper.toDomain(bookEntity);
     }
 
