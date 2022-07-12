@@ -2,7 +2,7 @@ package com.productdock.library.inventory.config.dbmigrations;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
-import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordEntityRepository;
+import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.adapter.out.mongo.entity.InventoryRecordEntity;
 import com.productdock.library.inventory.config.coverage.Generated;
 
@@ -11,7 +11,7 @@ import com.productdock.library.inventory.config.coverage.Generated;
 public class DatabaseInitChangeLog {
 
     @ChangeSet(order = "001", id = "init_inventory_records", author = "pd")
-    public void initInventoryRecords(InventoryRecordEntityRepository inventoryRecordRepository) {
+    public void initInventoryRecords(InventoryRecordRepository inventoryRecordRepository) {
 
         inventoryRecordRepository.save(InventoryRecordEntity.builder()
                 .bookId("1")

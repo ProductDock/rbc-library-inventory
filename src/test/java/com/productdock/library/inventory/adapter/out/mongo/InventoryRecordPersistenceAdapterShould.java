@@ -1,8 +1,9 @@
-package com.productdock.library.inventory.adapter.out.mongo.mapper;
+package com.productdock.library.inventory.adapter.out.mongo;
 
-import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordEntityRepository;
-import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordsRepository;
+import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordPersistenceAdapter;
+import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.adapter.out.mongo.entity.InventoryRecordEntity;
+import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecordMapper;
 import com.productdock.library.inventory.domain.Inventory;
 import com.productdock.library.inventory.domain.exception.InventoryException;
 import org.junit.jupiter.api.Test;
@@ -20,46 +21,46 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class InventoryRecordsRepositoryShould {
+class InventoryRecordPersistenceAdapterShould {
 
     private static final String BOOK_ID = "1";
     private static final Optional<InventoryRecordEntity> INVENTORY_RECORD_ENTITY = Optional.of(mock(InventoryRecordEntity.class));
     private static final Inventory INVENTORY = mock(Inventory.class);
 
     @InjectMocks
-    private InventoryRecordsRepository inventoryRecordsRepository;
+    private InventoryRecordPersistenceAdapter inventoryRecordPersistenceAdapter;
 
     @Mock
-    private InventoryRecordEntityRepository inventoryRecordEntityRepository;
+    private InventoryRecordRepository inventoryRecordRepository;
 
     @Mock
     private InventoryRecordMapper inventoryRecordMapper;
 
     @Test
     void getInventoryRecordWhenIdExist() {
-        given(inventoryRecordEntityRepository.findByBookId(BOOK_ID)).willReturn(INVENTORY_RECORD_ENTITY);
+        given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(INVENTORY_RECORD_ENTITY);
         given(inventoryRecordMapper.toDomain(INVENTORY_RECORD_ENTITY.get())).willReturn(INVENTORY);
 
-        var inventory = inventoryRecordsRepository.getInventoryFrom(BOOK_ID);
+        var inventory = inventoryRecordPersistenceAdapter.getInventoryFrom(BOOK_ID);
 
         assertThat(inventory).isEqualTo(INVENTORY);
     }
 
     @Test
     void getInventoryRecordWhenIdNotExist() {
-        given(inventoryRecordEntityRepository.findByBookId(BOOK_ID)).willReturn(Optional.empty());
+        given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(Optional.empty());
 
-        assertThatThrownBy(() -> inventoryRecordsRepository.getInventoryFrom(BOOK_ID))
+        assertThatThrownBy(() -> inventoryRecordPersistenceAdapter.getInventoryFrom(BOOK_ID))
                 .isInstanceOf(InventoryException.class);
     }
 
     @Test
     void saveInventoryRecord() {
-        given(inventoryRecordEntityRepository.findByBookId(INVENTORY.getBookId())).willReturn(Optional.empty());
+        given(inventoryRecordRepository.findByBookId(INVENTORY.getBookId())).willReturn(Optional.empty());
         given(inventoryRecordMapper.toEntity(INVENTORY)).willReturn(INVENTORY_RECORD_ENTITY.get());
 
-        inventoryRecordsRepository.saveInventoryRecord(INVENTORY);
+        inventoryRecordPersistenceAdapter.saveInventoryRecord(INVENTORY);
 
-        verify(inventoryRecordEntityRepository).save(INVENTORY_RECORD_ENTITY.get());
+        verify(inventoryRecordRepository).save(INVENTORY_RECORD_ENTITY.get());
     }
 }

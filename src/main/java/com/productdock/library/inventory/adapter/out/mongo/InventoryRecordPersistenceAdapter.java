@@ -11,15 +11,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Slf4j
 @AllArgsConstructor
-public class InventoryRecordsRepository implements InventoryRecordsPersistenceOutPort {
+public class InventoryRecordPersistenceAdapter implements InventoryRecordsPersistenceOutPort {
 
-    private InventoryRecordEntityRepository inventoryRecordEntityRepository;
+    private InventoryRecordRepository inventoryRecordRepository;
     private InventoryRecordMapper inventoryRecordMapper;
 
     @Override
     public Inventory getInventoryFrom(String bookId) {
         log.debug("Find book in database by id: {}", bookId);
-        var bookEntity = inventoryRecordEntityRepository.findByBookId(bookId).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
+        var bookEntity = inventoryRecordRepository.findByBookId(bookId).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
         return inventoryRecordMapper.toDomain(bookEntity);
     }
 
@@ -27,9 +27,9 @@ public class InventoryRecordsRepository implements InventoryRecordsPersistenceOu
     public void saveInventoryRecord(Inventory book) {
         log.debug("Save new book state for book: {}", book);
 
-        var previousRecordEntity = inventoryRecordEntityRepository.findByBookId(book.getBookId());
+        var previousRecordEntity = inventoryRecordRepository.findByBookId(book.getBookId());
         var newRecordEntity = inventoryRecordMapper.toEntity(book);
         previousRecordEntity.ifPresent(inventoryRecordEntity -> newRecordEntity.setId(previousRecordEntity.get().getId()));
-        inventoryRecordEntityRepository.save(newRecordEntity);
+        inventoryRecordRepository.save(newRecordEntity);
     }
 }

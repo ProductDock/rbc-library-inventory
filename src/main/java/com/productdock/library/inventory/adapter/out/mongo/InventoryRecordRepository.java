@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface InventoryRecordEntityRepository extends MongoRepository<InventoryRecordEntity, String> {
+public interface InventoryRecordRepository extends MongoRepository<InventoryRecordEntity, String> {
 
     Optional<InventoryRecordEntity> findByBookId(String bookId);
 }

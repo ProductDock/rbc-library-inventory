@@ -1,6 +1,6 @@
 package com.productdock.library.inventory.integration;
 
-import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordEntityRepository;
+import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,11 +23,11 @@ class InventoryRecordApiTest extends KafkaTestBase {
     private MockMvc mockMvc;
 
     @Autowired
-    private InventoryRecordEntityRepository inventoryRecordEntityRepository;
+    private InventoryRecordRepository inventoryRecordRepository;
 
     @BeforeEach
     void before() {
-        inventoryRecordEntityRepository.deleteAll();
+        inventoryRecordRepository.deleteAll();
     }
 
     @Test
@@ -54,6 +54,6 @@ class InventoryRecordApiTest extends KafkaTestBase {
     }
 
     private void givenInventoryRecordEntity() {
-        inventoryRecordEntityRepository.save(defaultInventoryRecordEntity());
+        inventoryRecordRepository.save(defaultInventoryRecordEntity());
     }
 }
