@@ -1,9 +1,8 @@
 package com.productdock.library.inventory.adapter.in.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.productdock.library.inventory.adapter.in.kafka.messages.RentalRecordMapper;
 import com.productdock.library.inventory.application.port.in.UpdateBookStatusUseCase;
-import com.productdock.library.inventory.application.service.UpdateBookStatusService;
-import com.productdock.library.inventory.domain.RentalRecordMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;

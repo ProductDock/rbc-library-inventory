@@ -1,6 +1,6 @@
-package com.productdock.library.inventory.domain;
+package com.productdock.library.inventory.adapter.in.kafka.messages;
 
-import com.productdock.library.inventory.adapter.in.kafka.messages.RentalRecordMessage;
+import com.productdock.library.inventory.domain.RentalRecord;
 import org.springframework.stereotype.Component;
 
 @Component

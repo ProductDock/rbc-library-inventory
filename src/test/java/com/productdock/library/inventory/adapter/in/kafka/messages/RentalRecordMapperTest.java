@@ -1,4 +1,4 @@
-package com.productdock.library.inventory.domain;
+package com.productdock.library.inventory.adapter.in.kafka.messages;
 
 import org.junit.jupiter.api.Test;
 

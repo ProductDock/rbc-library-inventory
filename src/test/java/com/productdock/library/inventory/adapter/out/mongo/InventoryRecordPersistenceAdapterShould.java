@@ -1,7 +1,5 @@
 package com.productdock.library.inventory.adapter.out.mongo;
 
-import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordPersistenceAdapter;
-import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.adapter.out.mongo.entity.InventoryRecordEntity;
 import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecordMapper;
 import com.productdock.library.inventory.domain.Inventory;
