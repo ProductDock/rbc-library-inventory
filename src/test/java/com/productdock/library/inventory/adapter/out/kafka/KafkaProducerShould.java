@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,8 +13,7 @@ import static org.mockito.Mockito.mock;
 @ExtendWith(MockitoExtension.class)
 class KafkaProducerShould {
 
-    @InjectMocks
-    private RecordProducer recordProducer;
+    private RecordProducer recordProducer = new RecordProducer();
 
     private final String topic = "test-book-availability";
 
@@ -29,7 +27,7 @@ class KafkaProducerShould {
     }
 
     @Test
-    void throwExceptionWhenProducingBadEntity() {
+    void throwException_whenProducingBadEntity() {
         BookAvailabilityMessage bookAvailabilityMessage = mock(BookAvailabilityMessage.class);
         assertThrows(JsonProcessingException.class, () -> {
             var producerRecord = recordProducer.createKafkaRecord(topic, bookAvailabilityMessage);

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static com.productdock.library.inventory.data.provider.in.kafka.RentalRecordMessageMother.defaultRentalRecordMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RentalRecordMapperTest {
+class RentalRecordMapperShould {
 
     RentalRecordMapper rentalRecordMapper = new RentalRecordMapper();
 

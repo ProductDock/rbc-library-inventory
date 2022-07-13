@@ -2,6 +2,7 @@ package com.productdock.library.inventory.integration;
 
 import com.productdock.library.inventory.adapter.out.kafka.Publisher;
 import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
+import com.productdock.library.inventory.data.provider.domain.InventoryMother;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +25,7 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 class KafkaProducerTest extends KafkaTestBase {
 
     public static final String FIRST_BOOK = "1";
-    public static final int AVAILABLE_BOOK_COUNT = 1;
+    public static final int AVAILABLE_BOOK_COUNT = 3;
     public static final String TEST_FILE = "testRecord.txt";
 
     @Autowired
@@ -39,7 +40,7 @@ class KafkaProducerTest extends KafkaTestBase {
 
     @Test
     void shouldSendMessage() throws IOException, ClassNotFoundException, ExecutionException, InterruptedException {
-        publisher.sendMessage(new BookAvailabilityMessage("1", 1));
+        publisher.sendMessage(InventoryMother.defaultInventory());
         await()
                 .atMost(Duration.ofSeconds(5))
                 .until(ifFileExists(TEST_FILE));

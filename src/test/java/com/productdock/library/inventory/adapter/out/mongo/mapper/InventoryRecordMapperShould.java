@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {InventoryRecordMapperImpl.class})
-class InventoryRecordMapperTest {
+class InventoryRecordMapperShould {
 
     @Autowired
     private InventoryRecordMapper inventoryRecordMapper;
@@ -26,6 +26,9 @@ class InventoryRecordMapperTest {
         var inventoryRecordEntity = inventoryRecordMapper.toEntity(inventory);
 
         assertThat(inventoryRecordEntity.getBookId()).isEqualTo(inventory.getBookId());
+        assertThat(inventoryRecordEntity.getBookCopies()).isEqualTo(inventory.getBookCopies());
+        assertThat(inventoryRecordEntity.getReservedBooks()).isEqualTo(inventory.getReservedBooks());
+        assertThat(inventoryRecordEntity.getRentedBooks()).isEqualTo(inventory.getRentedBooks());
     }
 
     @Test
@@ -35,5 +38,8 @@ class InventoryRecordMapperTest {
         var inventory = inventoryRecordMapper.toDomain(inventoryRecordEntity);
 
         assertThat(inventory.getBookId()).isEqualTo(inventoryRecordEntity.getBookId());
+        assertThat(inventory.getBookCopies()).isEqualTo(inventoryRecordEntity.getBookCopies());
+        assertThat(inventory.getReservedBooks()).isEqualTo(inventoryRecordEntity.getReservedBooks());
+        assertThat(inventory.getRentedBooks()).isEqualTo(inventoryRecordEntity.getRentedBooks());
     }
 }

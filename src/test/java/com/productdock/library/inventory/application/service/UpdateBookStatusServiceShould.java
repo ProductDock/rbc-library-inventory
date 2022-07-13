@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static com.productdock.library.inventory.data.provider.domain.RentalRecordMother.defaultRentalRecord;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -35,12 +37,12 @@ class UpdateBookStatusServiceShould {
     void updateBookState_whenBookExists() throws Exception {
         var rentalRecord = defaultRentalRecord();
         var inventory = mock(Inventory.class);
-        given(inventoryRecordRepository.getInventoryFrom(rentalRecord.getBookId())).willReturn(inventory);
+        given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.of(inventory));
 
-        updateBookStatusService.updateBookState(rentalRecord);
+        updateBookStatusService.updateBookStatus(rentalRecord);
 
         verify(inventory).updateStateWith(rentalRecord);
-        verify(inventoryRecordRepository).saveInventoryRecord(inventory);
+        verify(inventoryRecordRepository).save(inventory);
         verify(bookAvailabilityMessagingOutPort).sendMessage(any());
     }
 }

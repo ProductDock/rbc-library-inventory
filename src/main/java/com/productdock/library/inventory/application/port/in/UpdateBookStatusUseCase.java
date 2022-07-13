@@ -4,5 +4,5 @@ import com.productdock.library.inventory.domain.RentalRecord;
 
 public interface UpdateBookStatusUseCase {
 
-    void updateBookState(RentalRecord rentalRecord);
+    void updateBookStatus(RentalRecord rentalRecord);
 }

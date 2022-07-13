@@ -38,12 +38,10 @@ class KafkaConsumerTest extends KafkaTestBase {
         inventoryRecordRepository.deleteAll();
     }
 
-    //    @Disabled("Flaky test when running on Sonar")
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
         givenInventoryRecordEntity();
         var rentalRecord = defaultRentalRecordMessage();
-        System.out.println(inventoryRecordRepository.findAll());
 
         producer.send(topic, rentalRecord);
         await()

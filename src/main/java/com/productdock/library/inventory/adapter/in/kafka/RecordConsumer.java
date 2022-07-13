@@ -19,6 +19,6 @@ public record RecordConsumer(UpdateBookStatusUseCase updateBookStatusUseCase,
 
         var rentalRecordMessage = rentalRecordDeserializer.deserializeRentalRecord(message);
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
-        updateBookStatusUseCase.updateBookState(rentalRecord);
+        updateBookStatusUseCase.updateBookStatus(rentalRecord);
     }
 }

@@ -3,6 +3,7 @@ package com.productdock.library.inventory.adapter.out.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
 import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
+import com.productdock.library.inventory.domain.Inventory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -25,7 +26,8 @@ public class Publisher implements BookAvailabilityMessagingOutPort {
         this.recordProducer = recordProducer;
     }
 
-    public void sendMessage(BookAvailabilityMessage bookAvailabilityMessage) throws ExecutionException, InterruptedException, JsonProcessingException {
+    public void sendMessage(Inventory inventory) throws ExecutionException, InterruptedException, JsonProcessingException {
+        var bookAvailabilityMessage = new BookAvailabilityMessage(inventory.getBookId(), inventory.getAvailableBooksCount());
         log.debug("Sent kafka message: {} on kafka topic: {}", bookAvailabilityMessage, kafkaTopic);
 
         var kafkaRecord = recordProducer.createKafkaRecord(kafkaTopic, bookAvailabilityMessage);

@@ -35,29 +35,21 @@ class InventoryRecordPersistenceAdapterShould {
     private InventoryRecordMapper inventoryRecordMapper;
 
     @Test
-    void getInventoryRecordWhenIdExist() {
+    void findInventoryByBookId_whenIdExist() {
         given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(INVENTORY_RECORD_ENTITY);
         given(inventoryRecordMapper.toDomain(INVENTORY_RECORD_ENTITY.get())).willReturn(INVENTORY);
 
-        var inventory = inventoryRecordPersistenceAdapter.getInventoryFrom(BOOK_ID);
+        var inventory = inventoryRecordPersistenceAdapter.findByBookId(BOOK_ID);
 
-        assertThat(inventory).isEqualTo(INVENTORY);
+        assertThat(inventory).isEqualTo(Optional.of(INVENTORY));
     }
 
     @Test
-    void getInventoryRecordWhenIdNotExist() {
-        given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(Optional.empty());
-
-        assertThatThrownBy(() -> inventoryRecordPersistenceAdapter.getInventoryFrom(BOOK_ID))
-                .isInstanceOf(InventoryException.class);
-    }
-
-    @Test
-    void saveInventoryRecord() {
+    void saveInventory() {
         given(inventoryRecordRepository.findByBookId(INVENTORY.getBookId())).willReturn(Optional.empty());
         given(inventoryRecordMapper.toEntity(INVENTORY)).willReturn(INVENTORY_RECORD_ENTITY.get());
 
-        inventoryRecordPersistenceAdapter.saveInventoryRecord(INVENTORY);
+        inventoryRecordPersistenceAdapter.save(INVENTORY);
 
         verify(inventoryRecordRepository).save(INVENTORY_RECORD_ENTITY.get());
     }

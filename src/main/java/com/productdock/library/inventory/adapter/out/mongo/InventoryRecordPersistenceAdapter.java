@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @Slf4j
 @AllArgsConstructor
@@ -17,14 +19,17 @@ public class InventoryRecordPersistenceAdapter implements InventoryRecordsPersis
     private InventoryRecordMapper inventoryRecordMapper;
 
     @Override
-    public Inventory getInventoryFrom(String bookId) {
+    public Optional<Inventory> findByBookId(String bookId) {
         log.debug("Find book in database by id: {}", bookId);
-        var bookEntity = inventoryRecordRepository.findByBookId(bookId).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
-        return inventoryRecordMapper.toDomain(bookEntity);
+        var bookEntity = inventoryRecordRepository.findByBookId(bookId);
+        if (bookEntity.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(inventoryRecordMapper.toDomain(bookEntity.get()));
     }
 
     @Override
-    public void saveInventoryRecord(Inventory book) {
+    public void save(Inventory book) {
         log.debug("Save new book state for book: {}", book);
 
         var previousRecordEntity = inventoryRecordRepository.findByBookId(book.getBookId());
