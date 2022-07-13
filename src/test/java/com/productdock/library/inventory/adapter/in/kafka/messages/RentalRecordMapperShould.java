@@ -23,7 +23,7 @@ class RentalRecordMapperShould {
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
 
         assertThat(rentalRecord.getBookId()).isEqualTo(rentalRecordMessage.getBookId());
-        assertThat(rentalRecord.getRentalRecords().size()).isEqualTo(rentalRecordMessage.getRentalRecords().size());
+        assertThat(rentalRecord.getRentalRecords()).hasSameSizeAs(rentalRecordMessage.getRentalRecords());
     }
 
 }
