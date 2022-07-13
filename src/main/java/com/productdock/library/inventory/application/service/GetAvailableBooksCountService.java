@@ -16,7 +16,7 @@ public class GetAvailableBooksCountService implements GetAvailableBooksCountQuer
 
     @Override
     public int getAvailableBooksCount(String bookId) {
-        var book = inventoryRecordRepository.findByBookId(bookId).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
-        return book.getAvailableBooksCount();
+        var inventory = inventoryRecordRepository.findByBookId(bookId).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
+        return inventory.getAvailableBooksCount();
     }
 }

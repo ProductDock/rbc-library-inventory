@@ -16,13 +16,13 @@ import java.util.List;
 public class RentalRecordMessage {
 
     private String bookId;
-    private List<RentalRecordRequest> rentalRecords;
+    private List<RentalRecordMessageRequest> rentalRecords;
 
     @AllArgsConstructor
     @NoArgsConstructor
     @Data
     @Builder
-    public static class RentalRecordRequest implements Serializable {
+    public static class RentalRecordMessageRequest implements Serializable {
 
         private String patron;
         private RentalStatus status;

@@ -1,13 +1,12 @@
 package com.productdock.library.inventory.adapter.in.kafka.messages;
 
 import com.productdock.library.inventory.domain.RentalRecord;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 
-@Component
-public class RentalRecordMapper {
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
+public interface RentalRecordMapper {
 
-    public RentalRecord toDomain(RentalRecordMessage source) {
-        return new RentalRecord(source.getBookId(), source.getRentalRecords());
-    }
+    RentalRecord toDomain(RentalRecordMessage source);
 
 }

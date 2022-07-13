@@ -1,6 +1,5 @@
 package com.productdock.library.inventory.domain;
 
-import com.productdock.library.inventory.adapter.in.kafka.messages.RentalRecordMessage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,26 +17,19 @@ import java.util.List;
 public class RentalRecord implements Serializable {
 
     private String bookId;
-    private int rentsCount;
-    private int reservationsCount;
+    private List<RentalRecordRequest> rentalRecords;
 
-    public RentalRecord(String bookId, List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests) {
-        this.bookId = bookId;
-        setRentsCountFrom(rentalRecordRequests);
-        setReservationsCountFrom(rentalRecordRequests);
+    public int getRecordsCount(RentalStatus status) {
+        return (int) rentalRecords.stream().filter(r -> r.getStatus().equals(status)).count();
     }
 
-    private void setRentsCountFrom(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests) {
-        rentsCount = getCountByStatus(rentalRecordRequests, RentalStatus.RENTED);
-    }
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    @Builder
+    public static class RentalRecordRequest implements Serializable {
 
-    private void setReservationsCountFrom(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests) {
-        reservationsCount = getCountByStatus(rentalRecordRequests, RentalStatus.RESERVED);
-    }
-
-    private int getCountByStatus(List<RentalRecordMessage.RentalRecordRequest> rentalRecordRequests, RentalStatus status) {
-        log.debug("Get rental records count by status: {}", status);
-
-        return (int) rentalRecordRequests.stream().filter(book -> book.getStatus().equals(status)).count();
+        private String patron;
+        private RentalStatus status;
     }
 }

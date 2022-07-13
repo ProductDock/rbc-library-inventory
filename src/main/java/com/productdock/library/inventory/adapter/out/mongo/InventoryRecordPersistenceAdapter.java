@@ -3,7 +3,6 @@ package com.productdock.library.inventory.adapter.out.mongo;
 import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecordMapper;
 import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
 import com.productdock.library.inventory.domain.Inventory;
-import com.productdock.library.inventory.domain.exception.InventoryException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

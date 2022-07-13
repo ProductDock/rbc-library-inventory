@@ -27,7 +27,7 @@ public class Inventory {
     public void updateStateWith(RentalRecord rentalRecord) {
         log.debug("Update book state with: {}", rentalRecord);
 
-        setRentedBooks(rentalRecord.getRentsCount());
-        setReservedBooks(rentalRecord.getReservationsCount());
+        setRentedBooks(rentalRecord.getRecordsCount(RentalStatus.RENTED));
+        setReservedBooks(rentalRecord.getRecordsCount(RentalStatus.RESERVED));
     }
 }

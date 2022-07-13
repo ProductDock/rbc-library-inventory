@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public record RecordConsumer(UpdateBookStatusUseCase updateBookStatusUseCase,
-                             RentalRecordDeserializer rentalRecordDeserializer, RentalRecordMapper rentalRecordMapper) {
+public record KafkaConsumer(UpdateBookStatusUseCase updateBookStatusUseCase,
+                            RentalRecordDeserializer rentalRecordDeserializer, RentalRecordMapper rentalRecordMapper) {
 
     @KafkaListener(topics = "${spring.kafka.topic.book-status}")
     public synchronized void listen(ConsumerRecord<String, String> message) throws JsonProcessingException {

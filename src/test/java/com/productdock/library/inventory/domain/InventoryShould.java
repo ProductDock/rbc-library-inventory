@@ -1,15 +1,12 @@
 package com.productdock.library.inventory.domain;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.productdock.library.inventory.data.provider.domain.InventoryMother.defaultInventory;
 import static com.productdock.library.inventory.data.provider.domain.RentalRecordMother.defaultRentalRecord;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
-class InventoryTest {
+class InventoryShould {
 
     @Test
     void getAvailableBookCount() {

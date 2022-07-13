@@ -4,6 +4,7 @@ import com.productdock.library.inventory.application.port.in.UpdateBookStatusUse
 import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
 import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
 import com.productdock.library.inventory.domain.RentalRecord;
+import com.productdock.library.inventory.domain.RentalStatus;
 import com.productdock.library.inventory.domain.exception.InventoryException;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -22,7 +23,7 @@ public class UpdateBookStatusService implements UpdateBookStatusUseCase {
     @Override
     @SneakyThrows
     public void updateBookStatus(RentalRecord rentalRecord) {
-        log.debug("Update book state for book {} with rental record: rents count - {}, reservations count - {}", rentalRecord.getBookId(), rentalRecord.getRentsCount(), rentalRecord.getReservationsCount());
+        log.debug("Update book state for book {} with rental record: rents count - {}, reservations count - {}", rentalRecord.getBookId(), rentalRecord.getRecordsCount(RentalStatus.RENTED), rentalRecord.getRecordsCount(RentalStatus.RESERVED));
 
         var inventory = inventoryRecordRepository.findByBookId(rentalRecord.getBookId()).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
         inventory.updateStateWith(rentalRecord);

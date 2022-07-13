@@ -3,7 +3,6 @@ package com.productdock.library.inventory.adapter.out.mongo;
 import com.productdock.library.inventory.adapter.out.mongo.entity.InventoryRecordEntity;
 import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecordMapper;
 import com.productdock.library.inventory.domain.Inventory;
-import com.productdock.library.inventory.domain.exception.InventoryException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
