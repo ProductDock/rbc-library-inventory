@@ -29,7 +29,7 @@ class GetAvailableBooksCountServiceShould {
     private InventoryRecordsPersistenceOutPort inventoryRecordRepository;
 
     @Test
-    void getGetAvailableBooksCount_whenBookExist() {
+    void getGetAvailableBooksCount() {
         var inventory = mock(Inventory.class);
         given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(Optional.of(inventory));
         given(inventory.getAvailableBooksCount()).willReturn(AVAILABLE_BOOKS_COUNT);

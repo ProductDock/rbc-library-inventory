@@ -17,7 +17,7 @@ class RentalRecordMapperShould {
     private RentalRecordMapper rentalRecordMapper;
 
     @Test
-    void mapBookToBookEntity() {
+    void mapMessageToDomain() {
         var rentalRecordMessage = defaultRentalRecordMessage();
 
         var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);

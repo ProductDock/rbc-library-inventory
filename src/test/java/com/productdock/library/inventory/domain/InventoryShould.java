@@ -18,7 +18,7 @@ class InventoryShould {
     }
 
     @Test
-    void processRentalRecords() {
+    void processRentalRecord() {
         var inventory = defaultInventory();
         var rentalRecord = defaultRentalRecord();
 

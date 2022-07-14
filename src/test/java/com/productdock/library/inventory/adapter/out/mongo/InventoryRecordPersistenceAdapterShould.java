@@ -33,7 +33,7 @@ class InventoryRecordPersistenceAdapterShould {
     private InventoryRecordMapper inventoryRecordMapper;
 
     @Test
-    void findInventoryByBookId_whenIdExist() {
+    void findInventoryByBookId() {
         given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(INVENTORY_RECORD_ENTITY);
         given(inventoryRecordMapper.toDomain(INVENTORY_RECORD_ENTITY.get())).willReturn(INVENTORY);
 
