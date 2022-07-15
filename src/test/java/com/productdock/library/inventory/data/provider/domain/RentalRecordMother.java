@@ -20,7 +20,7 @@ public class RentalRecordMother {
         return defaultRentalRecordBuilder().build();
     }
 
-    public static BookRentals.RentalRecordBuilder defaultRentalRecordBuilder() {
+    public static BookRentals.BookRentalsBuilder defaultRentalRecordBuilder() {
         return BookRentals.builder()
                 .bookId(defaultBookId)
                 .bookCopiesRentalState(defaultRentalRecords);

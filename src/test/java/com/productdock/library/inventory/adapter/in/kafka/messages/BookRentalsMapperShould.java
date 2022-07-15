@@ -10,7 +10,7 @@ import static com.productdock.library.inventory.data.provider.in.kafka.RentalRec
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {RentalRecordMapperImpl.class})
+@ContextConfiguration(classes = {BookRentalsMapperImpl.class})
 class BookRentalsMapperShould {
 
     @Autowired
