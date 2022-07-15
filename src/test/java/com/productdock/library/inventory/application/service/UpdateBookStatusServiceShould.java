@@ -41,7 +41,7 @@ class UpdateBookStatusServiceShould {
         var inventory = mock(Inventory.class);
         given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.of(inventory));
 
-        updateBookStatusService.updateBookStatus(rentalRecord);
+        updateBookStatusService.updateBookRentalStatus(rentalRecord);
 
         verify(inventory).updateStateWith(rentalRecord);
         verify(inventoryRecordRepository).save(inventory);
@@ -53,6 +53,6 @@ class UpdateBookStatusServiceShould {
         var rentalRecord = bookRentals();
         given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.empty());
 
-        assertThrows(InventoryException.class, () -> updateBookStatusService.updateBookStatus(rentalRecord));
+        assertThrows(InventoryException.class, () -> updateBookStatusService.updateBookRentalStatus(rentalRecord));
     }
 }

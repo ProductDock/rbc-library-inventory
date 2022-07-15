@@ -22,7 +22,7 @@ public record KafkaConsumer(UpdateBookStatusUseCase updateBookStatusUseCase,
 
         var rentalRecordMessage = deserializeMessageFromJson(message.value());
         var rentalRecord = bookRentalsMapper.toDomain(rentalRecordMessage);
-        updateBookStatusUseCase.updateBookStatus(rentalRecord);
+        updateBookStatusUseCase.updateBookRentalStatus(rentalRecord);
     }
 
     private BookRentalStatusChanged deserializeMessageFromJson(String message) throws JsonProcessingException {
