@@ -10,11 +10,11 @@ public class InventoryRecordEntityMother {
     private static final int defaultRentedBooks = 0;
     private static final int defaultReservedBooks = 0;
 
-    public static InventoryRecordEntity defaultInventoryRecordEntity() {
-        return defaultBookEntityBuilder().build();
+    public static InventoryRecordEntity inventoryRecordEntity() {
+        return inventoryRecordEntityBuilder().build();
     }
 
-    public static InventoryRecordEntity.InventoryRecordEntityBuilder defaultBookEntityBuilder() {
+    public static InventoryRecordEntity.InventoryRecordEntityBuilder inventoryRecordEntityBuilder() {
         return InventoryRecordEntity.builder()
                 .id(defaultId)
                 .bookId(defaultBookId)

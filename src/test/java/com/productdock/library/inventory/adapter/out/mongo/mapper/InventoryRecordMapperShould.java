@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static com.productdock.library.inventory.data.provider.domain.InventoryMother.defaultInventory;
-import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.defaultInventoryRecordEntity;
+import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -31,7 +31,7 @@ class InventoryRecordMapperShould {
 
     @Test
     void mapInventoryRecordEntityToInventory() {
-        var inventoryRecordEntity = defaultInventoryRecordEntity();
+        var inventoryRecordEntity = inventoryRecordEntity();
 
         var inventory = inventoryRecordMapper.toDomain(inventoryRecordEntity);
 

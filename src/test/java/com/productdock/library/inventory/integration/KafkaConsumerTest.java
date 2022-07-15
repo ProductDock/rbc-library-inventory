@@ -2,7 +2,6 @@ package com.productdock.library.inventory.integration;
 
 
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
-import com.productdock.library.inventory.application.service.UpdateBookStatusService;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import com.productdock.library.inventory.integration.kafka.KafkaTestProducer;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.Duration;
 
 import static com.productdock.library.inventory.data.provider.in.kafka.BookRentalStatusChangedMother.bookRentalStatusChanged;
-import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.defaultInventoryRecordEntity;
+import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
@@ -38,9 +37,8 @@ class KafkaConsumerTest extends KafkaTestBase {
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
         givenInventoryRecordEntity();
-        var bookRentalStatusChanged = bookRentalStatusChanged();
 
-        producer.send(topic, bookRentalStatusChanged);
+        producer.send(topic, bookRentalStatusChanged());
         await()
                 .atMost(Duration.ofSeconds(20))
                 .until(() -> inventoryRecordRepository.findByBookId("1").get().getRentedBooks() != 0);
@@ -52,6 +50,6 @@ class KafkaConsumerTest extends KafkaTestBase {
     }
 
     private void givenInventoryRecordEntity() {
-        inventoryRecordRepository.save(defaultInventoryRecordEntity());
+        inventoryRecordRepository.save(inventoryRecordEntity());
     }
 }
