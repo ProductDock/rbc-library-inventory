@@ -11,8 +11,8 @@ public class RentalRecordMessageMother {
     private static final String defaultBookId = "1";
     private static final String defaultUserEmail = "default@gmail.com";
 
-    private static final List<BookRentalStatusChanged.RentalRecordMessageRequest> defaultRentalRecords =
-            Arrays.asList(new BookRentalStatusChanged.RentalRecordMessageRequest(defaultUserEmail, RentalStatus.RENTED));
+    private static final List<BookRentalStatusChanged.RentalRecord> defaultRentalRecords =
+            Arrays.asList(new BookRentalStatusChanged.RentalRecord(defaultUserEmail, RentalStatus.RENTED));
 
     public static BookRentalStatusChanged defaultRentalRecordMessage() {
         return defaultRentalRecordMessageBuilder().build();
