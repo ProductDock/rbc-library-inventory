@@ -18,7 +18,7 @@ public class BookRentalStatusChangedMother {
     public static BookRentalStatusChanged.BookRentalStatusChangedBuilder bookRentalStatusChangedBuilder() {
         return BookRentalStatusChanged.builder()
                 .bookId(defaultBookId)
-                .rentalRecords(new ArrayList<>(Arrays.asList(rented())));
+                .rentalRecord(rented());
     }
 
 }
