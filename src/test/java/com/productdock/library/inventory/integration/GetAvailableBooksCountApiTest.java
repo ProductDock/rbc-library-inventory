@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class InventoryRecordApiTest extends KafkaTestBase {
+class GetAvailableBooksCountApiTest extends KafkaTestBase {
 
     public static final String BOOK_ID = "1";
 
