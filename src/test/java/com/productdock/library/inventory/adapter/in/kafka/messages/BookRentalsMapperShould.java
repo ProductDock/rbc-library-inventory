@@ -1,5 +1,6 @@
 package com.productdock.library.inventory.adapter.in.kafka.messages;
 
+import com.productdock.library.inventory.data.provider.domain.BookCopyRentalStateMother;
 import com.productdock.library.inventory.domain.BookRentals;
 import com.productdock.library.inventory.domain.RentalStatus;
 import org.assertj.core.api.AutoCloseableSoftAssertions;
@@ -30,7 +31,7 @@ class BookRentalsMapperShould {
 
         assertThat(bookRentals.getBookId()).isEqualTo(bookRentalStatusChanged.bookId);
         assertThat(bookRentals.getBookCopiesRentalState()).extracting("patron", "status")
-                .contains(
+                .containsExactly(
                         tuple("default@gmail.com", RentalStatus.RENTED)
                 );
     }
