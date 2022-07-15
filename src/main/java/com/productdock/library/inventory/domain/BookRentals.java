@@ -17,10 +17,10 @@ import java.util.List;
 public class BookRentals implements Serializable {
 
     private String bookId;
-    private List<RentalRecordRequest> rentalRecords;
+    private List<RentalRecordRequest> bookCopiesRentalState;
 
     public int getRecordsCount(RentalStatus status) {
-        return (int) rentalRecords.stream().filter(r -> r.getStatus().equals(status)).count();
+        return (int) bookCopiesRentalState.stream().filter(r -> r.getStatus().equals(status)).count();
     }
 
     @AllArgsConstructor
