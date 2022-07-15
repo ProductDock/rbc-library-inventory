@@ -32,9 +32,6 @@ class UpdateBookStockServiceShould {
     @Mock
     private BookAvailabilityMessagingOutPort bookAvailabilityMessagingOutPort;
 
-    @Mock
-    private InventoryRecordMapper inventoryRecordMapper;
-
     @Test
     void updateBookStock() throws Exception {
         var bookRentals = bookRentals();
