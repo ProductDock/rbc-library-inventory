@@ -1,7 +1,7 @@
 package com.productdock.library.inventory.adapter.out.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
+import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityChanged;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -19,7 +19,7 @@ class KafkaProducerShould {
 
     @Test
     void produceMessage() throws JsonProcessingException {
-        var bookAvailabilityMessage = new BookAvailabilityMessage("1", 1);
+        var bookAvailabilityMessage = new BookAvailabilityChanged("1", 1);
         var producerRecord = recordProducer.createKafkaRecord(topic, bookAvailabilityMessage);
         String desiredValue = "{\"bookId\":\"" + bookAvailabilityMessage.getBookId() + "\",\"availableBookCount\":" + bookAvailabilityMessage.getAvailableBookCount() + "}";
 

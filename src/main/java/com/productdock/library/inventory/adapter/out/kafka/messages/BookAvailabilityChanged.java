@@ -9,10 +9,8 @@ import java.io.Serializable;
 
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class BookAvailabilityMessage implements Serializable {
+public class BookAvailabilityChanged implements Serializable {
 
-    private String bookId;
-    private int availableBookCount;
+    public final String bookId;
+    public final int availableBookCount;
 }

@@ -1,7 +1,7 @@
 package com.productdock.library.inventory.integration;
 
-import com.productdock.library.inventory.adapter.out.kafka.Publisher;
-import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
+import com.productdock.library.inventory.adapter.out.kafka.KafkaPublisher;
+import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityChanged;
 import com.productdock.library.inventory.data.provider.domain.InventoryMother;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import org.junit.jupiter.api.AfterEach;
@@ -22,14 +22,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SpringBootTest
-class KafkaProducerTest extends KafkaTestBase {
+class KafkaPublisherTest extends KafkaTestBase {
 
     public static final String FIRST_BOOK = "1";
     public static final int AVAILABLE_BOOK_COUNT = 3;
     public static final String TEST_FILE = "testRecord.txt";
 
     @Autowired
-    private Publisher publisher;
+    private KafkaPublisher kafkaPublisher;
 
     @AfterEach
     @BeforeEach
@@ -40,15 +40,15 @@ class KafkaProducerTest extends KafkaTestBase {
 
     @Test
     void shouldSendMessage() throws IOException, ClassNotFoundException, ExecutionException, InterruptedException {
-        publisher.sendMessage(InventoryMother.inventory());
+        kafkaPublisher.sendMessage(inventory());
         await()
                 .atMost(Duration.ofSeconds(5))
                 .until(ifFileExists(TEST_FILE));
 
-        var bookAvailabilityMessage = getAvailableBookCountFromConsumersFile(TEST_FILE);
+        var bookAvailabilityChanged = getAvailableBookCountFromConsumersFile(TEST_FILE);
 
-        assertThat(bookAvailabilityMessage.getBookId()).isEqualTo(FIRST_BOOK);
-        assertThat(bookAvailabilityMessage.getAvailableBookCount()).isEqualTo(AVAILABLE_BOOK_COUNT);
+        assertThat(bookAvailabilityChanged.bookId).isEqualTo(FIRST_BOOK);
+        assertThat(bookAvailabilityChanged.availableBookCount).isEqualTo(AVAILABLE_BOOK_COUNT);
     }
 
     private Callable<Boolean> ifFileExists(String testFile) {
@@ -62,10 +62,10 @@ class KafkaProducerTest extends KafkaTestBase {
         return checkForFile;
     }
 
-    private BookAvailabilityMessage getAvailableBookCountFromConsumersFile(String testFile) throws IOException, ClassNotFoundException {
+    private BookAvailabilityChanged getAvailableBookCountFromConsumersFile(String testFile) throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(testFile);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        var bookAvailabilityMessage = (BookAvailabilityMessage) objectInputStream.readObject();
+        var bookAvailabilityMessage = (BookAvailabilityChanged) objectInputStream.readObject();
         objectInputStream.close();
         return bookAvailabilityMessage;
     }

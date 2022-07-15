@@ -2,7 +2,7 @@ package com.productdock.library.inventory.integration.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityMessage;
+import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityChanged;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +23,11 @@ public class KafkaTestConsumer {
     @KafkaListener(topics = "${spring.kafka.topic.book-availability}")
     public void receive(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
         LOGGER.info("received payload='{}'", consumerRecord.toString());
-        var bookAvailabilityMessage = objectMapper.readValue(consumerRecord.value(), BookAvailabilityMessage.class);
+        var bookAvailabilityMessage = objectMapper.readValue(consumerRecord.value(), BookAvailabilityChanged.class);
         writeRecordToFile(bookAvailabilityMessage);
     }
 
-    private void writeRecordToFile(BookAvailabilityMessage message) {
+    private void writeRecordToFile(BookAvailabilityChanged message) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("testRecord.txt");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
