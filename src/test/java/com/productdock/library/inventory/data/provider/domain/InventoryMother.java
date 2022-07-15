@@ -9,7 +9,7 @@ public class InventoryMother {
     private static final int defaultRentedBooks = 0;
     private static final int defaultReservedBooks = 0;
 
-    public static Inventory defaultInventory() {
+    public static Inventory inventory() {
         return defaultInventoryBuilder().build();
     }
 

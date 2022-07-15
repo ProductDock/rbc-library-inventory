@@ -2,7 +2,7 @@ package com.productdock.library.inventory.domain;
 
 import org.junit.jupiter.api.Test;
 
-import static com.productdock.library.inventory.data.provider.domain.InventoryMother.defaultInventory;
+import static com.productdock.library.inventory.data.provider.domain.InventoryMother.inventory;
 import static com.productdock.library.inventory.data.provider.domain.BookRentalsMother.bookRentals;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,7 +10,7 @@ class InventoryShould {
 
     @Test
     void getAvailableBookCount() {
-        var inventory = defaultInventory();
+        var inventory = inventory();
 
         int availableBookCount = inventory.getAvailableBooksCount();
 
@@ -18,11 +18,11 @@ class InventoryShould {
     }
 
     @Test
-    void processRentalRecord() {
-        var inventory = defaultInventory();
-        var rentalRecord = bookRentals();
+    void updateStateWith() {
+        var inventory = inventory();
+        var bookRentals = bookRentals();
 
-        inventory.updateStateWith(rentalRecord);
+        inventory.updateStateWith(bookRentals);
 
         assertThat(inventory.getAvailableBooksCount()).isZero();
         assertThat(inventory.getRentedBooks()).isEqualTo(1);

@@ -9,10 +9,10 @@ class BookRentalsShould {
 
     @Test
     void getRecordsCount() {
-        var rentalRecord = BookRentalsMother.bookRentals();
+        var bookRentals = BookRentalsMother.bookRentals();
 
-        int rentedBooksCount = rentalRecord.getRecordsCount(RentalStatus.RENTED);
-        int reservedBooksCount = rentalRecord.getRecordsCount(RentalStatus.RESERVED);
+        int rentedBooksCount = bookRentals.getRecordsCount(RentalStatus.RENTED);
+        int reservedBooksCount = bookRentals.getRecordsCount(RentalStatus.RESERVED);
 
         assertThat(rentedBooksCount).isEqualTo(1);
         assertThat(reservedBooksCount).isEqualTo(2);

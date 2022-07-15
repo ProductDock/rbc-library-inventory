@@ -27,11 +27,11 @@ public class KafkaTestConsumer {
         writeRecordToFile(bookAvailabilityMessage);
     }
 
-    private void writeRecordToFile(BookAvailabilityMessage rentalRecord) {
+    private void writeRecordToFile(BookAvailabilityMessage message) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("testRecord.txt");
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(rentalRecord);
+            objectOutputStream.writeObject(message);
             objectOutputStream.flush();
             objectOutputStream.close();
         } catch (Exception e) {

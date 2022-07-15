@@ -40,7 +40,7 @@ class KafkaProducerTest extends KafkaTestBase {
 
     @Test
     void shouldSendMessage() throws IOException, ClassNotFoundException, ExecutionException, InterruptedException {
-        publisher.sendMessage(InventoryMother.defaultInventory());
+        publisher.sendMessage(InventoryMother.inventory());
         await()
                 .atMost(Duration.ofSeconds(5))
                 .until(ifFileExists(TEST_FILE));

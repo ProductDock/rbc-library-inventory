@@ -20,9 +20,9 @@ public record KafkaConsumer(UpdateBookStockUseCase updateBookStockUseCase,
     public synchronized void listen(ConsumerRecord<String, String> message) throws JsonProcessingException {
         log.debug("Received kafka message: {}", message);
 
-        var rentalRecordMessage = deserializeMessageFromJson(message.value());
-        var rentalRecord = bookRentalsMapper.toDomain(rentalRecordMessage);
-        updateBookStockUseCase.updateBookStock(rentalRecord);
+        var bookRentalStatusChanged = deserializeMessageFromJson(message.value());
+        var bookRentals = bookRentalsMapper.toDomain(bookRentalStatusChanged);
+        updateBookStockUseCase.updateBookStock(bookRentals);
     }
 
     private BookRentalStatusChanged deserializeMessageFromJson(String message) throws JsonProcessingException {
