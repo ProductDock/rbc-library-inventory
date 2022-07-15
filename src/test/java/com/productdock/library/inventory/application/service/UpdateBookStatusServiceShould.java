@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static com.productdock.library.inventory.data.provider.domain.RentalRecordMother.defaultRentalRecord;
+import static com.productdock.library.inventory.data.provider.domain.BookRentalsMother.bookRentals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -37,7 +37,7 @@ class UpdateBookStatusServiceShould {
 
     @Test
     void updateBookState() throws Exception {
-        var rentalRecord = defaultRentalRecord();
+        var rentalRecord = bookRentals();
         var inventory = mock(Inventory.class);
         given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.of(inventory));
 
@@ -50,7 +50,7 @@ class UpdateBookStatusServiceShould {
 
     @Test
     void throwInventoryException_whenBookNotExist() {
-        var rentalRecord = defaultRentalRecord();
+        var rentalRecord = bookRentals();
         given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.empty());
 
         assertThrows(InventoryException.class, () -> updateBookStatusService.updateBookStatus(rentalRecord));

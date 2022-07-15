@@ -17,7 +17,7 @@ import java.util.List;
 public class BookRentals implements Serializable {
 
     private String bookId;
-    private List<RentalRecordRequest> bookCopiesRentalState;
+    private List<BookCopyRentalState> bookCopiesRentalState;
 
     public int getRecordsCount(RentalStatus status) {
         return (int) bookCopiesRentalState.stream().filter(r -> r.getStatus().equals(status)).count();
@@ -27,7 +27,7 @@ public class BookRentals implements Serializable {
     @NoArgsConstructor
     @Data
     @Builder
-    public static class RentalRecordRequest implements Serializable {
+    public static class BookCopyRentalState implements Serializable {
 
         private String patron;
         private RentalStatus status;

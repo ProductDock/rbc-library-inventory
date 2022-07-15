@@ -3,7 +3,7 @@ package com.productdock.library.inventory.domain;
 import org.junit.jupiter.api.Test;
 
 import static com.productdock.library.inventory.data.provider.domain.InventoryMother.defaultInventory;
-import static com.productdock.library.inventory.data.provider.domain.RentalRecordMother.defaultRentalRecord;
+import static com.productdock.library.inventory.data.provider.domain.BookRentalsMother.bookRentals;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class InventoryShould {
@@ -20,7 +20,7 @@ class InventoryShould {
     @Test
     void processRentalRecord() {
         var inventory = defaultInventory();
-        var rentalRecord = defaultRentalRecord();
+        var rentalRecord = bookRentals();
 
         inventory.updateStateWith(rentalRecord);
 
