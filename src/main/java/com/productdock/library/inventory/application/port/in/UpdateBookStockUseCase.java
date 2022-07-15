@@ -2,7 +2,7 @@ package com.productdock.library.inventory.application.port.in;
 
 import com.productdock.library.inventory.domain.BookRentals;
 
-public interface UpdateBookStatusUseCase {
+public interface UpdateBookStockUseCase {
 
-    void updateBookRentalStatus(BookRentals bookRentals);
+    void updateBookStock(BookRentals bookRentals);
 }

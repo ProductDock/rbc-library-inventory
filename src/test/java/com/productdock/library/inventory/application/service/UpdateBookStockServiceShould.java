@@ -21,10 +21,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class UpdateBookStatusServiceShould {
+class UpdateBookStockServiceShould {
 
     @InjectMocks
-    private UpdateBookStatusService updateBookStatusService;
+    private UpdateBookStockService updateBookStockService;
 
     @Mock
     private InventoryRecordsPersistenceOutPort inventoryRecordRepository;
@@ -36,23 +36,23 @@ class UpdateBookStatusServiceShould {
     private InventoryRecordMapper inventoryRecordMapper;
 
     @Test
-    void updateBookState() throws Exception {
-        var rentalRecord = bookRentals();
+    void updateBookStock() throws Exception {
+        var bookRentals = bookRentals();
         var inventory = mock(Inventory.class);
-        given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.of(inventory));
+        given(inventoryRecordRepository.findByBookId(bookRentals.getBookId())).willReturn(Optional.of(inventory));
 
-        updateBookStatusService.updateBookRentalStatus(rentalRecord);
+        updateBookStockService.updateBookStock(bookRentals);
 
-        verify(inventory).updateStateWith(rentalRecord);
+        verify(inventory).updateStateWith(bookRentals);
         verify(inventoryRecordRepository).save(inventory);
         verify(bookAvailabilityMessagingOutPort).sendMessage(any());
     }
 
     @Test
     void throwInventoryException_whenBookNotExist() {
-        var rentalRecord = bookRentals();
-        given(inventoryRecordRepository.findByBookId(rentalRecord.getBookId())).willReturn(Optional.empty());
+        var bookRentals = bookRentals();
+        given(inventoryRecordRepository.findByBookId(bookRentals.getBookId())).willReturn(Optional.empty());
 
-        assertThrows(InventoryException.class, () -> updateBookStatusService.updateBookRentalStatus(rentalRecord));
+        assertThrows(InventoryException.class, () -> updateBookStockService.updateBookStock(bookRentals));
     }
 }
