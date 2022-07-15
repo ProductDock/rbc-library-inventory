@@ -9,22 +9,18 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Builder
-public class RentalRecordMessage {
+@AllArgsConstructor
+public class BookRentalStatusChanged {
 
-    private String bookId;
-    private List<RentalRecordMessageRequest> rentalRecords;
+    public final String bookId;
+    public final List<RentalRecordMessageRequest> rentalRecords;
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
     @Builder
+    @AllArgsConstructor
     public static class RentalRecordMessageRequest implements Serializable {
 
-        private String patron;
-        private RentalStatus status;
+        public final String patron;
+        public final RentalStatus status;
     }
 }
