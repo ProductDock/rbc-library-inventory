@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
+import static com.productdock.library.inventory.data.provider.domain.InventoryMother.inventory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 

@@ -15,13 +15,11 @@ class KafkaProducerShould {
 
     private RecordProducer recordProducer = new RecordProducer();
 
-    private final String topic = "test-book-availability";
-
     @Test
     void produceMessage() throws JsonProcessingException {
-        var bookAvailabilityMessage = new BookAvailabilityChanged("1", 1);
-        var producerRecord = recordProducer.createKafkaRecord(topic, bookAvailabilityMessage);
-        String desiredValue = "{\"bookId\":\"" + bookAvailabilityMessage.getBookId() + "\",\"availableBookCount\":" + bookAvailabilityMessage.getAvailableBookCount() + "}";
+        var message = new BookAvailabilityChanged("1", 1);
+        var producerRecord = recordProducer.createKafkaRecord("topic", message);
+        String desiredValue = "{\"bookId\":\"" + message.bookId + "\",\"availableBookCount\":" + message.availableBookCount + "}";
 
         assertThat(producerRecord.value()).isEqualTo(desiredValue);
     }

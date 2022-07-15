@@ -20,11 +20,7 @@ public class InventoryRecordPersistenceAdapter implements InventoryRecordsPersis
     @Override
     public Optional<Inventory> findByBookId(String bookId) {
         log.debug("Find book in database by id: {}", bookId);
-        var bookEntity = inventoryRecordRepository.findByBookId(bookId);
-        if (bookEntity.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(inventoryRecordMapper.toDomain(bookEntity.get()));
+        return inventoryRecordRepository.findByBookId(bookId).map((bookEntity) -> inventoryRecordMapper.toDomain(bookEntity));
     }
 
     @Override
