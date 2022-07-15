@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 
-import static com.productdock.library.inventory.data.provider.in.kafka.RentalRecordMessageMother.defaultRentalRecordMessage;
+import static com.productdock.library.inventory.data.provider.in.kafka.BookRentalStatusChangedMother.bookRentalStatusChanged;
 import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.defaultInventoryRecordEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
@@ -41,9 +41,9 @@ class KafkaConsumerTest extends KafkaTestBase {
     @Test
     void shouldUpdateInventory_whenMessageReceived() throws Exception {
         givenInventoryRecordEntity();
-        var rentalRecord = defaultRentalRecordMessage();
+        var bookRentalStatusChanged = bookRentalStatusChanged();
 
-        producer.send(topic, rentalRecord);
+        producer.send(topic, bookRentalStatusChanged);
         await()
                 .atMost(Duration.ofSeconds(20))
                 .until(() -> inventoryRecordRepository.findByBookId("1").get().getRentedBooks() != 0);

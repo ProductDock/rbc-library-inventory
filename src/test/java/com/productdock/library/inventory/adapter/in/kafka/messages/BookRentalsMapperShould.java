@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static com.productdock.library.inventory.data.provider.in.kafka.RentalRecordMessageMother.defaultRentalRecordMessage;
+import static com.productdock.library.inventory.data.provider.in.kafka.BookRentalStatusChangedMother.bookRentalStatusChanged;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
@@ -18,12 +18,12 @@ class BookRentalsMapperShould {
 
     @Test
     void mapMessageToDomain() {
-        var rentalRecordMessage = defaultRentalRecordMessage();
+        var bookRentalStatusChanged = bookRentalStatusChanged();
 
-        var rentalRecord = bookRentalsMapper.toDomain(rentalRecordMessage);
+        var bookRentals = bookRentalsMapper.toDomain(bookRentalStatusChanged);
 
-        assertThat(rentalRecord.getBookId()).isEqualTo(rentalRecordMessage.bookId);
-        assertThat(rentalRecord.getBookCopiesRentalState()).hasSameSizeAs(rentalRecordMessage.rentalRecords);
+        assertThat(bookRentals.getBookId()).isEqualTo(bookRentalStatusChanged.bookId);
+        assertThat(bookRentals.getBookCopiesRentalState()).hasSameSizeAs(bookRentalStatusChanged.rentalRecords);
     }
 
 }

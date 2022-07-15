@@ -6,7 +6,7 @@ import com.productdock.library.inventory.domain.RentalStatus;
 import java.util.Arrays;
 import java.util.List;
 
-public class RentalRecordMessageMother {
+public class BookRentalStatusChangedMother {
 
     private static final String defaultBookId = "1";
     private static final String defaultUserEmail = "default@gmail.com";
@@ -14,11 +14,11 @@ public class RentalRecordMessageMother {
     private static final List<BookRentalStatusChanged.RentalRecord> defaultRentalRecords =
             Arrays.asList(new BookRentalStatusChanged.RentalRecord(defaultUserEmail, RentalStatus.RENTED));
 
-    public static BookRentalStatusChanged defaultRentalRecordMessage() {
-        return defaultRentalRecordMessageBuilder().build();
+    public static BookRentalStatusChanged bookRentalStatusChanged() {
+        return bookRentalStatusChangedBuilder().build();
     }
 
-    public static BookRentalStatusChanged.BookRentalStatusChangedBuilder defaultRentalRecordMessageBuilder() {
+    public static BookRentalStatusChanged.BookRentalStatusChangedBuilder bookRentalStatusChangedBuilder() {
         return BookRentalStatusChanged.builder()
                 .bookId(defaultBookId)
                 .rentalRecords(defaultRentalRecords);
