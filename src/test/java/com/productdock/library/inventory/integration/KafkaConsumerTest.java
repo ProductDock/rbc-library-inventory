@@ -27,9 +27,6 @@ class KafkaConsumerTest extends KafkaTestBase {
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
 
-    @Autowired
-    private UpdateBookStatusService updateBookStatusService;
-
     @Value("${spring.kafka.topic.book-status}")
     private String topic;
 
