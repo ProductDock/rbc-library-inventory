@@ -16,8 +16,7 @@ public class KafkaTestProducer {
     private KafkaTemplate<String, String> kafkaTemplate;
 
     public void send(String topic, BookRentalStatusChanged bookRentalStatusChanged) throws JsonProcessingException {
-        String message = "";
-        message = OBJECT_MAPPER.writeValueAsString(bookRentalStatusChanged);
+        String message = OBJECT_MAPPER.writeValueAsString(bookRentalStatusChanged);
         kafkaTemplate.send(topic, message);
     }
 }
