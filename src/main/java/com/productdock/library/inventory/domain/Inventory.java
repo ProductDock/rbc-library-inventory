@@ -24,10 +24,10 @@ public class Inventory {
         return bookCopies - (rentedBooks + reservedBooks);
     }
 
-    public void updateStateWith(RentalRecord rentalRecord) {
-        log.debug("Update book state with: {}", rentalRecord);
+    public void updateStateWith(BookRentals bookRentals) {
+        log.debug("Update book state with: {}", bookRentals);
 
-        setRentedBooks(rentalRecord.getRecordsCount(RentalStatus.RENTED));
-        setReservedBooks(rentalRecord.getRecordsCount(RentalStatus.RESERVED));
+        setRentedBooks(bookRentals.getRecordsCount(RentalStatus.RENTED));
+        setReservedBooks(bookRentals.getRecordsCount(RentalStatus.RESERVED));
     }
 }

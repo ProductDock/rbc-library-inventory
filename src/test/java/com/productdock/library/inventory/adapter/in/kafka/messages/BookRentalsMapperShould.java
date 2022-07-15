@@ -11,16 +11,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {RentalRecordMapperImpl.class})
-class RentalRecordMapperShould {
+class BookRentalsMapperShould {
 
     @Autowired
-    private RentalRecordMapper rentalRecordMapper;
+    private BookRentalsMapper bookRentalsMapper;
 
     @Test
     void mapMessageToDomain() {
         var rentalRecordMessage = defaultRentalRecordMessage();
 
-        var rentalRecord = rentalRecordMapper.toDomain(rentalRecordMessage);
+        var rentalRecord = bookRentalsMapper.toDomain(rentalRecordMessage);
 
         assertThat(rentalRecord.getBookId()).isEqualTo(rentalRecordMessage.bookId);
         assertThat(rentalRecord.getRentalRecords()).hasSameSizeAs(rentalRecordMessage.rentalRecords);

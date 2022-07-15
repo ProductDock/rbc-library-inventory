@@ -4,7 +4,6 @@ import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecor
 import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
 import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
 import com.productdock.library.inventory.domain.Inventory;
-import com.productdock.library.inventory.domain.RentalRecord;
 import com.productdock.library.inventory.domain.exception.InventoryException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

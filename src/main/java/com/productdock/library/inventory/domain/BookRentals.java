@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @Slf4j
-public class RentalRecord implements Serializable {
+public class BookRentals implements Serializable {
 
     private String bookId;
     private List<RentalRecordRequest> rentalRecords;
