@@ -1,6 +1,9 @@
 package com.productdock.library.inventory.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Data
@@ -21,10 +24,10 @@ public class Inventory {
         return bookCopies - (rentedBooks + reservedBooks);
     }
 
-    public void updateStateWith(RentalRecord rentalRecord) {
-        log.debug("Update book state with: {}", rentalRecord);
+    public void updateStateWith(BookRentals bookRentals) {
+        log.debug("Update book state with: {}", bookRentals);
 
-        setRentedBooks(rentalRecord.getRentsCount());
-        setReservedBooks(rentalRecord.getReservationsCount());
+        setRentedBooks(bookRentals.getRecordsCount(RentalStatus.RENTED));
+        setReservedBooks(bookRentals.getRecordsCount(RentalStatus.RESERVED));
     }
 }

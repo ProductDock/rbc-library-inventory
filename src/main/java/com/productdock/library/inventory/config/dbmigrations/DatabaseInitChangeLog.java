@@ -2,8 +2,8 @@ package com.productdock.library.inventory.config.dbmigrations;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
-import com.productdock.library.inventory.book.InventoryRecordEntity;
-import com.productdock.library.inventory.book.InventoryRecordRepository;
+import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
+import com.productdock.library.inventory.adapter.out.mongo.entity.InventoryRecordEntity;
 import com.productdock.library.inventory.config.coverage.Generated;
 
 @Generated
