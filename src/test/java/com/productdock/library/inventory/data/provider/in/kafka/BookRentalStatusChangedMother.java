@@ -2,9 +2,6 @@ package com.productdock.library.inventory.data.provider.in.kafka;
 
 import com.productdock.library.inventory.adapter.in.kafka.messages.BookRentalStatusChanged;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import static com.productdock.library.inventory.data.provider.in.kafka.RentalRecordMother.rented;
 
 public class BookRentalStatusChangedMother {

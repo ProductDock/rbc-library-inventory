@@ -1,6 +1,5 @@
 package com.productdock.library.inventory.application.service;
 
-import com.productdock.library.inventory.adapter.out.mongo.mapper.InventoryRecordMapper;
 import com.productdock.library.inventory.application.port.out.messaging.BookAvailabilityMessagingOutPort;
 import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
 import com.productdock.library.inventory.domain.Inventory;

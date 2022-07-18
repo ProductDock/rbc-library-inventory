@@ -2,8 +2,8 @@ package com.productdock.library.inventory.domain;
 
 import org.junit.jupiter.api.Test;
 
-import static com.productdock.library.inventory.data.provider.domain.InventoryMother.inventory;
 import static com.productdock.library.inventory.data.provider.domain.BookRentalsMother.bookRentals;
+import static com.productdock.library.inventory.data.provider.domain.InventoryMother.inventory;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class InventoryShould {
