@@ -1,2 +1,2 @@
 jwt:
-  public.key: ${inventory.jwt.public.key}
+  public.key: file:${inventory.jwt.public.key}
