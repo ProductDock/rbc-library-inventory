@@ -534,4 +534,35 @@ public class DatabaseInitChangeLog {
                 .rentedBooks(0)
                 .build());
     }
+
+    @ChangeSet(order = "003", id = "add_four_new_books_to_inventory", author = "pd")
+    public void addFourNewBooksToInventory(InventoryRecordRepository inventoryRecordRepository) {
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("76")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("77")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("78")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("79")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+    }
 }
