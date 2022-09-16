@@ -565,4 +565,56 @@ public class DatabaseInitChangeLog {
                 .rentedBooks(0)
                 .build());
     }
+
+    @ChangeSet(order = "004", id = "add_missing_books_to_inventory", author = "pd")
+    public void addMissingBooksToInventory(InventoryRecordRepository inventoryRecordRepository) {
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("80")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("81")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("82")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("83")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("84")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("85")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+
+        inventoryRecordRepository.save(InventoryRecordEntity.builder()
+                .bookId("86")
+                .bookCopies(1)
+                .reservedBooks(0)
+                .rentedBooks(0)
+                .build());
+    }
 }
