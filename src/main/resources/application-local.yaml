@@ -1,2 +1,2 @@
 jwt:
-  public.key: classpath:app.pub
+  public.key: classpath:app-local.pub
