@@ -12,7 +12,7 @@ spring:
     consumer:
       enable-auto-commit: true
       auto-offset-reset: earliest
-      group-id: ${CONSUMER_GROUP}
+      group-id: inventory-group
     topic:
       book-status: book-status
       book-availability: book-availability
@@ -34,4 +34,4 @@ logging:
     com.productdock.library.inventory: INFO
 
 jwt:
-  public.key: file:${INVENTORY_JWT_PUBLIC_KEY}
+  public.key: file:${USER_PROFILES_JWT_PUBLIC_KEY}
