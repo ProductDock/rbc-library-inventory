@@ -12,7 +12,7 @@ spring:
     consumer:
       enable-auto-commit: true
       auto-offset-reset: earliest
-      group-id: ${CONSUMER_GROUP}
+      group-id: inventory-group
     topic:
       book-status: book-status
       book-availability: book-availability
