@@ -1,6 +1,9 @@
 package com.productdock.library.inventory.config;
 
 import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.actuate.metrics.MetricsEndpoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +23,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+        http.authorizeRequests(authorize -> authorize.antMatchers("/actuator/**").permitAll().anyRequest().authenticated())
                 .cors().and()
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
