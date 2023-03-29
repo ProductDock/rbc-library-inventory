@@ -1,6 +1,5 @@
 package com.productdock.library.inventory.integration;
 
-
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import com.productdock.library.inventory.integration.kafka.KafkaTestConsumer;
@@ -12,16 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
 import java.time.Duration;
 
-import static com.productdock.library.inventory.data.provider.in.kafka.BookRentalStatusChangedMother.bookRentalStatusChanged;
-import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
+import static com.productdock.library.inventory.data.provider.in.kafka.InsertBookMessageMother.insertBookMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SpringBootTest
-class UpdateBookStockTest extends KafkaTestBase {
+class InsertBookTest extends KafkaTestBase {
 
     @Autowired
     private KafkaTestProducer producer;
@@ -29,7 +26,7 @@ class UpdateBookStockTest extends KafkaTestBase {
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
 
-    @Value("${spring.kafka.topic.book-status}")
+    @Value("${spring.kafka.topic.insert-inventory}")
     private String topic;
 
     @AfterEach
@@ -41,37 +38,19 @@ class UpdateBookStockTest extends KafkaTestBase {
 
     @Test
     void shouldUpdateBookStock_whenMessageReceived() throws Exception {
-        givenInventoryRecordEntity();
+        producer.sendInsertBook(topic, insertBookMessage());
 
-        producer.sendRentalStatusChange(topic, bookRentalStatusChanged());
-
-        verifyThatStockIsUpdated();
-        verifyThatAvailabilityChangedEventIsPublished();
+        verifyThatBookIsAdded();
     }
 
-    private void verifyThatStockIsUpdated() {
+    private void verifyThatBookIsAdded() {
         await()
                 .atMost(Duration.ofSeconds(20))
-                .until(() -> inventoryRecordRepository.findByBookId("1").get().getRentedBooks() != 0);
+                .until(() -> inventoryRecordRepository.findByBookId("1").isPresent());
 
         var entity = inventoryRecordRepository.findByBookId("1");
-        assertThat(entity.get().getBookCopies()).isEqualTo(3);
-        assertThat(entity.get().getRentedBooks()).isEqualTo(1);
+        assertThat(entity.get().getBookCopies()).isEqualTo(1);
+        assertThat(entity.get().getRentedBooks()).isZero();
         assertThat(entity.get().getReservedBooks()).isZero();
-    }
-
-    private void verifyThatAvailabilityChangedEventIsPublished() throws IOException, ClassNotFoundException {
-        await()
-                .atMost(Duration.ofSeconds(20))
-                .until(KafkaTestConsumer.ifFileExists());
-
-        var bookAvailabilityChanged = KafkaTestConsumer.getMessage();
-
-        assertThat(bookAvailabilityChanged.bookId).isEqualTo("1");
-        assertThat(bookAvailabilityChanged.availableBookCount).isEqualTo(2);
-    }
-
-    private void givenInventoryRecordEntity() {
-        inventoryRecordRepository.save(inventoryRecordEntity());
     }
 }
