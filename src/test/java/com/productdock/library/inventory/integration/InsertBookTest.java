@@ -26,7 +26,7 @@ class InsertBookTest extends KafkaTestBase {
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
 
-    @Value("${spring.kafka.topic.insert-inventory}")
+    @Value("${spring.kafka.topic.insert-book}")
     private String topic;
 
     @AfterEach

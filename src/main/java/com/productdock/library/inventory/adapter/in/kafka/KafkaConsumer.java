@@ -30,7 +30,7 @@ public record KafkaConsumer(UpdateBookStockUseCase updateBookStockUseCase,
         updateBookStockUseCase.updateBookStock(bookRentals);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.insert-inventory}")
+    @KafkaListener(topics = "${spring.kafka.topic.insert-book}")
     public synchronized void listenInsertInventory(ConsumerRecord<String, String> message) throws JsonProcessingException {
         log.debug("Received insert inventory kafka message: {}", message);
 
