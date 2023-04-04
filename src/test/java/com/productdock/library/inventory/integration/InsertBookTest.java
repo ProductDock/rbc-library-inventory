@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.Duration;
 
 import static com.productdock.library.inventory.data.provider.in.kafka.InsertBookMessageMother.insertBookMessage;
+import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
@@ -40,10 +41,19 @@ class InsertBookTest extends KafkaTestBase {
     void shouldUpdateBookStock_whenMessageReceived() throws Exception {
         producer.sendInsertBook(topic, insertBookMessage());
 
-        verifyThatBookIsAdded();
+        verifyBookStock();
     }
 
-    private void verifyThatBookIsAdded() {
+    @Test
+    void shouldUpdateBookStock_whenMessageReceivedAndBookAlreadyExists() throws Exception {
+        givenInventoryRecordEntity();
+
+        producer.sendInsertBook(topic, insertBookMessage());
+
+        verifyBookStock();
+    }
+
+    private void verifyBookStock() {
         await()
                 .atMost(Duration.ofSeconds(20))
                 .until(() -> inventoryRecordRepository.findByBookId("1").isPresent());
@@ -52,5 +62,9 @@ class InsertBookTest extends KafkaTestBase {
         assertThat(entity.get().getBookCopies()).isEqualTo(1);
         assertThat(entity.get().getRentedBooks()).isZero();
         assertThat(entity.get().getReservedBooks()).isZero();
+    }
+
+    private void givenInventoryRecordEntity() {
+        inventoryRecordRepository.save(inventoryRecordEntity());
     }
 }
