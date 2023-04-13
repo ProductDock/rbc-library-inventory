@@ -16,6 +16,7 @@ spring:
     topic:
       book-status: book-status
       book-availability: book-availability
+      insert-book: insert-book
 
   data:
     mongodb:
