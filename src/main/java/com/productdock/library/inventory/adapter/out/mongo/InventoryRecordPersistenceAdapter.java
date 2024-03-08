@@ -32,4 +32,10 @@ public class InventoryRecordPersistenceAdapter implements InventoryRecordsPersis
         previousRecordEntity.ifPresent(inventoryRecordEntity -> newRecordEntity.setId(previousRecordEntity.get().getId()));
         inventoryRecordRepository.save(newRecordEntity);
     }
+
+    @Override
+    public void deleteByBookId(String bookId) {
+        log.debug("Deleting book: {}", bookId);
+        inventoryRecordRepository.deleteByBookId(bookId);
+    }
 }

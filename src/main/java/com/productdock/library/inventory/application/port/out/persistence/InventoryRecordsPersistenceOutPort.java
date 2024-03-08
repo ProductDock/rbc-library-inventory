@@ -9,4 +9,5 @@ public interface InventoryRecordsPersistenceOutPort {
     Optional<Inventory> findByBookId(String bookId);
 
     void save(Inventory book);
+    void deleteByBookId(String bookId);
 }
