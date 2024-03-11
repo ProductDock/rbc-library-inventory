@@ -26,4 +26,8 @@ public class KafkaTestProducer {
         kafkaTemplate.send(topic, message);
     }
 
+    public void sendDeleteBook(String topic, String message) throws JsonProcessingException {
+        kafkaTemplate.send(topic, message);
+    }
+
 }

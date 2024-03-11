@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class DeleteBookServiceShould {
 
-    private String bookId = "1";
+    private static  final String BOOK_ID = "1";
     @InjectMocks
     private DeleteBookService deleteBookService;
     @Mock
@@ -27,17 +27,17 @@ public class DeleteBookServiceShould {
     @Test
     void deleteBookInventory(){
         var inventory = mock(Inventory.class);
-        given(inventoryRecordRepository.findByBookId(bookId)).willReturn(Optional.of(inventory));
-        deleteBookService.deleteBook(bookId);
+        given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(Optional.of(inventory));
+        deleteBookService.deleteBook(BOOK_ID);
 
-        verify(inventoryRecordRepository).deleteByBookId(bookId);
+        verify(inventoryRecordRepository).deleteByBookId(BOOK_ID);
     }
 
     @Test
     void deleteBookInventory_WhenInventoryDoesntExist(){
-        given(inventoryRecordRepository.findByBookId(bookId)).willReturn(Optional.empty());
+        given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(Optional.empty());
 
-        assertThrows(InventoryException.class, () -> deleteBookService.deleteBook(bookId));
+        assertThrows(InventoryException.class, () -> deleteBookService.deleteBook(BOOK_ID));
     }
 
 }
