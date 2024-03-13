@@ -17,7 +17,7 @@ public class DeleteBookService implements DeleteBookUseCase {
     @Override
     public void deleteBook(String bookId) {
         var bookInventory = inventoryRecordRepository.findByBookId(bookId).orElseThrow(() -> new InventoryException("Book does not exist in inventory!"));
-        log.debug("Found by book id {}: {}", bookId, bookInventory);
+        log.debug("Found inventory by book id {}: {}", bookId, bookInventory);
         inventoryRecordRepository.deleteByBookId(bookId);
     }
 }
