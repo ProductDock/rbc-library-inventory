@@ -2,9 +2,9 @@ package com.productdock.library.inventory.adapter.in.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.productdock.library.inventory.adapter.in.kafka.messages.InsertBookMessage;
 import com.productdock.library.inventory.adapter.in.kafka.messages.BookRentalStatusChanged;
 import com.productdock.library.inventory.adapter.in.kafka.messages.BookRentalsMapper;
+import com.productdock.library.inventory.adapter.in.kafka.messages.InsertBookMessage;
 import com.productdock.library.inventory.adapter.in.kafka.messages.InventoryMapper;
 import com.productdock.library.inventory.application.port.in.DeleteBookUseCase;
 import com.productdock.library.inventory.application.port.in.InsertBookUseCase;
@@ -42,7 +42,7 @@ public record KafkaConsumer(UpdateBookStockUseCase updateBookStockUseCase,
     }
 
     @KafkaListener(topics = "${spring.kafka.topic.delete-book}")
-    public synchronized void listenDeleteInvetory(ConsumerRecord<String, String> message) throws JsonProcessingException{
+    public synchronized void listenDeleteInvetory(ConsumerRecord<String, String> message) throws JsonProcessingException {
         log.debug("Recieved delete book kafka message: {}", message);
         var bookId = deserializeDeleteBookMessageFromJson(message.value());
         deleteBookUseCase.deleteBook(bookId);

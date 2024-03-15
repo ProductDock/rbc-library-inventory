@@ -1,7 +1,6 @@
 package com.productdock.library.inventory.integration;
 
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
-import com.productdock.library.inventory.domain.exception.InventoryException;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import com.productdock.library.inventory.integration.kafka.KafkaTestConsumer;
 import com.productdock.library.inventory.integration.kafka.KafkaTestProducer;
@@ -14,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.Duration;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SpringBootTest
@@ -50,6 +49,4 @@ public class DeleteBookTest extends KafkaTestBase {
     private void givenInventoryRecordEntity() {
         inventoryRecordRepository.save(inventoryRecordEntity());
     }
-
-
 }
