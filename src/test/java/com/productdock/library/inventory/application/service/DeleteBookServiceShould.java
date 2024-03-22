@@ -1,17 +1,12 @@
 package com.productdock.library.inventory.application.service;
 
 import com.productdock.library.inventory.application.port.out.persistence.InventoryRecordsPersistenceOutPort;
-import com.productdock.library.inventory.domain.Inventory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,8 +20,6 @@ class DeleteBookServiceShould {
 
     @Test
     void deleteBookInventory() {
-        var inventory = mock(Inventory.class);
-        given(inventoryRecordRepository.findByBookId(BOOK_ID)).willReturn(Optional.of(inventory));
         deleteBookService.deleteBook(BOOK_ID);
 
         verify(inventoryRecordRepository).deleteByBookId(BOOK_ID);
