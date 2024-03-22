@@ -42,7 +42,7 @@ public record KafkaConsumer(UpdateBookStockUseCase updateBookStockUseCase,
     }
 
     @KafkaListener(topics = "${spring.kafka.topic.delete-book}")
-    public synchronized void listenDeleteInvetory(ConsumerRecord<String, String> message) throws JsonProcessingException {
+    public void listenDeleteInvetory(ConsumerRecord<String, String> message) throws JsonProcessingException {
         log.debug("Recieved delete book kafka message: {}", message);
         var bookId = deserializeDeleteBookMessageFromJson(message.value());
         deleteBookUseCase.deleteBook(bookId);
