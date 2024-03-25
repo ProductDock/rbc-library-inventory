@@ -51,4 +51,11 @@ class InventoryRecordPersistenceAdapterShould {
 
         verify(inventoryRecordRepository).save(INVENTORY_RECORD_ENTITY.get());
     }
+
+    @Test
+    void deleteByBookId(){
+        inventoryRecordPersistenceAdapter.deleteByBookId(BOOK_ID);
+
+        verify(inventoryRecordRepository).deleteByBookId(BOOK_ID);
+    }
 }

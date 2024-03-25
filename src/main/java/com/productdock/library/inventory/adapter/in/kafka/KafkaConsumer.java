@@ -2,10 +2,11 @@ package com.productdock.library.inventory.adapter.in.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.productdock.library.inventory.adapter.in.kafka.messages.InsertBookMessage;
 import com.productdock.library.inventory.adapter.in.kafka.messages.BookRentalStatusChanged;
 import com.productdock.library.inventory.adapter.in.kafka.messages.BookRentalsMapper;
+import com.productdock.library.inventory.adapter.in.kafka.messages.InsertBookMessage;
 import com.productdock.library.inventory.adapter.in.kafka.messages.InventoryMapper;
+import com.productdock.library.inventory.application.port.in.DeleteBookUseCase;
 import com.productdock.library.inventory.application.port.in.InsertBookUseCase;
 import com.productdock.library.inventory.application.port.in.UpdateBookStockUseCase;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public record KafkaConsumer(UpdateBookStockUseCase updateBookStockUseCase,
                             InsertBookUseCase insertBookUseCase,
+                            DeleteBookUseCase deleteBookUseCase,
                             BookRentalsMapper bookRentalsMapper,
                             InventoryMapper inventoryMapper,
                             ObjectMapper objectMapper) {
@@ -39,11 +41,22 @@ public record KafkaConsumer(UpdateBookStockUseCase updateBookStockUseCase,
         insertBookUseCase.insertBook(newInventory);
     }
 
+    @KafkaListener(topics = "${spring.kafka.topic.delete-book}")
+    public void listenDeleteInvetory(ConsumerRecord<String, String> message) throws JsonProcessingException {
+        log.debug("Recieved delete book kafka message: {}", message);
+        var bookId = deserializeDeleteBookMessageFromJson(message.value());
+        deleteBookUseCase.deleteBook(bookId);
+    }
+
     private BookRentalStatusChanged deserializeBookRentalStatusChangedMessageFromJson(String message) throws JsonProcessingException {
         return objectMapper.readValue(message, BookRentalStatusChanged.class);
     }
 
     private InsertBookMessage deserializeInsertBookMessageFromJson(String message) throws JsonProcessingException {
         return objectMapper.readValue(message, InsertBookMessage.class);
+    }
+
+    private String deserializeDeleteBookMessageFromJson(String message) throws JsonProcessingException {
+        return objectMapper.readValue(message, String.class);
     }
 }
