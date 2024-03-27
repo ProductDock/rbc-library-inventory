@@ -15,7 +15,7 @@ class BookSubscriptionsShould {
 
         subscriptions.subscribeUser(USER_ID);
 
-        assertThat(subscriptions.getSubscribers().size()).isEqualTo(2);
+        assertThat(subscriptions.getSubscribers()).hasSize(2);
     }
 
     @Test
@@ -25,7 +25,7 @@ class BookSubscriptionsShould {
 
         subscriptions.unsubscribeUser(USER_ID);
 
-        assertThat(subscriptions.getSubscribers().size()).isEqualTo(1);
+        assertThat(subscriptions.getSubscribers()).hasSize(1);
     }
 
     @Test

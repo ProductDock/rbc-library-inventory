@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {BookSubscriptionsMapperImpl.class})
-public class BookSubscriptionsMapperShould {
+class BookSubscriptionsMapperShould {
 
     @Autowired
     private BookSubscriptionsMapper bookSubscriptionsMapper;

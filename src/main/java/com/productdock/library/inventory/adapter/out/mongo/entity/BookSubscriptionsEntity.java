@@ -15,8 +15,7 @@ import java.util.List;
 public class BookSubscriptionsEntity {
 
     @Id
-    public String id;
-    public String bookId;
-    public List<String> subscribers;
-
+    private String id;
+    private String bookId;
+    private List<String> subscribers;
 }

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCase) {
 
+    public static final String EMAIL = "email";
+
     @PostMapping("/subscribe/{bookId}")
     public void subscribeToBook(@PathVariable("bookId") String bookId, Authentication authentication) {
 
-        var userId = ((Jwt) authentication.getCredentials()).getClaim("email");
+        var userId = ((Jwt) authentication.getCredentials()).getClaim(EMAIL);
         log.debug("Subscribe request received for book id: {}, with user id: {}", bookId, userId.toString());
         bookSubscriptionUseCase.subscribeToBook(bookId, userId.toString());
     }
@@ -22,7 +24,7 @@ public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCas
     @PostMapping("/unsubscribe/{bookId}")
     public void unsubscribeFromBook(@PathVariable("bookId") String bookId, Authentication authentication) {
 
-        var userId = ((Jwt) authentication.getCredentials()).getClaim("email");
+        var userId = ((Jwt) authentication.getCredentials()).getClaim(EMAIL);
         log.debug("Unsubscribe request received for book id: {}, with user id: {}", bookId, userId.toString());
         bookSubscriptionUseCase.unsubscribeFromBook(bookId, userId.toString());
     }
@@ -30,7 +32,7 @@ public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCas
     @GetMapping("/{bookId}")
     public boolean checkSubscription(@PathVariable("bookId") String bookId, Authentication authentication) {
 
-        var userId = ((Jwt) authentication.getCredentials()).getClaim("email");
+        var userId = ((Jwt) authentication.getCredentials()).getClaim(EMAIL);
         log.debug("Check subscription request received for book id: {}, with user id: {}", bookId, userId.toString());
         return bookSubscriptionUseCase.checkSubscription(bookId, userId.toString());
     }
