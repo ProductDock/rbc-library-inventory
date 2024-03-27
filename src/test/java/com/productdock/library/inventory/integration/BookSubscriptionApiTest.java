@@ -1,6 +1,7 @@
 package com.productdock.library.inventory.integration;
 
 import com.productdock.library.inventory.adapter.out.mongo.BookSubscriptionsRepository;
+import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.productdock.library.inventory.data.provider.out.mongo.BookSubscriptionsEntityMother.bookSubscriptionsEntity;
+import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,20 +29,45 @@ public class BookSubscriptionApiTest extends KafkaTestBase {
 
     @Autowired
     private BookSubscriptionsRepository subscriptionsRepository;
+    @Autowired
+    private InventoryRecordRepository inventoryRecordRepository;
 
     @BeforeEach
     void before() {
         subscriptionsRepository.deleteAll();
+        inventoryRecordRepository.deleteAll();
     }
 
     @Test
     @WithMockUser
     void shouldSubscribeUserToBook() throws Exception {
+        givenUnavailableInventoryRecordEntity();
         mockMvc.perform(post("/api/inventory/subscriptions/subscribe/" + BOOK_ID)
                         .with(jwt().jwt(jwt -> {
                             jwt.claim("email", USER_ID);
                         })))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldThrowExceptionWhenSubscribingToUnexistingBook() throws Exception {
+        mockMvc.perform(post("/api/inventory/subscriptions/subscribe/" + BOOK_ID)
+                        .with(jwt().jwt(jwt -> {
+                            jwt.claim("email", USER_ID);
+                        })))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnOkIfSubscribingToAvailableBook() throws Exception {
+        givenInventoryRecordEntity();
+        mockMvc.perform(post("/api/inventory/subscriptions/subscribe/" + BOOK_ID)
+                        .with(jwt().jwt(jwt -> {
+                            jwt.claim("email", USER_ID);
+                        })))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -95,6 +122,16 @@ public class BookSubscriptionApiTest extends KafkaTestBase {
 
     private void givenSubscripotionEntity() {
         subscriptionsRepository.save(bookSubscriptionsEntity());
+    }
+
+    private void givenInventoryRecordEntity() {
+        inventoryRecordRepository.save(inventoryRecordEntity());
+    }
+
+    private void givenUnavailableInventoryRecordEntity() {
+        var entity = inventoryRecordEntity();
+        entity.setRentedBooks(3);
+        inventoryRecordRepository.save(entity);
     }
 
 }

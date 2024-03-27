@@ -1,8 +1,10 @@
 package com.productdock.library.inventory.application.service;
 
 import com.productdock.library.inventory.application.port.in.BookSubscriptionUseCase;
+import com.productdock.library.inventory.application.port.in.GetAvailableBooksCountQuery;
 import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionsPersistenceOutPort;
 import com.productdock.library.inventory.domain.BookSubscriptions;
+import com.productdock.library.inventory.domain.exception.InventoryException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +15,19 @@ import java.util.ArrayList;
 public class BookSubscriptionService implements BookSubscriptionUseCase {
 
     private BookSubscriptionsPersistenceOutPort subscriptionsPersistenceOutPort;
+    private GetAvailableBooksCountQuery getAvailableBooksCountQuery;
 
     @Override
     public void subscribeToBook(String bookId, String userId) {
-        var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookId(bookId)
-                .orElseGet(() -> BookSubscriptions.builder().bookId(bookId).subscribers(new ArrayList<>()).build());
+        if (getAvailableBooksCountQuery.getAvailableBooksCount(bookId) == 0) {
+            var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookId(bookId)
+                    .orElseGet(() -> BookSubscriptions.builder().bookId(bookId).subscribers(new ArrayList<>()).build());
 
-        bookSubscriptions.subscribeUser(userId);
-        subscriptionsPersistenceOutPort.save(bookSubscriptions);
+            bookSubscriptions.subscribeUser(userId);
+            subscriptionsPersistenceOutPort.save(bookSubscriptions);
+        } else {
+            throw new InventoryException("Cannot subscribe to available book!");
+        }
     }
 
     @Override
