@@ -36,5 +36,4 @@ public class BookSubscriptionsShould {
         assertThat(subscription.checkSubscription(USER_ID)).isTrue();
     }
 
-
 }

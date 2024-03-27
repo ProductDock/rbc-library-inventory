@@ -55,7 +55,6 @@ public class BookSubscriptionApiTest extends KafkaTestBase {
                 .andExpect(status().isOk());
     }
 
-
     @Test
     @WithMockUser
     void shouldReturnTrueIfUserIsSubscribed() throws Exception {
@@ -93,7 +92,6 @@ public class BookSubscriptionApiTest extends KafkaTestBase {
                 .andExpect(status().isOk())
                 .andExpect(content().string("false"));
     }
-
 
     private void givenSubscripotionEntity() {
         subscriptionsRepository.save(bookSubscriptionsEntity());
