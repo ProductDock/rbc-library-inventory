@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static com.productdock.library.inventory.data.provider.domain.BookSubscriptionsMother.bookSubscriptions;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BookSubscriptionsShould {
+class BookSubscriptionsShould {
 
     public static final String USER_ID = "newUserEmail";
 

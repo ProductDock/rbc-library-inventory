@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class BookSubscriptionApiTest extends KafkaTestBase {
+class BookSubscriptionApiTest extends KafkaTestBase {
 
     public static final String BOOK_ID = "1";
 

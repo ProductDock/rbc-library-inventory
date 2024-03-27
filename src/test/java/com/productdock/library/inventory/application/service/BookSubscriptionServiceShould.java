@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class BookSubscriptionServiceShould {
+class BookSubscriptionServiceShould {
 
     private static final String BOOK_ID = "1";
     private static final String USER_ID = "1";

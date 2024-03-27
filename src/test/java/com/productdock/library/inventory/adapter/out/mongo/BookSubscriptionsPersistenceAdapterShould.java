@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class BookSubscriptionsPersistenceAdapterShould {
+class BookSubscriptionsPersistenceAdapterShould {
 
     private static final String BOOK_ID = "1";
 
