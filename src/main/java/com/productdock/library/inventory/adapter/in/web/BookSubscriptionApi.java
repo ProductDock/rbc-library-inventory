@@ -21,7 +21,7 @@ public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCas
         bookSubscriptionUseCase.subscribeToBook(bookId, userId.toString());
     }
 
-    @PostMapping("/unsubscribe/{bookId}")
+    @DeleteMapping("/unsubscribe/{bookId}")
     public void unsubscribeFromBook(@PathVariable("bookId") String bookId, Authentication authentication) {
 
         var userId = ((Jwt) authentication.getCredentials()).getClaim(EMAIL);
