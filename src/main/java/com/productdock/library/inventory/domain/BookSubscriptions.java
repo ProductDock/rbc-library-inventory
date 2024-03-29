@@ -17,20 +17,20 @@ public class BookSubscriptions {
 
     private String bookId;
 
-    private List<String> subscribers;
+    private List<String> subscriberUserIds;
 
     public void subscribeUser(String userId) {
-        if (!subscribers.contains(userId)) {
-            subscribers.add(userId);
+        if (!isUserSubscribed(userId)) {
+            subscriberUserIds.add(userId);
         }
     }
 
     public void unsubscribeUser(String userId) {
-        subscribers.remove(userId);
+        subscriberUserIds.remove(userId);
     }
 
-    public boolean checkSubscription(String userId) {
-        return subscribers.contains(userId);
+    public boolean isUserSubscribed(String userId) {
+        return subscriberUserIds.contains(userId);
     }
 
 }

@@ -24,7 +24,7 @@ class BookSubscriptionsMapperShould {
         var bookSubscriptionsEntity = bookSubscriptionsMapper.toEntity(bookSubscriptions);
 
         assertThat(bookSubscriptionsEntity.getBookId()).isEqualTo(bookSubscriptions.getBookId());
-        assertThat(bookSubscriptionsEntity.getSubscribers()).isEqualTo(bookSubscriptions.getSubscribers());
+        assertThat(bookSubscriptionsEntity.getSubscriberUserIds()).isEqualTo(bookSubscriptions.getSubscriberUserIds());
     }
 
     @Test
@@ -34,6 +34,6 @@ class BookSubscriptionsMapperShould {
         var bookSubscriptions = bookSubscriptionsMapper.toDomain(bookSubscriptionsEntity);
 
         assertThat(bookSubscriptions.getBookId()).isEqualTo(bookSubscriptionsEntity.getBookId());
-        assertThat(bookSubscriptions.getSubscribers()).isEqualTo(bookSubscriptionsEntity.getSubscribers());
+        assertThat(bookSubscriptions.getSubscriberUserIds()).isEqualTo(bookSubscriptionsEntity.getSubscriberUserIds());
     }
 }

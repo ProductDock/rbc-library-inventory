@@ -16,24 +16,28 @@ public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCas
     @PostMapping("/subscribe/{bookId}")
     public void subscribeToBook(@PathVariable("bookId") String bookId, Authentication authentication) {
 
-        var userId = ((Jwt) authentication.getCredentials()).getClaim(EMAIL);
-        log.debug("Subscribe request received for book id: {}, with user id: {}", bookId, userId.toString());
-        bookSubscriptionUseCase.subscribeToBook(bookId, userId.toString());
+        var userId = getUserId(authentication);
+        log.debug("Subscribe request received for book id: {}, with user id: {}", bookId, userId);
+        bookSubscriptionUseCase.subscribeToBook(bookId, userId);
     }
 
     @DeleteMapping("/unsubscribe/{bookId}")
     public void unsubscribeFromBook(@PathVariable("bookId") String bookId, Authentication authentication) {
 
-        var userId = ((Jwt) authentication.getCredentials()).getClaim(EMAIL);
-        log.debug("Unsubscribe request received for book id: {}, with user id: {}", bookId, userId.toString());
-        bookSubscriptionUseCase.unsubscribeFromBook(bookId, userId.toString());
+        var userId = getUserId(authentication);
+        log.debug("Unsubscribe request received for book id: {}, with user id: {}", bookId, userId);
+        bookSubscriptionUseCase.unsubscribeFromBook(bookId, userId);
     }
 
     @GetMapping("/{bookId}")
     public boolean checkSubscription(@PathVariable("bookId") String bookId, Authentication authentication) {
 
-        var userId = ((Jwt) authentication.getCredentials()).getClaim(EMAIL);
-        log.debug("Check subscription request received for book id: {}, with user id: {}", bookId, userId.toString());
-        return bookSubscriptionUseCase.checkSubscription(bookId, userId.toString());
+        var userId = getUserId(authentication);
+        log.debug("Check subscription request received for book id: {}, with user id: {}", bookId, userId);
+        return bookSubscriptionUseCase.checkSubscription(bookId, userId);
+    }
+
+    private String getUserId(Authentication authentication) {
+        return ((Jwt) authentication.getCredentials()).getClaim(EMAIL).toString();
     }
 }

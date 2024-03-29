@@ -19,7 +19,7 @@ public class BookSubscriptionsEntityMother {
         return BookSubscriptionsEntity.builder()
                 .id(defaultId)
                 .bookId(defaultBookId)
-                .subscribers(new ArrayList<>(Arrays.asList(defaultUserId)));
+                .subscriberUserIds(new ArrayList<>(Arrays.asList(defaultUserId)));
     }
 
 }

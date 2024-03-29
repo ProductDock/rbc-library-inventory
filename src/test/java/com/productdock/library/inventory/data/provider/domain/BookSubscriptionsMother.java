@@ -18,7 +18,7 @@ public class BookSubscriptionsMother {
     public static BookSubscriptions.BookSubscriptionsBuilder bookSubscriptionsBuilder() {
         return BookSubscriptions.builder()
                 .bookId(defaultBookId)
-                .subscribers(new ArrayList<>(Arrays.asList(defaultUserId)));
+                .subscriberUserIds(new ArrayList<>(Arrays.asList(defaultUserId)));
     }
 
 }

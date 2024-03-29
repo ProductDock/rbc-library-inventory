@@ -15,7 +15,7 @@ class BookSubscriptionsShould {
 
         subscriptions.subscribeUser(USER_ID);
 
-        assertThat(subscriptions.getSubscribers()).hasSize(2);
+        assertThat(subscriptions.getSubscriberUserIds()).hasSize(2);
     }
 
     @Test
@@ -25,7 +25,7 @@ class BookSubscriptionsShould {
 
         subscriptions.unsubscribeUser(USER_ID);
 
-        assertThat(subscriptions.getSubscribers()).hasSize(1);
+        assertThat(subscriptions.getSubscriberUserIds()).hasSize(1);
     }
 
     @Test
@@ -33,7 +33,7 @@ class BookSubscriptionsShould {
         var subscription = bookSubscriptions();
         subscription.subscribeUser(USER_ID);
 
-        assertThat(subscription.checkSubscription(USER_ID)).isTrue();
+        assertThat(subscription.isUserSubscribed(USER_ID)).isTrue();
     }
 
 }

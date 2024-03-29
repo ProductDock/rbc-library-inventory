@@ -17,5 +17,5 @@ public class BookSubscriptionsEntity {
     @Id
     private String id;
     private String bookId;
-    private List<String> subscribers;
+    private List<String> subscriberUserIds;
 }
