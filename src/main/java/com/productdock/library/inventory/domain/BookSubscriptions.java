@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,17 +21,29 @@ public class BookSubscriptions {
     private List<String> subscriberUserIds;
 
     public void subscribeUser(String userId) {
+        initSubscribers();
         if (!isUserSubscribed(userId)) {
             subscriberUserIds.add(userId);
         }
     }
 
     public void unsubscribeUser(String userId) {
-        subscriberUserIds.remove(userId);
+        if (subscriberUserIds != null) {
+            subscriberUserIds.remove(userId);
+        }
     }
 
     public boolean isUserSubscribed(String userId) {
-        return subscriberUserIds.contains(userId);
+        if (subscriberUserIds != null) {
+            return subscriberUserIds.contains(userId);
+        }
+        return false;
+    }
+
+    private void initSubscribers() {
+        if (subscriberUserIds == null) {
+            subscriberUserIds = new ArrayList<>();
+        }
     }
 
 }
