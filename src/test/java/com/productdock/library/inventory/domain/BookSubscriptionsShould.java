@@ -19,6 +19,15 @@ class BookSubscriptionsShould {
     }
 
     @Test
+    void subscribeUserWhenListIsNull() {
+        var subscriptions = new BookSubscriptions();
+
+        subscriptions.subscribeUser(USER_ID);
+
+        assertThat(subscriptions.getSubscriberUserIds()).hasSize(1);
+    }
+
+    @Test
     void unsubscribeUser() {
         var subscriptions = bookSubscriptions();
         subscriptions.subscribeUser(USER_ID);
@@ -29,11 +38,27 @@ class BookSubscriptionsShould {
     }
 
     @Test
+    void unsubscribeUserWhenListIsNull() {
+        var subscriptions = new BookSubscriptions();
+
+        subscriptions.unsubscribeUser(USER_ID);
+
+        assertThat(subscriptions.getSubscriberUserIds()).isNull();
+    }
+
+    @Test
     void checkSubscription() {
         var subscription = bookSubscriptions();
         subscription.subscribeUser(USER_ID);
 
         assertThat(subscription.isUserSubscribed(USER_ID)).isTrue();
+    }
+
+    @Test
+    void checkSubscriptionWhenListIsNull() {
+        var subscription = new BookSubscriptions();
+
+        assertThat(subscription.isUserSubscribed(USER_ID)).isFalse();
     }
 
 }
