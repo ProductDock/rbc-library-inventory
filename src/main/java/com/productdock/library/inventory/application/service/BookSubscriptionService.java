@@ -8,8 +8,6 @@ import com.productdock.library.inventory.domain.exception.InventoryException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 @AllArgsConstructor
 public class BookSubscriptionService implements BookSubscriptionUseCase {
@@ -21,7 +19,7 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
     public void subscribeToBook(String bookId, String userId) {
         if (getAvailableBooksCountQuery.getAvailableBooksCount(bookId) == 0) {
             var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookId(bookId)
-                    .orElseGet(() -> BookSubscriptions.builder().bookId(bookId).subscriberUserIds(new ArrayList<>()).build());
+                    .orElseGet(() -> BookSubscriptions.builder().bookId(bookId).build());
 
             bookSubscriptions.subscribeUser(userId);
             subscriptionsPersistenceOutPort.save(bookSubscriptions);

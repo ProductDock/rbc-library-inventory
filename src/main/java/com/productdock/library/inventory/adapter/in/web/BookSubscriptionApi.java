@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCase) {
 
-    public static final String EMAIL = "email";
+    public static final String CLAIM_EMAIL = "email";
 
     @PostMapping("/subscribe/{bookId}")
     public void subscribeToBook(@PathVariable("bookId") String bookId, Authentication authentication) {
@@ -38,6 +38,6 @@ public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCas
     }
 
     private String getUserId(Authentication authentication) {
-        return ((Jwt) authentication.getCredentials()).getClaim(EMAIL).toString();
+        return ((Jwt) authentication.getCredentials()).getClaim(CLAIM_EMAIL).toString();
     }
 }
