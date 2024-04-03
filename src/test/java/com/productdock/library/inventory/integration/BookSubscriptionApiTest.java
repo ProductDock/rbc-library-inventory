@@ -50,6 +50,28 @@ class BookSubscriptionApiTest extends KafkaTestBase {
 
     @Test
     @WithMockUser
+    void shouldThrowExceptionWhenNotSubscribed() throws Exception {
+        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID + "/subscriptions").param("userId", USER_ID)
+                        .with(jwt().jwt(jwt -> {
+                            jwt.claim("email", USER_ID);
+                        })))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldReturnSubscriptionWhenSubscribed() throws Exception {
+        givenSubscriptionEntity();
+
+        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID + "/subscriptions").param("userId", USER_ID)
+                        .with(jwt().jwt(jwt -> {
+                            jwt.claim("email", USER_ID);
+                        })))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser
     void shouldThrowExceptionWhenSubscribingToUnexistingBook() throws Exception {
         mockMvc.perform(post("/api/inventory/subscriptions/subscribe/" + BOOK_ID)
                         .with(jwt().jwt(jwt -> {
@@ -60,7 +82,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
 
     @Test
     @WithMockUser
-    void shouldReturnOkIfSubscribingToAvailableBook() throws Exception {
+    void shouldThrowExceptionWhenSubscribingToAvailableBook() throws Exception {
         givenInventoryRecordEntity();
         mockMvc.perform(post("/api/inventory/subscriptions/subscribe/" + BOOK_ID)
                         .with(jwt().jwt(jwt -> {
@@ -72,7 +94,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
     @Test
     @WithMockUser
     void shouldUnsubscribeUserFromBook() throws Exception {
-        givenSubscripotionEntity();
+        givenSubscriptionEntity();
 
         mockMvc.perform(delete("/api/inventory/subscriptions/unsubscribe/" + BOOK_ID)
                         .with(jwt().jwt(jwt -> {
@@ -84,7 +106,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
     @Test
     @WithMockUser
     void shouldReturnTrueIfUserIsSubscribed() throws Exception {
-        givenSubscripotionEntity();
+        givenSubscriptionEntity();
 
         mockMvc.perform(get("/api/inventory/subscriptions/" + BOOK_ID)
                         .with(jwt().jwt(jwt -> {
@@ -97,7 +119,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
     @Test
     @WithMockUser
     void shouldReturnFalseIfUserIsNotSubscribed() throws Exception {
-        givenSubscripotionEntity();
+        givenSubscriptionEntity();
 
         mockMvc.perform(get("/api/inventory/subscriptions/" + BOOK_ID)
                         .with(jwt().jwt(jwt -> {
@@ -119,7 +141,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
                 .andExpect(content().string("false"));
     }
 
-    private void givenSubscripotionEntity() {
+    private void givenSubscriptionEntity() {
         subscriptionsRepository.save(bookSubscriptionEntity());
     }
 

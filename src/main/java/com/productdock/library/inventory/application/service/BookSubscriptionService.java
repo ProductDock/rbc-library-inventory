@@ -5,6 +5,7 @@ import com.productdock.library.inventory.application.port.in.GetAvailableBooksCo
 import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionPersistenceOutPort;
 import com.productdock.library.inventory.domain.BookSubscription;
 import com.productdock.library.inventory.domain.exception.InventoryException;
+import com.productdock.library.inventory.domain.exception.SubscriptionException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,11 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
 
     @Override
     public void subscribeToBook(String bookId, String userId) {
+        if (checkSubscription(bookId, userId)) {
+            return;
+        }
         if (getAvailableBooksCountQuery.getAvailableBooksCount(bookId) == 0) {
-            var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId)
-                    .orElseGet(() -> BookSubscription.builder().bookId(bookId).userId(userId).build());
-
+            var bookSubscriptions = BookSubscription.builder().bookId(bookId).userId(userId).build();
             subscriptionsPersistenceOutPort.save(bookSubscriptions);
         } else {
             throw new InventoryException("Cannot subscribe to available book!");
@@ -30,14 +32,22 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
     @Override
     public void unsubscribeFromBook(String bookId, String userId) {
         var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
-        bookSubscriptions.ifPresent(subscriptions -> {
-            subscriptionsPersistenceOutPort.delete(subscriptions);
-        });
+        bookSubscriptions.ifPresent(subscriptions -> subscriptionsPersistenceOutPort.delete(subscriptions));
     }
 
     @Override
     public boolean checkSubscription(String bookId, String userId) {
         var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
         return bookSubscriptions.isPresent();
+    }
+
+    @Override
+    public BookSubscription getSubscription(String bookId, String userId) {
+        var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
+        if (bookSubscriptions.isPresent()) {
+            return bookSubscriptions.get();
+        } else {
+            throw new SubscriptionException("User is not subscribed");
+        }
     }
 }
