@@ -1,6 +1,6 @@
 package com.productdock.library.inventory.integration;
 
-import com.productdock.library.inventory.adapter.out.mongo.BookSubscriptionsRepository;
+import com.productdock.library.inventory.adapter.out.mongo.BookSubscriptionRepository;
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.productdock.library.inventory.data.provider.out.mongo.BookSubscriptionsEntityMother.bookSubscriptionsEntity;
+import static com.productdock.library.inventory.data.provider.out.mongo.BookSubscriptionsEntityMother.bookSubscriptionEntity;
 import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -27,7 +27,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
     private MockMvc mockMvc;
 
     @Autowired
-    private BookSubscriptionsRepository subscriptionsRepository;
+    private BookSubscriptionRepository subscriptionsRepository;
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
 
@@ -120,7 +120,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
     }
 
     private void givenSubscripotionEntity() {
-        subscriptionsRepository.save(bookSubscriptionsEntity());
+        subscriptionsRepository.save(bookSubscriptionEntity());
     }
 
     private void givenInventoryRecordEntity() {

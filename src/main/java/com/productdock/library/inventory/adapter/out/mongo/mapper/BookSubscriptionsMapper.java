@@ -1,15 +1,15 @@
 package com.productdock.library.inventory.adapter.out.mongo.mapper;
 
-import com.productdock.library.inventory.adapter.out.mongo.entity.BookSubscriptionsEntity;
-import com.productdock.library.inventory.domain.BookSubscriptions;
+import com.productdock.library.inventory.adapter.out.mongo.entity.BookSubscriptionEntity;
+import com.productdock.library.inventory.domain.BookSubscription;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface BookSubscriptionsMapper {
 
-    BookSubscriptionsEntity toEntity(BookSubscriptions source);
+    BookSubscriptionEntity toEntity(BookSubscription source);
 
-    BookSubscriptions toDomain(BookSubscriptionsEntity source);
+    BookSubscription toDomain(BookSubscriptionEntity source);
 
 }

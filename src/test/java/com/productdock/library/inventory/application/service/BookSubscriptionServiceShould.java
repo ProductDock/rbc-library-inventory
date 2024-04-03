@@ -1,8 +1,8 @@
 package com.productdock.library.inventory.application.service;
 
 import com.productdock.library.inventory.application.port.in.GetAvailableBooksCountQuery;
-import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionsPersistenceOutPort;
-import com.productdock.library.inventory.domain.BookSubscriptions;
+import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionPersistenceOutPort;
+import com.productdock.library.inventory.domain.BookSubscription;
 import com.productdock.library.inventory.domain.exception.InventoryException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,9 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
+import static com.productdock.library.inventory.data.provider.domain.BookSubscriptionMother.bookSubscription;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -21,14 +21,14 @@ import static org.mockito.Mockito.verify;
 class BookSubscriptionServiceShould {
 
     private static final String BOOK_ID = "1";
-    private static final String USER_ID = "1";
+    private static final String USER_ID = "userEmail";
 
-    private static final BookSubscriptions SUBSCRIPTIONS = new BookSubscriptions(BOOK_ID, new ArrayList<>());
+    private static final BookSubscription SUBSCRIPTION = bookSubscription();
 
     @InjectMocks
     private BookSubscriptionService subscriptionService;
     @Mock
-    private BookSubscriptionsPersistenceOutPort subscriptionsPersistenceOutPort;
+    private BookSubscriptionPersistenceOutPort subscriptionPersistenceOutPort;
     @Mock
     private GetAvailableBooksCountQuery getAvailableBooksCountQuery;
 
@@ -36,18 +36,14 @@ class BookSubscriptionServiceShould {
     void subscribeUser() {
         given(getAvailableBooksCountQuery.getAvailableBooksCount(BOOK_ID)).willReturn(0);
 
-        SUBSCRIPTIONS.subscribeUser(USER_ID);
-
         subscriptionService.subscribeToBook(BOOK_ID, USER_ID);
 
-        verify(subscriptionsPersistenceOutPort).save(SUBSCRIPTIONS);
+        verify(subscriptionPersistenceOutPort).save(SUBSCRIPTION);
     }
 
     @Test
     void subscribeToAvailableBook() {
         given(getAvailableBooksCountQuery.getAvailableBooksCount(BOOK_ID)).willReturn(1);
-
-        SUBSCRIPTIONS.subscribeUser(USER_ID);
 
         assertThatThrownBy(() -> subscriptionService.subscribeToBook(BOOK_ID, USER_ID))
                 .isInstanceOf(InventoryException.class);
@@ -55,10 +51,10 @@ class BookSubscriptionServiceShould {
 
     @Test
     void unsubscribeUser() {
-        given(subscriptionsPersistenceOutPort.findByBookId(BOOK_ID)).willReturn(Optional.of(SUBSCRIPTIONS));
+        given(subscriptionPersistenceOutPort.findByBookIdAndUserId(BOOK_ID, USER_ID)).willReturn(Optional.of(SUBSCRIPTION));
 
         subscriptionService.unsubscribeFromBook(BOOK_ID, USER_ID);
 
-        verify(subscriptionsPersistenceOutPort).save(SUBSCRIPTIONS);
+        verify(subscriptionPersistenceOutPort).delete(SUBSCRIPTION);
     }
 }

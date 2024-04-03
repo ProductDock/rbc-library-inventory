@@ -6,16 +6,14 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
 @Document("subscriptions")
 @Data
 @AllArgsConstructor
 @Builder
-public class BookSubscriptionsEntity {
+public class BookSubscriptionEntity {
 
     @Id
     private String id;
     private String bookId;
-    private List<String> subscriberUserIds;
+    private String userId;
 }
