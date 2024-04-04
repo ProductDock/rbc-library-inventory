@@ -18,9 +18,6 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
 
     @Override
     public void subscribeToBook(String bookId, String userId) {
-        if (checkSubscription(bookId, userId)) {
-            return;
-        }
         if (getAvailableBooksCountQuery.getAvailableBooksCount(bookId) == 0) {
             var bookSubscriptions = BookSubscription.builder().bookId(bookId).userId(userId).build();
             subscriptionsPersistenceOutPort.save(bookSubscriptions);
@@ -36,18 +33,8 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
     }
 
     @Override
-    public boolean checkSubscription(String bookId, String userId) {
-        var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
-        return bookSubscriptions.isPresent();
-    }
-
-    @Override
     public BookSubscription getSubscription(String bookId, String userId) {
-        var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
-        if (bookSubscriptions.isPresent()) {
-            return bookSubscriptions.get();
-        } else {
-            throw new SubscriptionException("User is not subscribed");
-        }
+        var bookSubscription = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
+        return bookSubscription.orElseThrow(() -> new SubscriptionException("User is not subscribed"));
     }
 }

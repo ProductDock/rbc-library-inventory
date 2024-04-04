@@ -18,21 +18,12 @@ public class BookSubscriptionPersistenceAdapter implements BookSubscriptionPersi
     private BookSubscriptionsMapper subscriptionsMapper;
 
     @Override
-    public Optional<BookSubscription> findByBookId(String bookId) {
-        return subscriptionsRepository.findByBookId(bookId).map(subscriptionsEntity -> subscriptionsMapper.toDomain(subscriptionsEntity));
-    }
-
-    @Override
     public void save(BookSubscription subscriptions) {
         var previousSubscriptionsEntity = subscriptionsRepository.findByBookIdAndUserId(subscriptions.getBookId(), subscriptions.getUserId());
         var newSubscriptionsEntity = subscriptionsMapper.toEntity(subscriptions);
-        previousSubscriptionsEntity.ifPresent(subscriptionsEntity -> newSubscriptionsEntity.setId(previousSubscriptionsEntity.get().getId()));
-        subscriptionsRepository.save(newSubscriptionsEntity);
-    }
-
-    @Override
-    public void deleteByBookId(String bookId) {
-        subscriptionsRepository.deleteByBookId(bookId);
+        if (previousSubscriptionsEntity.isEmpty()) {
+            subscriptionsRepository.save(newSubscriptionsEntity);
+        }
     }
 
     @Override

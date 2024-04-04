@@ -29,14 +29,6 @@ public record BookSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCas
         bookSubscriptionUseCase.unsubscribeFromBook(bookId, userId);
     }
 
-    @GetMapping("/{bookId}")
-    public boolean checkSubscription(@PathVariable("bookId") String bookId, Authentication authentication) {
-
-        var userId = getUserId(authentication);
-        log.debug("Check subscription request received for book id: {}, with user id: {}", bookId, userId);
-        return bookSubscriptionUseCase.checkSubscription(bookId, userId);
-    }
-
     private String getUserId(Authentication authentication) {
         return ((Jwt) authentication.getCredentials()).getClaim(CLAIM_EMAIL).toString();
     }
