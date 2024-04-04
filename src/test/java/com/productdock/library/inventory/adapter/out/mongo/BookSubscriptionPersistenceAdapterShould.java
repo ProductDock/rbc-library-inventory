@@ -48,7 +48,6 @@ class BookSubscriptionPersistenceAdapterShould {
 
     @Test
     void saveSubscription() {
-        given(subscriptionRepository.findByBookIdAndUserId(BOOK_ID, USER_ID)).willReturn(Optional.empty());
         given(subscriptionMapper.toEntity(SUBSCRIPTION)).willReturn(SUBSCRIPTION_ENTITY.get());
 
         bookSubscriptionPersistenceAdapter.save(SUBSCRIPTION);
