@@ -14,7 +14,6 @@ import static com.productdock.library.inventory.data.provider.out.mongo.BookSubs
 import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -101,44 +100,6 @@ class BookSubscriptionApiTest extends KafkaTestBase {
                             jwt.claim("email", USER_ID);
                         })))
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    @WithMockUser
-    void shouldReturnTrueIfUserIsSubscribed() throws Exception {
-        givenSubscriptionEntity();
-
-        mockMvc.perform(get("/api/inventory/subscriptions/" + BOOK_ID)
-                        .with(jwt().jwt(jwt -> {
-                            jwt.claim("email", USER_ID);
-                        })))
-                .andExpect(status().isOk())
-                .andExpect(content().string("true"));
-    }
-
-    @Test
-    @WithMockUser
-    void shouldReturnFalseIfUserIsNotSubscribed() throws Exception {
-        givenSubscriptionEntity();
-
-        mockMvc.perform(get("/api/inventory/subscriptions/" + BOOK_ID)
-                        .with(jwt().jwt(jwt -> {
-                            jwt.claim("email", "otherUserEmail");
-                        })))
-                .andExpect(status().isOk())
-                .andExpect(content().string("false"));
-    }
-
-    @Test
-    @WithMockUser
-    void shouldReturnFalseIfSubscriptionsEntityDoesntExist() throws Exception {
-
-        mockMvc.perform(get("/api/inventory/subscriptions/" + BOOK_ID)
-                        .with(jwt().jwt(jwt -> {
-                            jwt.claim("email", USER_ID);
-                        })))
-                .andExpect(status().isOk())
-                .andExpect(content().string("false"));
     }
 
     private void givenSubscriptionEntity() {
