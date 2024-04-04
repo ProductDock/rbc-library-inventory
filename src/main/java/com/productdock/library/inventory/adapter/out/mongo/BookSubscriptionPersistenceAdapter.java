@@ -19,11 +19,7 @@ public class BookSubscriptionPersistenceAdapter implements BookSubscriptionPersi
 
     @Override
     public void save(BookSubscription subscriptions) {
-        var previousSubscriptionsEntity = subscriptionsRepository.findByBookIdAndUserId(subscriptions.getBookId(), subscriptions.getUserId());
-        var newSubscriptionsEntity = subscriptionsMapper.toEntity(subscriptions);
-        if (previousSubscriptionsEntity.isEmpty()) {
-            subscriptionsRepository.save(newSubscriptionsEntity);
-        }
+        subscriptionsRepository.save(subscriptionsMapper.toEntity(subscriptions));
     }
 
     @Override
