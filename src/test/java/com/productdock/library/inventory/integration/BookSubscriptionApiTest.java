@@ -92,6 +92,17 @@ class BookSubscriptionApiTest extends KafkaTestBase {
 
     @Test
     @WithMockUser
+    void shouldThrowExceptionWhenAlreadySubscribed() throws Exception {
+        givenSubscriptionEntity();
+        mockMvc.perform(post("/api/inventory/subscriptions/subscribe/" + BOOK_ID)
+                        .with(jwt().jwt(jwt -> {
+                            jwt.claim("email", USER_ID);
+                        })))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithMockUser
     void shouldUnsubscribeUserFromBook() throws Exception {
         givenSubscriptionEntity();
 
