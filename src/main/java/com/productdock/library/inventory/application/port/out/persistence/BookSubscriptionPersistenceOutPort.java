@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface BookSubscriptionPersistenceOutPort {
 
-    void save(BookSubscription subscriptions);
+    void save(BookSubscription subscription);
 
     Optional<BookSubscription> findByBookIdAndUserId(String bookId, String userId);
 
-    void delete(BookSubscription subscriptions);
+    void delete(BookSubscription subscription);
 }

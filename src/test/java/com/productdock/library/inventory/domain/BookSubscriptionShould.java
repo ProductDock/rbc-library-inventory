@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static com.productdock.library.inventory.data.provider.domain.BookSubscriptionMother.bookSubscription;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BookSubscriptionsShould {
+class BookSubscriptionShould {
 
     @Test
     void getSubscription() {

@@ -2,7 +2,7 @@ package com.productdock.library.inventory.data.provider.out.mongo;
 
 import com.productdock.library.inventory.adapter.out.mongo.entity.BookSubscriptionEntity;
 
-public class BookSubscriptionsEntityMother {
+public class BookSubscriptionEntityMother {
 
     private static final String defaultId = "1111111";
     private static final String defaultBookId = "1";

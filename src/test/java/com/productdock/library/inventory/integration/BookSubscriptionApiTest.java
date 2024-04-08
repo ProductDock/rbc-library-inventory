@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.productdock.library.inventory.data.provider.out.mongo.BookSubscriptionsEntityMother.bookSubscriptionEntity;
+import static com.productdock.library.inventory.data.provider.out.mongo.BookSubscriptionEntityMother.bookSubscriptionEntity;
 import static com.productdock.library.inventory.data.provider.out.mongo.InventoryRecordEntityMother.inventoryRecordEntity;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -26,13 +26,13 @@ class BookSubscriptionApiTest extends KafkaTestBase {
     private MockMvc mockMvc;
 
     @Autowired
-    private BookSubscriptionRepository subscriptionsRepository;
+    private BookSubscriptionRepository subscriptionRepository;
     @Autowired
     private InventoryRecordRepository inventoryRecordRepository;
 
     @BeforeEach
     void before() {
-        subscriptionsRepository.deleteAll();
+        subscriptionRepository.deleteAll();
         inventoryRecordRepository.deleteAll();
     }
 
@@ -114,7 +114,7 @@ class BookSubscriptionApiTest extends KafkaTestBase {
     }
 
     private void givenSubscriptionEntity() {
-        subscriptionsRepository.save(bookSubscriptionEntity());
+        subscriptionRepository.save(bookSubscriptionEntity());
     }
 
     private void givenInventoryRecordEntity() {

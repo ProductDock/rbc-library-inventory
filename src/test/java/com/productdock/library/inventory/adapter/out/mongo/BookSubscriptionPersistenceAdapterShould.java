@@ -41,9 +41,9 @@ class BookSubscriptionPersistenceAdapterShould {
         given(subscriptionRepository.findByBookIdAndUserId(BOOK_ID, USER_ID)).willReturn(SUBSCRIPTION_ENTITY);
         given(subscriptionMapper.toDomain(SUBSCRIPTION_ENTITY.get())).willReturn(SUBSCRIPTION);
 
-        var subscriptions = bookSubscriptionPersistenceAdapter.findByBookIdAndUserId(BOOK_ID, USER_ID);
+        var subscription = bookSubscriptionPersistenceAdapter.findByBookIdAndUserId(BOOK_ID, USER_ID);
 
-        assertThat(subscriptions).isEqualTo(Optional.of(SUBSCRIPTION));
+        assertThat(subscription).isEqualTo(Optional.of(SUBSCRIPTION));
     }
 
     @Test
@@ -56,7 +56,7 @@ class BookSubscriptionPersistenceAdapterShould {
     }
 
     @Test
-    void deleteBookSubscriptions() {
+    void deleteBookSubscription() {
 
         bookSubscriptionPersistenceAdapter.delete(SUBSCRIPTION);
 

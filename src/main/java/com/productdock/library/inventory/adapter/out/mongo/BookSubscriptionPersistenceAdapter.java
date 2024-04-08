@@ -14,21 +14,21 @@ import java.util.Optional;
 @AllArgsConstructor
 public class BookSubscriptionPersistenceAdapter implements BookSubscriptionPersistenceOutPort {
 
-    private BookSubscriptionRepository subscriptionsRepository;
+    private BookSubscriptionRepository subscriptionRepository;
     private BookSubscriptionEntityMapper subscriptionMapper;
 
     @Override
-    public void save(BookSubscription subscriptions) {
-        subscriptionsRepository.save(subscriptionMapper.toEntity(subscriptions));
+    public void save(BookSubscription subscription) {
+        subscriptionRepository.save(subscriptionMapper.toEntity(subscription));
     }
 
     @Override
     public Optional<BookSubscription> findByBookIdAndUserId(String bookId, String userId) {
-        return subscriptionsRepository.findByBookIdAndUserId(bookId, userId).map(subscriptionsEntity -> subscriptionMapper.toDomain(subscriptionsEntity));
+        return subscriptionRepository.findByBookIdAndUserId(bookId, userId).map(subscriptionsEntity -> subscriptionMapper.toDomain(subscriptionsEntity));
     }
 
     @Override
-    public void delete(BookSubscription subscriptions) {
-        subscriptionsRepository.deleteByBookIdAndUserId(subscriptions.getBookId(), subscriptions.getUserId());
+    public void delete(BookSubscription subscription) {
+        subscriptionRepository.deleteByBookIdAndUserId(subscription.getBookId(), subscription.getUserId());
     }
 }
