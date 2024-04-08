@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/inventory/book")
+@RequestMapping("api/inventory/books")
 @Slf4j
 public record GetAvailableBooksCountApi(GetAvailableBooksCountQuery getAvailableBooksCountQuery) {
 
