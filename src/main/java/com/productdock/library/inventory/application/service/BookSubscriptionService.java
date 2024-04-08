@@ -7,10 +7,13 @@ import com.productdock.library.inventory.domain.BookSubscription;
 import com.productdock.library.inventory.domain.exception.InventoryException;
 import com.productdock.library.inventory.domain.exception.SubscriptionException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class BookSubscriptionService implements BookSubscriptionUseCase {
 
     private BookSubscriptionPersistenceOutPort subscriptionsPersistenceOutPort;
@@ -20,7 +23,11 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
     public void subscribeToBook(String bookId, String userId) {
         if (getAvailableBooksCountQuery.getAvailableBooksCount(bookId) == 0) {
             var bookSubscriptions = BookSubscription.builder().bookId(bookId).userId(userId).build();
-            subscriptionsPersistenceOutPort.save(bookSubscriptions);
+            try {
+                subscriptionsPersistenceOutPort.save(bookSubscriptions);
+            } catch (DuplicateKeyException e) {
+                log.warn("Ignoring duplicate key error: " + e.getMessage());
+            }
         } else {
             throw new InventoryException("Cannot subscribe to available book!");
         }
@@ -28,8 +35,8 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
 
     @Override
     public void unsubscribeFromBook(String bookId, String userId) {
-        var bookSubscriptions = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
-        bookSubscriptions.ifPresent(subscriptions -> subscriptionsPersistenceOutPort.delete(subscriptions));
+        var bookSubscription = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
+        bookSubscription.ifPresent(subscriptions -> subscriptionsPersistenceOutPort.delete(subscriptions));
     }
 
     @Override

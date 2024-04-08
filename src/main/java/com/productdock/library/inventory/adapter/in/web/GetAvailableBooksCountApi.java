@@ -14,7 +14,7 @@ public record GetAvailableBooksCountApi(GetAvailableBooksCountQuery getAvailable
 
     @GetMapping("/{bookId}")
     public int getAvailableBooksCount(@PathVariable("bookId") String bookId) {
-        log.debug("GET request received - api/inventory/book/{}", bookId);
+        log.debug("GET request received - api/inventory/books/{}", bookId);
         return getAvailableBooksCountQuery.getAvailableBooksCount(bookId);
     }
 }
