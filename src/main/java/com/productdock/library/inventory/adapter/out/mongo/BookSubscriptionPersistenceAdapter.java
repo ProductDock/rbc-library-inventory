@@ -1,5 +1,6 @@
 package com.productdock.library.inventory.adapter.out.mongo;
 
+import com.mongodb.MongoWriteException;
 import com.productdock.library.inventory.adapter.out.mongo.mapper.BookSubscriptionsMapper;
 import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionPersistenceOutPort;
 import com.productdock.library.inventory.domain.BookSubscription;
@@ -19,7 +20,15 @@ public class BookSubscriptionPersistenceAdapter implements BookSubscriptionPersi
 
     @Override
     public void save(BookSubscription subscriptions) {
-        subscriptionsRepository.save(subscriptionsMapper.toEntity(subscriptions));
+        try {
+            subscriptionsRepository.save(subscriptionsMapper.toEntity(subscriptions));
+        } catch (Exception e) {
+            if (e.getCause() instanceof MongoWriteException) {
+                log.warn("Ignoring duplicate key error: " + e.getMessage());
+            } else {
+                throw e;
+            }
+        }
     }
 
     @Override
