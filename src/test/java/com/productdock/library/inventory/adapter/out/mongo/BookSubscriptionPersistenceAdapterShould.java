@@ -1,7 +1,7 @@
 package com.productdock.library.inventory.adapter.out.mongo;
 
 import com.productdock.library.inventory.adapter.out.mongo.entity.BookSubscriptionEntity;
-import com.productdock.library.inventory.adapter.out.mongo.mapper.BookSubscriptionsMapper;
+import com.productdock.library.inventory.adapter.out.mongo.mapper.BookSubscriptionEntityMapper;
 import com.productdock.library.inventory.domain.BookSubscription;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class BookSubscriptionPersistenceAdapterShould {
     private BookSubscriptionRepository subscriptionRepository;
 
     @Mock
-    private BookSubscriptionsMapper subscriptionMapper;
+    private BookSubscriptionEntityMapper subscriptionMapper;
 
     @Test
     void findSubscriptionByBookIdAndUserId() {

@@ -11,11 +11,11 @@ import static com.productdock.library.inventory.data.provider.out.mongo.BookSubs
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {BookSubscriptionsMapperImpl.class})
+@ContextConfiguration(classes = {BookSubscriptionEntityMapperImpl.class})
 class BookSubscriptionMapperShould {
 
     @Autowired
-    private BookSubscriptionsMapper bookSubscriptionMapper;
+    private BookSubscriptionEntityMapper bookSubscriptionMapper;
 
     @Test
     void mapBookSubscriptionsToBookSubscriptionsEntity() {

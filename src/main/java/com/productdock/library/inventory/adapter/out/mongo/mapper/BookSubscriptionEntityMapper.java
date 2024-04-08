@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
-public interface BookSubscriptionsMapper {
+public interface BookSubscriptionEntityMapper {
 
     BookSubscriptionEntity toEntity(BookSubscription source);
 

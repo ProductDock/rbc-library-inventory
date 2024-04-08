@@ -1,6 +1,6 @@
 package com.productdock.library.inventory.adapter.out.mongo;
 
-import com.productdock.library.inventory.adapter.out.mongo.mapper.BookSubscriptionsMapper;
+import com.productdock.library.inventory.adapter.out.mongo.mapper.BookSubscriptionEntityMapper;
 import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionPersistenceOutPort;
 import com.productdock.library.inventory.domain.BookSubscription;
 import lombok.AllArgsConstructor;
@@ -15,16 +15,16 @@ import java.util.Optional;
 public class BookSubscriptionPersistenceAdapter implements BookSubscriptionPersistenceOutPort {
 
     private BookSubscriptionRepository subscriptionsRepository;
-    private BookSubscriptionsMapper subscriptionsMapper;
+    private BookSubscriptionEntityMapper subscriptionMapper;
 
     @Override
     public void save(BookSubscription subscriptions) {
-        subscriptionsRepository.save(subscriptionsMapper.toEntity(subscriptions));
+        subscriptionsRepository.save(subscriptionMapper.toEntity(subscriptions));
     }
 
     @Override
     public Optional<BookSubscription> findByBookIdAndUserId(String bookId, String userId) {
-        return subscriptionsRepository.findByBookIdAndUserId(bookId, userId).map(subscriptionsEntity -> subscriptionsMapper.toDomain(subscriptionsEntity));
+        return subscriptionsRepository.findByBookIdAndUserId(bookId, userId).map(subscriptionsEntity -> subscriptionMapper.toDomain(subscriptionsEntity));
     }
 
     @Override
