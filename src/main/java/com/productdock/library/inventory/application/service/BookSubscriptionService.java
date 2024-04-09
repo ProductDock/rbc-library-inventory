@@ -21,15 +21,15 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
 
     @Override
     public void subscribeToBook(String bookId, String userId) {
-        if (getAvailableBooksCountQuery.getAvailableBooksCount(bookId) == 0) {
-            var bookSubscriptions = BookSubscription.builder().bookId(bookId).userId(userId).build();
-            try {
-                subscriptionsPersistenceOutPort.save(bookSubscriptions);
-            } catch (DuplicateKeyException e) {
-                log.warn("Ignoring duplicate key error: " + e.getMessage());
-            }
-        } else {
+        if (getAvailableBooksCountQuery.getAvailableBooksCount(bookId) > 0) {
             throw new InventoryException("Cannot subscribe to available book!");
+        }
+
+        var bookSubscriptions = BookSubscription.builder().bookId(bookId).userId(userId).build();
+        try {
+            subscriptionsPersistenceOutPort.save(bookSubscriptions);
+        } catch (DuplicateKeyException e) {
+            log.warn("Ignoring duplicate key error: " + e.getMessage());
         }
     }
 
