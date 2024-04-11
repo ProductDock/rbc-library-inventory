@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/inventory/books")
 @Slf4j
-public record CheckSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCase,
-                                   BookSubscriptionMapper subscriptionMapper) {
+public record GetSubscriptionApi(BookSubscriptionUseCase bookSubscriptionUseCase,
+                                 BookSubscriptionMapper subscriptionMapper) {
 
     @GetMapping("/{bookId}/subscriptions")
     public BookSubscriptionDto getUserSubscription(@PathVariable("bookId") String bookId, @RequestParam("userId") String userId, Authentication authentication) {
