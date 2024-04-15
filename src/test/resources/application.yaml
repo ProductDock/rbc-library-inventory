@@ -21,9 +21,14 @@ spring:
       book-availability: test-book-availability
       insert-book: insert-book
       delete-book: delete-book
+      book-subscriptions: book-subscriptions
 
 mongock:
   enabled: false
+
+availability:
+  auto-check:
+    scheduled: '*/10 * * * * *'
 
 jwt:
   public.key: classpath:test.pub
