@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @AllArgsConstructor
 @Component
-public class checkAvailableBookForSubscribersJob {
+public class CheckAvailableBookForSubscribersJob {
 
     private CheckAvailableBooksForSubscriptionsUseCase checkAvailableBooksForSubscriptionsUseCase;
 
