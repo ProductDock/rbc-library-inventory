@@ -15,7 +15,7 @@ public class CheckAvailableBookForSubscribersJob {
 
     @Scheduled(cron = "${availability.auto-check.scheduled}")
     public void checkAvailablebooks() {
-        log.warn("Started scheduled task for checking book availability");
+        log.debug("Started scheduled task for checking book availability");
         checkAvailableBooksForSubscriptionsUseCase.checkAvailableBooks();
     }
 

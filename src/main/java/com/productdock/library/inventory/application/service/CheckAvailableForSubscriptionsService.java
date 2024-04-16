@@ -40,7 +40,7 @@ public class CheckAvailableForSubscriptionsService implements CheckAvailableBook
     @SneakyThrows
     private void resolveSubscriptions(List<BookSubscription> subscriptions) {
         for (var subscription : subscriptions) {
-            log.warn("Deleting book subscription with bookId: {}, and userId: {}", subscription.getBookId(), subscription.getUserId());
+            log.debug("Deleting book subscription with bookId: {}, and userId: {}", subscription.getBookId(), subscription.getUserId());
             bookSubscriptionUseCase.deleteSubscription(subscription.getBookId(), subscription.getUserId());
             subscriptionsMessagingOutPort.sendMessage(subscription);
         }

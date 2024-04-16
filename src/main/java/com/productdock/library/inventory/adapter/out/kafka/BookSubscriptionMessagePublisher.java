@@ -28,7 +28,7 @@ class BookSubscriptionMessagePublisher implements BookSubscriptionsMessagingOutP
     @Override
     public void sendMessage(BookSubscription subscription) throws ExecutionException, InterruptedException, JsonProcessingException {
         var bookSubscriptionMessage = new BookSubscriptionMessage(subscription.getBookId(), subscription.getUserId());
-        log.warn("Sent kafka message: {} on kafka topic: {}", bookSubscriptionMessage, kafkaTopic);
+        log.debug("Sent kafka message: {} on kafka topic: {}", bookSubscriptionMessage, kafkaTopic);
 
         var kafkaRecord = recordProducer.createKafkaRecord(kafkaTopic, bookSubscriptionMessage);
         kafkaTemplate.send(kafkaRecord).get();
