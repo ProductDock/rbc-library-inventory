@@ -1,18 +1,19 @@
 package com.productdock.library.inventory.integration;
 
+import com.productdock.library.inventory.adapter.out.kafka.messages.BookSubscriptionMessage;
 import com.productdock.library.inventory.adapter.out.mongo.BookSubscriptionRepository;
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
+import com.productdock.library.inventory.integration.kafka.KafkaTestConsumer;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import static com.productdock.library.inventory.data.provider.out.mongo.BookSubscriptionEntityMother.bookSubscriptionEntity;
@@ -21,11 +22,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SpringBootTest
-@EnableScheduling
 @Slf4j
-@EmbeddedKafka(partitions = 1, brokerProperties = {"listeners=PLAINTEXT://localhost:0", "port=0"})
 public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
 
+    public static final String FILE = "testSubscription.txt";
     public static final String BOOK_ID = "1";
     public static final String USER_ID = "userEmail";
 
@@ -35,15 +35,19 @@ public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
     private InventoryRecordRepository inventoryRecordRepository;
 
     @BeforeEach
-    @AfterEach
     void before() {
         subscriptionRepository.deleteAll();
         inventoryRecordRepository.deleteAll();
     }
 
+    @AfterAll
+    static void after() {
+        KafkaTestConsumer.clear(FILE);
+    }
+
     @Test
     @WithMockUser
-    void resolveSubscriptionWhenBookBecomesAvailable() {
+    void resolveSubscriptionWhenBookBecomesAvailable() throws IOException, ClassNotFoundException {
         givenUnavailableInventoryRecordEntity();
         givenSubscriptionEntity();
         givenInventoryRecordEntity();
@@ -53,6 +57,13 @@ public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
                 .until(() -> subscriptionRepository.findByBookIdAndUserId(BOOK_ID, USER_ID).isEmpty());
 
         assertThat(subscriptionRepository.findByBookIdAndUserId(BOOK_ID, USER_ID)).isEmpty();
+
+        await()
+                .atMost(Duration.ofSeconds(20))
+                .until(KafkaTestConsumer.ifFileExists(FILE));
+
+        var subscriptionMessage = (BookSubscriptionMessage) KafkaTestConsumer.getMessage(FILE);
+        assertThat(subscriptionMessage.bookId).isEqualTo(BOOK_ID);
     }
 
     @Test

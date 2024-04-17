@@ -1,6 +1,7 @@
 package com.productdock.library.inventory.integration;
 
 
+import com.productdock.library.inventory.adapter.out.kafka.messages.BookAvailabilityChanged;
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import com.productdock.library.inventory.integration.kafka.KafkaTestConsumer;
@@ -23,6 +24,8 @@ import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 @SpringBootTest
 class UpdateBookStockTest extends KafkaTestBase {
 
+    public static final String FILE = "testRecord.txt";
+
     @Autowired
     private KafkaTestProducer producer;
 
@@ -36,7 +39,7 @@ class UpdateBookStockTest extends KafkaTestBase {
     @BeforeEach
     void before() {
         inventoryRecordRepository.deleteAll();
-        KafkaTestConsumer.clear();
+        KafkaTestConsumer.clear(FILE);
     }
 
     @Test
@@ -63,9 +66,9 @@ class UpdateBookStockTest extends KafkaTestBase {
     private void verifyThatAvailabilityChangedEventIsPublished() throws IOException, ClassNotFoundException {
         await()
                 .atMost(Duration.ofSeconds(20))
-                .until(KafkaTestConsumer.ifFileExists());
+                .until(KafkaTestConsumer.ifFileExists(FILE));
 
-        var bookAvailabilityChanged = KafkaTestConsumer.getMessage();
+        var bookAvailabilityChanged = (BookAvailabilityChanged) KafkaTestConsumer.getMessage(FILE);
 
         assertThat(bookAvailabilityChanged.bookId).isEqualTo("1");
         assertThat(bookAvailabilityChanged.availableBookCount).isEqualTo(2);
