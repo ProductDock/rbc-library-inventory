@@ -20,7 +20,6 @@ public class CatalogApiClient implements CatalogClient {
 
     private String catalogServiceUrl;
     private HttpClient client = HttpClient.newHttpClient();
-
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public CatalogApiClient(@Value("${catalog.service.url}/api/catalog/books/") String catalogServiceUrl) {
@@ -29,22 +28,18 @@ public class CatalogApiClient implements CatalogClient {
 
     @Override
     public BookDetails getBookDetails(String bookId) throws IOException, InterruptedException {
-        log.warn("getting book details");
-        //var jwt = ((Jwt) SecurityContextHolder.getContext().getAuthentication().getCredentials()).getTokenValue();
         var uri = new DefaultUriBuilderFactory(catalogServiceUrl)
                 .builder()
                 .path(bookId)
                 .build();
         var request = HttpRequest.newBuilder()
                 .uri(uri)
-                //.header(HttpHeaders.AUTHORIZATION, "Bearer " + "jwt")
                 .GET()
                 .build();
         var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        log.warn("{}", response.body());
-
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         return objectMapper.readValue(response.body(), BookDetails.class);
     }
 }
