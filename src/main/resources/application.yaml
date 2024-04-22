@@ -18,7 +18,7 @@ spring:
       book-availability: book-availability
       insert-book: insert-book
       delete-book: delete-book
-      book-subscriptions: book-subscriptions
+      notifications: notifications
 
   data:
     mongodb:

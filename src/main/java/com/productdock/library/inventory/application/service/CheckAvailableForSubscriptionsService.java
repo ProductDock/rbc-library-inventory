@@ -42,7 +42,7 @@ public class CheckAvailableForSubscriptionsService implements CheckAvailableBook
         for (var subscription : subscriptions) {
             log.debug("Deleting book subscription with bookId: {}, and userId: {}", subscription.getBookId(), subscription.getUserId());
             bookSubscriptionUseCase.deleteSubscription(subscription.getBookId(), subscription.getUserId());
-            subscriptionsMessagingOutPort.sendMessage(subscription);
+            subscriptionsMessagingOutPort.sendMessage(subscription, bookDetails);
         }
     }
 

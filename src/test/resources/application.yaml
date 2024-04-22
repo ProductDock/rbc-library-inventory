@@ -21,7 +21,7 @@ spring:
       book-availability: test-book-availability
       insert-book: insert-book
       delete-book: delete-book
-      book-subscriptions: test-book-subscriptions
+      notifications: test-notifications
 
 mongock:
   enabled: false

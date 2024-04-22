@@ -29,7 +29,7 @@ public record KafkaTestConsumer(ObjectMapper objectMapper) {
         writeToFile(bookAvailabilityMessage, AVAILABILITY_FILE);
     }
 
-    @KafkaListener(topics = "${spring.kafka.topic.book-subscriptions}")
+    @KafkaListener(topics = "${spring.kafka.topic.notifications}")
     public void receiveSubscription(ConsumerRecord<String, String> consumerRecord) throws JsonProcessingException {
         LOGGER.info("received payload='{}'", consumerRecord.toString());
         var bookSubscriptionMessage = objectMapper.readValue(consumerRecord.value(), BookSubscriptionMessage.class);

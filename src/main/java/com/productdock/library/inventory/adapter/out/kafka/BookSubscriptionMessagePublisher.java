@@ -3,6 +3,7 @@ package com.productdock.library.inventory.adapter.out.kafka;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.productdock.library.inventory.adapter.out.kafka.messages.BookSubscriptionMessage;
 import com.productdock.library.inventory.application.port.out.messaging.BookSubscriptionsMessagingOutPort;
+import com.productdock.library.inventory.domain.BookDetails;
 import com.productdock.library.inventory.domain.BookSubscription;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 @Component
 class BookSubscriptionMessagePublisher implements BookSubscriptionsMessagingOutPort {
 
-    @Value("${spring.kafka.topic.book-subscriptions}")
+    @Value("${spring.kafka.topic.notifications}")
     private String kafkaTopic;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final RecordProducer recordProducer;
@@ -26,11 +27,24 @@ class BookSubscriptionMessagePublisher implements BookSubscriptionsMessagingOutP
     }
 
     @Override
-    public void sendMessage(BookSubscription subscription) throws ExecutionException, InterruptedException, JsonProcessingException {
-        var bookSubscriptionMessage = new BookSubscriptionMessage(subscription.getBookId(), subscription.getUserId());
-        log.debug("Sent kafka message: {} on kafka topic: {}", bookSubscriptionMessage, kafkaTopic);
+    public void sendMessage(BookSubscription subscription, BookDetails bookDetails) throws ExecutionException, InterruptedException, JsonProcessingException {
+        var bookNotificationMessage = generateBookNotificationMessage(subscription, bookDetails);
+        log.debug("Sent kafka message: {} on kafka topic: {}", bookNotificationMessage, kafkaTopic);
 
-        var kafkaRecord = recordProducer.createKafkaRecord(kafkaTopic, bookSubscriptionMessage);
+        var kafkaRecord = recordProducer.createKafkaRecord(kafkaTopic, bookNotificationMessage);
         kafkaTemplate.send(kafkaRecord).get();
+    }
+
+    private BookSubscriptionMessage generateBookNotificationMessage(BookSubscription subscription, BookDetails bookDetails) {
+        var title = "Book available!";
+        var description = "Book: " + bookDetails.getTitle() + " is available again.";
+        var message = BookSubscriptionMessage.builder()
+                .title(title)
+                .description(description)
+                .userId(subscription.getUserId())
+                .target(subscription.getBookId())
+                .build();
+
+        return message;
     }
 }

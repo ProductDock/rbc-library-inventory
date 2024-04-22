@@ -9,7 +9,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BookSubscriptionMessage implements Serializable {
 
-    public final String bookId;
+    public final String title;
+    public final String description;
     public final String userId;
-
+    public final String type;
+    public final String target;
 }
