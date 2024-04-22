@@ -6,7 +6,10 @@ import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordReposi
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
 import com.productdock.library.inventory.integration.kafka.KafkaTestConsumer;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
     public static final String BOOK_ID = "1";
     public static final String USER_ID = "userEmail";
 
+    public static MockWebServer mockCatalogBackEnd;
+
     @Autowired
     private BookSubscriptionRepository subscriptionRepository;
     @Autowired
@@ -38,6 +43,17 @@ public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
     void before() {
         subscriptionRepository.deleteAll();
         inventoryRecordRepository.deleteAll();
+    }
+
+    @BeforeAll
+    static void setUp() throws IOException {
+        mockCatalogBackEnd = new MockWebServer();
+        mockCatalogBackEnd.start(8082);
+    }
+
+    @AfterAll
+    static void tearDown() throws IOException {
+        mockCatalogBackEnd.shutdown();
     }
 
     @AfterAll
@@ -52,6 +68,11 @@ public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
         givenSubscriptionEntity();
         givenInventoryRecordEntity();
 
+        mockCatalogBackEnd.enqueue(new MockResponse()
+                .setBody("{\"bookId\": \"1\", \"title\": \"Test Book\", \"author\": \"Author\", \"description\": \"description\"}")
+                .addHeader("Content-Type", "application/json"));
+
+
         await()
                 .atMost(Duration.ofSeconds(10))
                 .until(() -> subscriptionRepository.findByBookIdAndUserId(BOOK_ID, USER_ID).isEmpty());
@@ -63,7 +84,8 @@ public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
                 .until(KafkaTestConsumer.ifFileExists(FILE));
 
         var subscriptionMessage = (BookSubscriptionMessage) KafkaTestConsumer.getMessage(FILE);
-        assertThat(subscriptionMessage.bookId).isEqualTo(BOOK_ID);
+        assertThat(subscriptionMessage.userId).isEqualTo(USER_ID);
+        assertThat(subscriptionMessage.target).isEqualTo(BOOK_ID);
     }
 
     @Test

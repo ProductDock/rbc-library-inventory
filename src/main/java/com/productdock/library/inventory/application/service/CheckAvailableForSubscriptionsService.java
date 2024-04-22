@@ -5,6 +5,7 @@ import com.productdock.library.inventory.application.port.in.CheckAvailableBooks
 import com.productdock.library.inventory.application.port.in.GetAvailableBooksCountQuery;
 import com.productdock.library.inventory.application.port.out.messaging.BookSubscriptionsMessagingOutPort;
 import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionPersistenceOutPort;
+import com.productdock.library.inventory.application.port.out.web.CatalogClient;
 import com.productdock.library.inventory.domain.BookSubscription;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -23,6 +24,7 @@ public class CheckAvailableForSubscriptionsService implements CheckAvailableBook
     private GetAvailableBooksCountQuery getAvailableBooksCountQuery;
     private BookSubscriptionUseCase bookSubscriptionUseCase;
     private BookSubscriptionsMessagingOutPort subscriptionsMessagingOutPort;
+    private CatalogClient catalogClient;
 
     @Override
     public void checkAvailableBooks() {
@@ -40,7 +42,8 @@ public class CheckAvailableForSubscriptionsService implements CheckAvailableBook
     @SneakyThrows
     private void resolveSubscriptions(List<BookSubscription> subscriptions) {
         for (var subscription : subscriptions) {
-            log.debug("Deleting book subscription with bookId: {}, and userId: {}", subscription.getBookId(), subscription.getUserId());
+            log.debug("Resolving book subscription with bookId: {}, and userId: {}", subscription.getBookId(), subscription.getUserId());
+            var bookDetails = catalogClient.getBookDetails(subscription.getBookId());
             bookSubscriptionUseCase.deleteSubscription(subscription.getBookId(), subscription.getUserId());
             subscriptionsMessagingOutPort.sendMessage(subscription, bookDetails);
         }

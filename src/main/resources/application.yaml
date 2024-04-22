@@ -46,6 +46,10 @@ availability:
 jwt:
   public.key: file:${USER_PROFILES_JWT_PUBLIC_KEY}
 
+catalog:
+  service:
+    url: ${CATALOG_SERVICE_URL}
+
 management:
   server:
     port: 8087

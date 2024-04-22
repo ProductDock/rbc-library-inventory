@@ -4,6 +4,7 @@ import com.productdock.library.inventory.application.port.in.BookSubscriptionUse
 import com.productdock.library.inventory.application.port.in.GetAvailableBooksCountQuery;
 import com.productdock.library.inventory.application.port.out.messaging.BookSubscriptionsMessagingOutPort;
 import com.productdock.library.inventory.application.port.out.persistence.BookSubscriptionPersistenceOutPort;
+import com.productdock.library.inventory.application.port.out.web.CatalogClient;
 import com.productdock.library.inventory.domain.BookSubscription;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +38,8 @@ class CheckAvailableForSubscriptionsServiceShould {
     private BookSubscriptionUseCase bookSubscriptionUseCase;
     @Mock
     private BookSubscriptionsMessagingOutPort subscriptionsMessagingOutPort;
+    @Mock
+    private CatalogClient catalogClient;
 
 
     @Test
