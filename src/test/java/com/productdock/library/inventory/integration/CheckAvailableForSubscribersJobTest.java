@@ -85,7 +85,7 @@ public class CheckAvailableForSubscribersJobTest extends KafkaTestBase {
 
         var subscriptionMessage = (BookSubscriptionMessage) KafkaTestConsumer.getMessage(FILE);
         assertThat(subscriptionMessage.userId).isEqualTo(USER_ID);
-        assertThat(subscriptionMessage.target).isEqualTo(BOOK_ID);
+        assertThat(subscriptionMessage.action.target).isEqualTo(BOOK_ID);
     }
 
     @Test

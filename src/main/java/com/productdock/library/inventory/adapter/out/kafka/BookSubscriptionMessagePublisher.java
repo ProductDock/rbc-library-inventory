@@ -1,6 +1,7 @@
 package com.productdock.library.inventory.adapter.out.kafka;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.productdock.library.inventory.adapter.out.kafka.messages.ActionMessage;
 import com.productdock.library.inventory.adapter.out.kafka.messages.BookSubscriptionMessage;
 import com.productdock.library.inventory.application.port.out.messaging.BookSubscriptionsMessagingOutPort;
 import com.productdock.library.inventory.domain.BookDetails;
@@ -38,11 +39,15 @@ class BookSubscriptionMessagePublisher implements BookSubscriptionsMessagingOutP
     private BookSubscriptionMessage generateBookNotificationMessage(BookSubscription subscription, BookDetails bookDetails) {
         var title = "Book available!";
         var description = "Book: " + bookDetails.getTitle() + " is available again.";
+        var action = ActionMessage.builder()
+                .type("bookSubscription")
+                .target(subscription.getBookId())
+                .build();
         var message = BookSubscriptionMessage.builder()
                 .title(title)
                 .description(description)
                 .userId(subscription.getUserId())
-                .target(subscription.getBookId())
+                .action(action)
                 .build();
 
         return message;
