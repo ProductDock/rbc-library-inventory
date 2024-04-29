@@ -35,7 +35,7 @@ class GetAvailableBooksCountApiTest extends KafkaTestBase {
     void shouldReturnAvailableBooksCount_whenRecordEntityExists() throws Exception {
         givenInventoryRecordEntity();
 
-        mockMvc.perform(get("/api/inventory/book/" + BOOK_ID))
+        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
                 .andExpect(status().isOk())
                 .andExpect(content().string("3"));
     }
@@ -43,13 +43,13 @@ class GetAvailableBooksCountApiTest extends KafkaTestBase {
     @Test
     @WithMockUser
     void shouldReturnBadRequest_whenRecordEntityDoesNotExist() throws Exception {
-        mockMvc.perform(get("/api/inventory/book/" + BOOK_ID))
+        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void shouldReturnNotAuthorized_whenUserIsUnauthenticated() throws Exception {
-        mockMvc.perform(get("/api/inventory/book/" + BOOK_ID))
+        mockMvc.perform(get("/api/inventory/books/" + BOOK_ID))
                 .andExpect(status().isUnauthorized());
     }
 

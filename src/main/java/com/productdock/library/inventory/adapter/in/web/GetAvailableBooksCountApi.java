@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/inventory/book")
+@RequestMapping("api/inventory/books")
 @Slf4j
 public record GetAvailableBooksCountApi(GetAvailableBooksCountQuery getAvailableBooksCountQuery) {
 
     @GetMapping("/{bookId}")
     public int getAvailableBooksCount(@PathVariable("bookId") String bookId) {
-        log.debug("GET request received - api/inventory/book/{}", bookId);
+        log.debug("GET request received - api/inventory/books/{}", bookId);
         return getAvailableBooksCountQuery.getAvailableBooksCount(bookId);
     }
 }
