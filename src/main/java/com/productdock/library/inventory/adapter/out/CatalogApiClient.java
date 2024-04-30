@@ -22,7 +22,7 @@ public class CatalogApiClient implements CatalogClient {
     private HttpClient client = HttpClient.newHttpClient();
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public CatalogApiClient(@Value("${catalog.service.url}/api/catalog/books/") String catalogServiceUrl) {
+    public CatalogApiClient(@Value("${catalog.service.url}/api/catalog/internal/books/") String catalogServiceUrl) {
         this.catalogServiceUrl = catalogServiceUrl;
     }
 

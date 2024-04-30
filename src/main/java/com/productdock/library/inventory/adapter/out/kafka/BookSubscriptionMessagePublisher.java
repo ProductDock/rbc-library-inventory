@@ -19,6 +19,9 @@ class BookSubscriptionMessagePublisher implements BookSubscriptionsMessagingOutP
 
     @Value("${spring.kafka.topic.notifications}")
     private String kafkaTopic;
+
+    private static final String actionType = "bookSubscription";
+    private static final String title = "Book available!";
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final RecordProducer recordProducer;
 
@@ -37,10 +40,9 @@ class BookSubscriptionMessagePublisher implements BookSubscriptionsMessagingOutP
     }
 
     private BookSubscriptionMessage generateBookNotificationMessage(BookSubscription subscription, BookDetails bookDetails) {
-        var title = "Book available!";
-        var description = "Book: " + bookDetails.getTitle() + " is available again.";
+        var description = bookDetails.getTitle();
         var action = ActionMessage.builder()
-                .type("bookSubscription")
+                .type(actionType)
                 .target(subscription.getBookId())
                 .build();
         var message = BookSubscriptionMessage.builder()
