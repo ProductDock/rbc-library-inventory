@@ -48,6 +48,10 @@ class InsertBookTest extends KafkaTestBase {
 
         producer.sendInsertBook(topic, insertBookMessage());
 
+        await()
+                .atMost(Duration.ofSeconds(20))
+                .until(() -> inventoryRecordRepository.findByBookId("1").get().getBookCopies() == 1);
+
         verifyBookStock();
     }
 
