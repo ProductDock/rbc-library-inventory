@@ -21,9 +21,18 @@ spring:
       book-availability: test-book-availability
       insert-book: insert-book
       delete-book: delete-book
+      notifications: test-notifications
 
 mongock:
   enabled: false
 
+availability:
+  auto-check:
+    scheduled: '*/10 * * * * *'
+
 jwt:
   public.key: classpath:test.pub
+
+catalog:
+  service:
+    url: http://localhost:8082
