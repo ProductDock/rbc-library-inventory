@@ -2,7 +2,6 @@ package com.productdock.library.inventory.integration;
 
 import com.productdock.library.inventory.adapter.out.mongo.InventoryRecordRepository;
 import com.productdock.library.inventory.integration.kafka.KafkaTestBase;
-import com.productdock.library.inventory.integration.kafka.KafkaTestConsumer;
 import com.productdock.library.inventory.integration.kafka.KafkaTestProducer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,6 @@ class InsertBookTest extends KafkaTestBase {
     @BeforeEach
     void before() {
         inventoryRecordRepository.deleteAll();
-        KafkaTestConsumer.clear();
     }
 
     @Test
@@ -49,6 +47,10 @@ class InsertBookTest extends KafkaTestBase {
         givenInventoryRecordEntity();
 
         producer.sendInsertBook(topic, insertBookMessage());
+
+        await()
+                .atMost(Duration.ofSeconds(20))
+                .until(() -> inventoryRecordRepository.findByBookId("1").get().getBookCopies() == 1);
 
         verifyBookStock();
     }

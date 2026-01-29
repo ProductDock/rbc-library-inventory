@@ -44,4 +44,10 @@ public class BookSubscriptionService implements BookSubscriptionUseCase {
         var bookSubscription = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
         return bookSubscription.orElseThrow(() -> new SubscriptionException("User is not subscribed"));
     }
+
+    @Override
+    public void deleteSubscription(String bookId, String userId) {
+        var bookSubscription = subscriptionsPersistenceOutPort.findByBookIdAndUserId(bookId, userId);
+        bookSubscription.ifPresent(subscription -> subscriptionsPersistenceOutPort.delete(subscription));
+    }
 }

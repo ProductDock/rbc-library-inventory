@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -30,5 +31,10 @@ public class BookSubscriptionPersistenceAdapter implements BookSubscriptionPersi
     @Override
     public void delete(BookSubscription subscription) {
         subscriptionRepository.deleteByBookIdAndUserId(subscription.getBookId(), subscription.getUserId());
+    }
+
+    @Override
+    public List<BookSubscription> getAll() {
+        return subscriptionRepository.findAll().stream().map(subscriptionsEntity -> subscriptionMapper.toDomain(subscriptionsEntity)).toList();
     }
 }

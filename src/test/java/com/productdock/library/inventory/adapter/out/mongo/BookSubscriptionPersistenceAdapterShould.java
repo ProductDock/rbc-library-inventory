@@ -63,4 +63,11 @@ class BookSubscriptionPersistenceAdapterShould {
         verify(subscriptionRepository).deleteByBookIdAndUserId(BOOK_ID, USER_ID);
     }
 
+    @Test
+    void getAllSubscriptions() {
+        bookSubscriptionPersistenceAdapter.getAll();
+
+        verify(subscriptionRepository).findAll();
+    }
+
 }

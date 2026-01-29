@@ -18,6 +18,7 @@ spring:
       book-availability: book-availability
       insert-book: insert-book
       delete-book: delete-book
+      notifications: notifications
 
   data:
     mongodb:
@@ -38,8 +39,16 @@ logging:
 
 file-logging-enabled: ${LOG_TO_FILE}
 
+availability:
+  auto-check:
+    scheduled: '*/10 * * * * *'
+
 jwt:
   public.key: file:${USER_PROFILES_JWT_PUBLIC_KEY}
+
+catalog:
+  service:
+    url: ${CATALOG_SERVICE_URL}
 
 management:
   server:

@@ -57,4 +57,13 @@ class BookSubscriptionServiceShould {
 
         verify(subscriptionPersistenceOutPort).delete(SUBSCRIPTION);
     }
+
+    @Test
+    void deleteSubscription() {
+        given(subscriptionPersistenceOutPort.findByBookIdAndUserId(BOOK_ID, USER_ID)).willReturn(Optional.of(SUBSCRIPTION));
+
+        subscriptionService.deleteSubscription(BOOK_ID, USER_ID);
+
+        verify(subscriptionPersistenceOutPort).delete(SUBSCRIPTION);
+    }
 }

@@ -9,4 +9,6 @@ public interface BookSubscriptionUseCase {
     void unsubscribeFromBook(String bookId, String userId);
     
     BookSubscription getSubscription(String bookId, String userId);
+
+    void deleteSubscription(String bookId, String userId);
 }
